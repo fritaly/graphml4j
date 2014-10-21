@@ -1,6 +1,5 @@
 package fr.ritaly.graphml4j;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Set;
@@ -364,13 +363,8 @@ public final class GraphMLWriter {
 
 			this.streamWriter.writeStartElement("y:ShapeNode");
 
-			// y:Geometry
 			writeGeometry(30.0f, 30.0f);
-
-			// y:Fill
 			writeFill("#FFCC00", false);
-
-			// y:BorderStyle
 			writeBorderStyle("#000000", LineType.LINE, 1.0f);
 
 			// y:NodeLabel
@@ -386,7 +380,6 @@ public final class GraphMLWriter {
 			this.streamWriter.writeCharacters(label);
 			this.streamWriter.writeEndElement(); // </y:NodeLabel>
 
-			// y:Shape
 			writeShape(Shape.RECTANGLE);
 
 			this.streamWriter.writeEndElement(); // </y:ShapeNode>
@@ -428,17 +421,9 @@ public final class GraphMLWriter {
 
 			this.streamWriter.writeStartElement("y:PolyLineEdge");
 
-			// y:Path
-			// TODO What is this used for ?
 			writePath(0.0f, 0.0f, 0.0f, 0.0f);
-
-			// y:LineStyle
 			writeLineStyle("#000000", LineType.LINE, 1.0f);
-
-			// y:Arrows
 			writeArrows(Arrow.NONE, Arrow.STANDARD);
-
-			// y:BendStyle
 			writeBendStyle(false);
 
 			this.streamWriter.writeEndElement(); // </y:PolyLineEdge>
@@ -481,21 +466,11 @@ public final class GraphMLWriter {
 			// Define the group node when closed
 			this.streamWriter.writeStartElement("y:GroupNode");
 
-			// y:Geometry
 			writeGeometry(80.0f,  140.0f);
-
-			// y:Fill
 			writeFill("#F5F5F5", false);
-
-			// y:BorderStyle
 			writeBorderStyle("#000000", LineType.DASHED, 1.0f);
-
-			// y:Shape
 			writeShape(Shape.ROUNDED_RECTANGLE);
-
-			// y:State
 			writeState(false,  50, 50, false);
-
 			writeInsets(15, 15, 15, 15);
 			writeBorderInsets(0, 0, 0, 0);
 
@@ -504,21 +479,11 @@ public final class GraphMLWriter {
 			// Define the group node when open
 			this.streamWriter.writeStartElement("y:GroupNode");
 
-			// y:Geometry
 			writeGeometry(50.0f,  50.0f);
-
-			// y:Fill
 			writeFill("#F5F5F5", false);
-
-			// y:BorderStyle
 			writeBorderStyle("#000000", LineType.LINE, 1.0f);
-
-			// y:Shape
 			writeShape(Shape.ROUNDED_RECTANGLE);
-
-			// y:State
 			writeState(true,  50, 50, false);
-
 			writeInsets(5, 5, 5, 5);
 			writeBorderInsets(0, 0, 0, 0);
 
