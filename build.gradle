@@ -7,3 +7,8 @@ sourceCompatibility = targetCompatibility = '1.6'
 task wrapper(type: Wrapper) {
   gradleVersion = '1.9'
 }
+
+dependencies {
+  compile 'commons-lang:commons-lang:2.4'
+  compile 'net.java.dev.stax-utils:stax-utils:20070216'
+}
