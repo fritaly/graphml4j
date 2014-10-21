@@ -213,7 +213,7 @@ public final class GraphMLWriter {
 			// y:BorderStyle
 			this.streamWriter.writeEmptyElement("y:BorderStyle");
 			this.streamWriter.writeAttribute("color", "#000000");
-			this.streamWriter.writeAttribute("type", "line");
+			this.streamWriter.writeAttribute("type", LineType.LINE.getValue());
 			this.streamWriter.writeAttribute("width", "1.0");
 
 			// y:NodeLabel
