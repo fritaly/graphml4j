@@ -338,7 +338,27 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("closedHeight", String.format("%.1f", height));
 			this.streamWriter.writeAttribute("closedWidth", String.format("%.1f", width));
 			this.streamWriter.writeAttribute("innerGraphDisplayEnabled", Boolean.toString(innerGraphDisplayEnabled));
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
 
+	private void writeNodeLabel(String label) throws GraphMLException {
+		Validate.notNull(label, "The given label is null");
+
+		try {
+			// y:NodeLabel
+			this.streamWriter.writeStartElement("y:NodeLabel");
+			this.streamWriter.writeAttribute("alignement", "center");
+			this.streamWriter.writeAttribute("fontFamily", "Dialog");
+			this.streamWriter.writeAttribute("fontSize", "12");
+			this.streamWriter.writeAttribute("fontStyle", "plain");
+			this.streamWriter.writeAttribute("hasBackgroundColor", "false");
+			this.streamWriter.writeAttribute("hasLineColor", "false");
+			this.streamWriter.writeAttribute("textColor", "#000000");
+			this.streamWriter.writeAttribute("visible", "true");
+			this.streamWriter.writeCharacters(label);
+			this.streamWriter.writeEndElement(); // </y:NodeLabel>
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -366,20 +386,7 @@ public final class GraphMLWriter {
 			writeGeometry(30.0f, 30.0f);
 			writeFill("#FFCC00", false);
 			writeBorderStyle("#000000", LineType.LINE, 1.0f);
-
-			// y:NodeLabel
-			this.streamWriter.writeStartElement("y:NodeLabel");
-			this.streamWriter.writeAttribute("alignement", "center");
-			this.streamWriter.writeAttribute("fontFamily", "Dialog");
-			this.streamWriter.writeAttribute("fontSize", "12");
-			this.streamWriter.writeAttribute("fontStyle", "plain");
-			this.streamWriter.writeAttribute("hasBackgroundColor", "false");
-			this.streamWriter.writeAttribute("hasLineColor", "false");
-			this.streamWriter.writeAttribute("textColor", "#000000");
-			this.streamWriter.writeAttribute("visible", "true");
-			this.streamWriter.writeCharacters(label);
-			this.streamWriter.writeEndElement(); // </y:NodeLabel>
-
+			writeNodeLabel(label);
 			writeShape(Shape.RECTANGLE);
 
 			this.streamWriter.writeEndElement(); // </y:ShapeNode>
