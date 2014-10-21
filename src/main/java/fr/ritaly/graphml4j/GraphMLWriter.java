@@ -18,14 +18,24 @@ import org.apache.commons.lang.Validate;
 
 public final class GraphMLWriter {
 
+	/**
+	 * Enumeration of possible writer states. The states are defined in the
+	 * valid state transitions (the order matters !).
+	 *
+	 * @author francois_ritaly
+	 */
+	private static enum State {
+		INITIAL, DOCUMENT_OPENED, GRAPH_OPENED, GRAPH_CLOSED, DOCUMENT_CLOSED, CLOSED;
+	}
+
 	private final Writer writer;
 
 	private final XMLStreamWriter streamWriter;
 
 	/**
-	 * Tells whether the writer has been already closed.
+	 * The writer's current state. Use for validating the sequence of method calls.
 	 */
-	private boolean closed = false;
+	private State state = State.INITIAL;
 
 	/**
 	 * Sequence used for generating node identifiers.
@@ -63,7 +73,7 @@ public final class GraphMLWriter {
 	}
 
 	public void startDocument() throws GraphMLException {
-		assertNotClosed();
+		assertState(State.INITIAL);
 
 		try {
 			this.streamWriter.writeStartDocument("1.0");
@@ -141,17 +151,21 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("for", "edge");
 			this.streamWriter.writeAttribute("id", "d10");
 			this.streamWriter.writeAttribute("yfiles.type", "edgegraphics");
+
+			this.state = State.DOCUMENT_OPENED;
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
 	}
 
 	public void endDocument() throws GraphMLException {
-		assertNotClosed();
+		assertState(State.GRAPH_CLOSED);
 
 		try {
 			this.streamWriter.writeEndElement(); // </graphml>
 			this.streamWriter.writeEndDocument();
+
+			this.state = State.DOCUMENT_CLOSED;
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -160,7 +174,7 @@ public final class GraphMLWriter {
 	// --- Graph --- //
 
 	public void startGraph() throws GraphMLException {
-		assertNotClosed();
+		assertState(State.DOCUMENT_OPENED);
 
 		try {
 			// TODO Introduce parameters for the 2 attributes
@@ -169,16 +183,20 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("id", "G");
 
 			// TODO Generate the <data key="d7"/>
+
+			this.state = State.GRAPH_OPENED;
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
 	}
 
 	public void endGraph() throws GraphMLException {
-		assertNotClosed();
+		assertState(State.GRAPH_OPENED);
 
 		try {
 			this.streamWriter.writeEndElement(); // </graph>
+
+			this.state = State.GRAPH_CLOSED;
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -191,7 +209,7 @@ public final class GraphMLWriter {
 		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
 
 		try {
-			// y:Geometry
+			// y:Geometry (the x & y attributes are computed when laying out the graph in yEd)
 			this.streamWriter.writeEmptyElement("y:Geometry");
 			this.streamWriter.writeAttribute("height", String.format("%.1f", height));
 			this.streamWriter.writeAttribute("width", String.format("%.1f", width));
@@ -405,7 +423,7 @@ public final class GraphMLWriter {
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
-		assertNotClosed();
+		assertState(State.GRAPH_OPENED);
 
 		try {
 			final String nodeId = nextNodeId();
@@ -448,7 +466,7 @@ public final class GraphMLWriter {
 		Validate.isTrue(nodeIds.contains(targetNodeId),
 				String.format("The (target) node with given id '%s' doesn't exist", targetNodeId));
 
-		assertNotClosed();
+		assertState(State.GRAPH_OPENED);
 
 		try {
 			final String edgeId = nextEdgeId();
@@ -484,7 +502,7 @@ public final class GraphMLWriter {
 	// --- Group --- //
 
 	public String startGroup(String label) throws GraphMLException {
-		assertNotClosed();
+		assertState(State.GRAPH_OPENED);
 
 		try {
 			// A group is also a node
@@ -553,7 +571,7 @@ public final class GraphMLWriter {
 	}
 
 	public void endGroup() throws GraphMLException {
-		assertNotClosed();
+		assertState(State.GRAPH_OPENED);
 
 		try {
 			this.streamWriter.writeEndElement(); // </graph>
@@ -585,14 +603,21 @@ public final class GraphMLWriter {
 		return String.format("e%d", edgeSequence.getAndIncrement());
 	}
 
-	private void assertNotClosed() {
-		if (closed) {
-			throw new IllegalStateException("The writer is closed");
+	private void assertState(State expected) {
+		if (state != expected) {
+			throw new IllegalStateException(String.format("The writer is in an invalid state (Actual: %s, Expected: %s)",
+					state.name(), expected.name()));
+		}
+	}
+
+	private void assertNotState(State expected) {
+		if (state == expected) {
+			throw new IllegalStateException(String.format("The writer is already in state %s", expected.name()));
 		}
 	}
 
 	public void close() {
-		assertNotClosed();
+		assertNotState(State.CLOSED);
 
 		if (streamWriter != null) {
 			try {
@@ -609,6 +634,6 @@ public final class GraphMLWriter {
 			}
 		}
 
-		this.closed = true;
+		this.state = State.CLOSED;
 	}
 }
