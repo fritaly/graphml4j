@@ -15,7 +15,7 @@ public class Main {
 			writer.node(Integer.toString(i));
 
 			if ((i > 0) && (i < 4)) {
-				writer.edge("n" + i, "n" + (i+1));
+				writer.edge("n" + (i-1), "n" + i);
 			}
 		}
 

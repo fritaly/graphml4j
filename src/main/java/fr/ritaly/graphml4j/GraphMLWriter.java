@@ -2,6 +2,8 @@ package fr.ritaly.graphml4j;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javanet.staxutils.IndentingXMLStreamWriter;
@@ -13,17 +15,31 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.Validate;
 
-public class GraphMLWriter {
+public final class GraphMLWriter {
 
 	private final Writer writer;
 
 	private final XMLStreamWriter streamWriter;
 
+	/**
+	 * Tells whether the writer has been already closed.
+	 */
 	private boolean closed = false;
 
+	/**
+	 * Sequence used for generating node identifiers.
+	 */
 	private final AtomicInteger nodeSequence = new AtomicInteger();
 
+	/**
+	 * Sequence used for generating edge identifiers.
+	 */
 	private final AtomicInteger edgeSequence = new AtomicInteger();
+
+	/**
+	 * Set containing the identifiers of nodes added to the graph.
+	 */
+	private final Set<String> nodeIds = new TreeSet<String>();
 
 	public GraphMLWriter(Writer writer) throws GraphMLException {
 		Validate.notNull(writer, "The given writer is null");
@@ -221,6 +237,9 @@ public class GraphMLWriter {
 			this.streamWriter.writeEndElement(); // </data>
 			this.streamWriter.writeEndElement(); // </node>
 
+			// Store the node id
+			this.nodeIds.add(nodeId);
+
 			return nodeId;
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
@@ -230,12 +249,16 @@ public class GraphMLWriter {
 	// --- Edge --- //
 
 	public String edge(String sourceNodeId, String targetNodeId) throws GraphMLException {
+		Validate.isTrue(nodeIds.contains(sourceNodeId),
+				String.format("The (source) node with given id '%s' doesn't exist", sourceNodeId));
+		Validate.isTrue(nodeIds.contains(targetNodeId),
+				String.format("The (target) node with given id '%s' doesn't exist", targetNodeId));
+
 		assertNotClosed();
 
 		try {
 			final String edgeId = nextEdgeId();
 
-			// TODO Check that the nodes exist !
 			this.streamWriter.writeStartElement("edge");
 			this.streamWriter.writeAttribute("id", edgeId);
 			this.streamWriter.writeAttribute("source", sourceNodeId);
