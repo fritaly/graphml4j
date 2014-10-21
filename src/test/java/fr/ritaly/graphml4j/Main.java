@@ -8,8 +8,8 @@ public class Main {
 		final StringWriter stringWriter = new StringWriter();
 
 		GraphMLWriter writer = new GraphMLWriter(stringWriter);
-		writer.startGraph();
-		writer.startGroup("TEST");
+		writer.graph();
+		writer.group("TEST");
 
 		String prevNodeId = null;
 
@@ -23,8 +23,8 @@ public class Main {
 			prevNodeId = nodeId;
 		}
 
-		writer.endGroup();
-		writer.endGraph();
+		writer.closeGroup();
+		writer.closeGraph();
 
 		System.out.println(stringWriter.toString());
 	}

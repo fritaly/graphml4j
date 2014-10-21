@@ -231,7 +231,7 @@ public final class GraphMLWriter {
 
 	// --- Graph --- //
 
-	public void startGraph() throws GraphMLException {
+	public void graph() throws GraphMLException {
 		startDocument();
 
 		assertState(State.DOCUMENT_OPENED);
@@ -250,7 +250,7 @@ public final class GraphMLWriter {
 		}
 	}
 
-	public void endGraph() throws GraphMLException {
+	public void closeGraph() throws GraphMLException {
 		assertState(State.GRAPH_OPENED);
 
 		try {
@@ -563,7 +563,7 @@ public final class GraphMLWriter {
 
 	// --- Group --- //
 
-	public String startGroup(String label) throws GraphMLException {
+	public String group(String label) throws GraphMLException {
 		assertState(State.GRAPH_OPENED);
 
 		try {
@@ -632,7 +632,7 @@ public final class GraphMLWriter {
 		}
 	}
 
-	public void endGroup() throws GraphMLException {
+	public void closeGroup() throws GraphMLException {
 		assertState(State.GRAPH_OPENED);
 
 		try {
