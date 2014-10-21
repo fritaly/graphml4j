@@ -332,6 +332,19 @@ public final class GraphMLWriter {
 		}
 	}
 
+	private void writeState(boolean closed, float height, float width, boolean innerGraphDisplayEnabled) throws GraphMLException {
+		try {
+			this.streamWriter.writeEmptyElement("y:State");
+			this.streamWriter.writeAttribute("closed", Boolean.toString(closed));
+			this.streamWriter.writeAttribute("closedHeight", String.format("%.1f", height));
+			this.streamWriter.writeAttribute("closedWidth", String.format("%.1f", width));
+			this.streamWriter.writeAttribute("innerGraphDisplayEnabled", Boolean.toString(innerGraphDisplayEnabled));
+
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
@@ -480,11 +493,8 @@ public final class GraphMLWriter {
 			// y:Shape
 			writeShape(Shape.ROUNDED_RECTANGLE);
 
-			this.streamWriter.writeEmptyElement("y:State");
-			this.streamWriter.writeAttribute("closed", "false");
-			this.streamWriter.writeAttribute("closedHeight", "50.0");
-			this.streamWriter.writeAttribute("closedWidth", "50.0");
-			this.streamWriter.writeAttribute("innerGraphDisplayEnabled", "false");
+			// y:State
+			writeState(false,  50, 50, false);
 
 			writeInsets(15, 15, 15, 15);
 			writeBorderInsets(0, 0, 0, 0);
@@ -506,11 +516,8 @@ public final class GraphMLWriter {
 			// y:Shape
 			writeShape(Shape.ROUNDED_RECTANGLE);
 
-			this.streamWriter.writeEmptyElement("y:State");
-			this.streamWriter.writeAttribute("closed", "true");
-			this.streamWriter.writeAttribute("closedHeight", "50.0");
-			this.streamWriter.writeAttribute("closedWidth", "50.0");
-			this.streamWriter.writeAttribute("innerGraphDisplayEnabled", "false");
+			// y:State
+			writeState(true,  50, 50, false);
 
 			writeInsets(5, 5, 5, 5);
 			writeBorderInsets(0, 0, 0, 0);
