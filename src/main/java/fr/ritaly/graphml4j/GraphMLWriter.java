@@ -119,6 +119,21 @@ public final class GraphMLWriter {
 		}
 	}
 
+	/**
+	 * Returns the current level of depth. When inside the parent graph, the
+	 * depth is 0. For a subgraph, the depth is 1. For a sub-subgraph, the depth
+	 * is 2 and so on.
+	 *
+	 * @return an int denoting a level of depth inside the graph.
+	 */
+	private int getDepth() {
+		return groupIds.size();
+	}
+
+	private boolean insideSubGraph() {
+		return (getDepth() > 0);
+	}
+
 	private void setState(State newState) {
 		Validate.notNull(newState, "The given new state is null");
 
@@ -250,8 +265,12 @@ public final class GraphMLWriter {
 		}
 	}
 
+	// This method can only be called when not inside a sub-graph
 	public void closeGraph() throws GraphMLException {
 		assertState(State.GRAPH_OPENED);
+		if (insideSubGraph()) {
+			throw new IllegalStateException("The writer is inside a sub-graph. Close the sub-graph(s) first");
+		}
 
 		try {
 			this.streamWriter.writeEndElement(); // </graph>
@@ -632,8 +651,12 @@ public final class GraphMLWriter {
 		}
 	}
 
+	// This method can only be called when inside a sub-graph
 	public void closeGroup() throws GraphMLException {
 		assertState(State.GRAPH_OPENED);
+		if (!insideSubGraph()) {
+			throw new IllegalStateException("The writer isn't inside a sub-graph. Invalid method call");
+		}
 
 		try {
 			this.streamWriter.writeEndElement(); // </graph>
