@@ -1,5 +1,6 @@
 package fr.ritaly.graphml4j;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Set;
@@ -202,6 +203,17 @@ public final class GraphMLWriter {
 		}
 	}
 
+	private void writeFill(String color, boolean transparent) throws GraphMLException {
+		try {
+			// y:Fill
+			this.streamWriter.writeEmptyElement("y:Fill");
+			this.streamWriter.writeAttribute("color", color);
+			this.streamWriter.writeAttribute("transparent", Boolean.toString(transparent));
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
@@ -225,9 +237,7 @@ public final class GraphMLWriter {
 			writeGeometry(30.0f, 30.0f);
 
 			// y:Fill
-			this.streamWriter.writeEmptyElement("y:Fill");
-			this.streamWriter.writeAttribute("color", "#FFCC00");
-			this.streamWriter.writeAttribute("transparent", "false");
+			writeFill("#FFCC00", false);
 
 			// y:BorderStyle
 			this.streamWriter.writeEmptyElement("y:BorderStyle");
@@ -357,9 +367,8 @@ public final class GraphMLWriter {
 			// y:Geometry
 			writeGeometry(80.0f,  140.0f);
 
-			this.streamWriter.writeEmptyElement("y:Fill");
-			this.streamWriter.writeAttribute("color", "#F5F5F5");
-			this.streamWriter.writeAttribute("transparent", "false");
+			// y:Fill
+			writeFill("#F5F5F5", false);
 
 			this.streamWriter.writeEmptyElement("y:BorderStyle");
 			this.streamWriter.writeAttribute("color", "#000000");
@@ -403,9 +412,8 @@ public final class GraphMLWriter {
 			// y:Geometry
 			writeGeometry(50.0f,  50.0f);
 
-			this.streamWriter.writeEmptyElement("y:Fill");
-			this.streamWriter.writeAttribute("color", "#F5F5F5");
-			this.streamWriter.writeAttribute("transparent", "false");
+			// y:Fill
+			writeFill("#F5F5F5", false);
 
 			this.streamWriter.writeEmptyElement("y:BorderStyle");
 			this.streamWriter.writeAttribute("color", "#000000");
