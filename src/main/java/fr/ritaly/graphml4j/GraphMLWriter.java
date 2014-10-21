@@ -260,6 +260,22 @@ public final class GraphMLWriter {
 		}
 	}
 
+	private void writeLineStyle(String color, LineType type, float width) throws GraphMLException {
+		Validate.notNull(color, "The given color is null");
+		Validate.notNull(type, "The given line type is null");
+		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
+
+		try {
+            // y:LineStyle
+            this.streamWriter.writeEmptyElement("y:LineStyle");
+            this.streamWriter.writeAttribute("color", color);
+            this.streamWriter.writeAttribute("type", type.getValue());
+            this.streamWriter.writeAttribute("width", String.format("%.1f", width));
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
@@ -348,10 +364,7 @@ public final class GraphMLWriter {
 			writePath(0.0f, 0.0f, 0.0f, 0.0f);
 
 			// y:LineStyle
-			this.streamWriter.writeEmptyElement("y:LineStyle");
-			this.streamWriter.writeAttribute("color", "#000000");
-			this.streamWriter.writeAttribute("type", "Line");
-			this.streamWriter.writeAttribute("width", "1.0");
+			writeLineStyle("#000000", LineType.LINE, 1.0f);
 
 			// y:Arrows
 			this.streamWriter.writeEmptyElement("y:Arrows");
