@@ -11,7 +11,7 @@ public class Main {
 		writer.startDocument();
 		writer.startGraph();
 
-		writer.startGroup();
+		writer.startGroup("TEST");
 
 		String prevNodeId = null;
 

@@ -445,7 +445,7 @@ public final class GraphMLWriter {
 
 	// --- Group --- //
 
-	public String startGroup() throws GraphMLException {
+	public String startGroup(String label) throws GraphMLException {
 		assertNotClosed();
 
 		try {
@@ -476,6 +476,28 @@ public final class GraphMLWriter {
 			writeGeometry(80.0f,  140.0f);
 			writeFill("#F5F5F5", false);
 			writeBorderStyle("#000000", LineType.DASHED, 1.0f);
+
+			// y:NodeLabel
+			this.streamWriter.writeStartElement("y:NodeLabel");
+			this.streamWriter.writeAttribute("alignement", "right");
+			this.streamWriter.writeAttribute("autoSizePolicy", "node_width");
+			this.streamWriter.writeAttribute("backgroundColor", "#EBEBEB");
+			this.streamWriter.writeAttribute("borderDistance", "0.0");
+			this.streamWriter.writeAttribute("fontFamily", "Dialog");
+			this.streamWriter.writeAttribute("fontSize", "15");
+			this.streamWriter.writeAttribute("fontStyle", "plain");
+			this.streamWriter.writeAttribute("hasLineColor", "false");
+			this.streamWriter.writeAttribute("height", "21.0");
+			this.streamWriter.writeAttribute("modelName", "internal");
+			this.streamWriter.writeAttribute("modelPosition", "t");
+			this.streamWriter.writeAttribute("textColor", "#000000");
+			this.streamWriter.writeAttribute("visible", "true");
+			this.streamWriter.writeAttribute("width", "200.0");
+			this.streamWriter.writeAttribute("x", "0.0");
+			this.streamWriter.writeAttribute("y", "0.0");
+			this.streamWriter.writeCharacters(label);
+			this.streamWriter.writeEndElement(); // </y:NodeLabel>
+
 			writeShape(Shape.ROUNDED_RECTANGLE);
 			writeState(false,  50, 50, false);
 			writeInsets(15, 15, 15, 15);
@@ -489,6 +511,28 @@ public final class GraphMLWriter {
 			writeGeometry(50.0f,  50.0f);
 			writeFill("#F5F5F5", false);
 			writeBorderStyle("#000000", LineType.LINE, 1.0f);
+
+			// y:NodeLabel
+			this.streamWriter.writeStartElement("y:NodeLabel");
+			this.streamWriter.writeAttribute("alignement", "right");
+			this.streamWriter.writeAttribute("autoSizePolicy", "node_width");
+			this.streamWriter.writeAttribute("backgroundColor", "#EBEBEB");
+			this.streamWriter.writeAttribute("borderDistance", "0.0");
+			this.streamWriter.writeAttribute("fontFamily", "Dialog");
+			this.streamWriter.writeAttribute("fontSize", "15");
+			this.streamWriter.writeAttribute("fontStyle", "plain");
+			this.streamWriter.writeAttribute("hasLineColor", "false");
+			this.streamWriter.writeAttribute("height", "21.0");
+			this.streamWriter.writeAttribute("modelName", "internal");
+			this.streamWriter.writeAttribute("modelPosition", "t");
+			this.streamWriter.writeAttribute("textColor", "#000000");
+			this.streamWriter.writeAttribute("visible", "true");
+			this.streamWriter.writeAttribute("width", "200.0");
+			this.streamWriter.writeAttribute("x", "0.0");
+			this.streamWriter.writeAttribute("y", "0.0");
+			this.streamWriter.writeCharacters(label);
+			this.streamWriter.writeEndElement(); // </y:NodeLabel>
+
 			writeShape(Shape.ROUNDED_RECTANGLE);
 			writeState(true,  50, 50, false);
 			writeInsets(5, 5, 5, 5);
