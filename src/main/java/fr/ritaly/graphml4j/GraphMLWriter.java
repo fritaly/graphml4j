@@ -2,6 +2,7 @@ package fr.ritaly.graphml4j;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.EnumSet;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
@@ -19,13 +20,37 @@ import org.apache.commons.lang.Validate;
 public final class GraphMLWriter {
 
 	/**
-	 * Enumeration of possible writer states. The states are defined in the
-	 * valid state transitions (the order matters !).
+	 * Enumeration of possible writer states.
 	 *
 	 * @author francois_ritaly
 	 */
 	private static enum State {
 		INITIAL, DOCUMENT_OPENED, GRAPH_OPENED, GRAPH_CLOSED, DOCUMENT_CLOSED, CLOSED;
+
+		/**
+		 * Tells whether the transition from this state to the target one is allowed.
+		 *
+		 * @param target a state representing the target of the transition.
+		 * @return whether the transition from this state to the target one is allowed.
+		 */
+		boolean isTransitionAllowed(State target) {
+			switch(this) {
+			case INITIAL:
+				return EnumSet.of(DOCUMENT_OPENED, CLOSED).contains(target);
+			case DOCUMENT_OPENED:
+				return EnumSet.of(GRAPH_OPENED, DOCUMENT_CLOSED, CLOSED).contains(target);
+			case GRAPH_OPENED:
+				return EnumSet.of(GRAPH_CLOSED, CLOSED).contains(target);
+			case GRAPH_CLOSED:
+				return EnumSet.of(DOCUMENT_CLOSED, CLOSED).contains(target);
+			case DOCUMENT_CLOSED:
+				return CLOSED.equals(target);
+			case CLOSED:
+				return false;
+			default:
+				throw new UnsupportedOperationException("Unsupported state: " + this);
+			}
+		}
 	}
 
 	private final Writer writer;
@@ -33,7 +58,8 @@ public final class GraphMLWriter {
 	private final XMLStreamWriter streamWriter;
 
 	/**
-	 * The writer's current state. Use for validating the sequence of method calls.
+	 * The writer's current state. Use for validating the sequence of method
+	 * calls. All state changes must be done by method {@link #setState(State)}.
 	 */
 	private State state = State.INITIAL;
 
@@ -70,6 +96,17 @@ public final class GraphMLWriter {
 		} catch (FactoryConfigurationError e) {
 			throw new GraphMLException(e);
 		}
+	}
+
+	private void setState(State newState) {
+		Validate.notNull(newState, "The given new state is null");
+
+		if (!this.state.isTransitionAllowed(newState)) {
+			throw new IllegalArgumentException(String.format("Transition from state '%s' to '%s' is forbidden", state.name(),
+					newState.name()));
+		}
+
+		this.state = newState;
 	}
 
 	public void startDocument() throws GraphMLException {
@@ -152,7 +189,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("id", "d10");
 			this.streamWriter.writeAttribute("yfiles.type", "edgegraphics");
 
-			this.state = State.DOCUMENT_OPENED;
+			setState(State.DOCUMENT_OPENED);
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -165,7 +202,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeEndElement(); // </graphml>
 			this.streamWriter.writeEndDocument();
 
-			this.state = State.DOCUMENT_CLOSED;
+			setState(State.DOCUMENT_CLOSED);
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -184,7 +221,7 @@ public final class GraphMLWriter {
 
 			// TODO Generate the <data key="d7"/>
 
-			this.state = State.GRAPH_OPENED;
+			setState(State.GRAPH_OPENED);
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -196,7 +233,7 @@ public final class GraphMLWriter {
 		try {
 			this.streamWriter.writeEndElement(); // </graph>
 
-			this.state = State.GRAPH_CLOSED;
+			setState(State.GRAPH_CLOSED);
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -634,6 +671,6 @@ public final class GraphMLWriter {
 			}
 		}
 
-		this.state = State.CLOSED;
+		setState(State.CLOSED);
 	}
 }
