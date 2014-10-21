@@ -11,7 +11,7 @@ public class Main {
 		writer.startDocument();
 		writer.startGraph();
 
-//		writer.startGroup();
+		writer.startGroup();
 
 		String prevNodeId = null;
 
@@ -25,7 +25,7 @@ public class Main {
 			prevNodeId = nodeId;
 		}
 
-//		writer.endGroup();
+		writer.endGroup();
 
 		writer.endGraph();
 		writer.endDocument();

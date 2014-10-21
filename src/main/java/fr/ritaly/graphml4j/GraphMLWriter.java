@@ -488,7 +488,7 @@ public final class GraphMLWriter {
 			writeBorderInsets(0, 0, 0, 0);
 
 			this.streamWriter.writeEndElement(); // </y:GroupNode>
-
+			this.streamWriter.writeEndElement(); // </y:Realizers>
 			this.streamWriter.writeEndElement(); // </y:ProxyAutoBoundsNode>
 			this.streamWriter.writeEndElement(); // </data>
 
