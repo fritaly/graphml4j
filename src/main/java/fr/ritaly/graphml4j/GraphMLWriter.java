@@ -226,6 +226,16 @@ public final class GraphMLWriter {
 		}
 	}
 
+	private void writeShape(Shape shape) throws GraphMLException {
+		try {
+			// y:Shape
+			this.streamWriter.writeEmptyElement("y:Shape");
+			this.streamWriter.writeAttribute("type", shape.getValue());
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
@@ -268,8 +278,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeEndElement(); // </y:NodeLabel>
 
 			// y:Shape
-			this.streamWriter.writeEmptyElement("y:Shape");
-			this.streamWriter.writeAttribute("type", Shape.RECTANGLE.getValue());
+			writeShape(Shape.RECTANGLE);
 
 			this.streamWriter.writeEndElement(); // </y:ShapeNode>
 			this.streamWriter.writeEndElement(); // </data>
@@ -382,8 +391,8 @@ public final class GraphMLWriter {
 			// y:BorderStyle
 			writeBorderStyle("#000000", LineType.DASHED, 1.0f);
 
-			this.streamWriter.writeEmptyElement("y:Shape");
-			this.streamWriter.writeAttribute("type", Shape.ROUNDED_RECTANGLE.getValue());
+			// y:Shape
+			writeShape(Shape.ROUNDED_RECTANGLE);
 
 			this.streamWriter.writeEmptyElement("y:State");
 			this.streamWriter.writeAttribute("closed", "false");
@@ -425,8 +434,8 @@ public final class GraphMLWriter {
 			// y:BorderStyle
 			writeBorderStyle("#000000", LineType.LINE, 1.0f);
 
-			this.streamWriter.writeEmptyElement("y:Shape");
-			this.streamWriter.writeAttribute("type", Shape.ROUNDED_RECTANGLE.getValue());
+			// y:Shape
+			writeShape(Shape.ROUNDED_RECTANGLE);
 
 			this.streamWriter.writeEmptyElement("y:State");
 			this.streamWriter.writeAttribute("closed", "true");
