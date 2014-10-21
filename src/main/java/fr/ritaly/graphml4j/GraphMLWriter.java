@@ -343,13 +343,14 @@ public final class GraphMLWriter {
 		}
 	}
 
-	private void writeNodeLabel(String label) throws GraphMLException {
+	private void writeNodeLabel(String label, Alignment alignment) throws GraphMLException {
 		Validate.notNull(label, "The given label is null");
+		Validate.notNull(alignment, "The given alignment is null");
 
 		try {
 			// y:NodeLabel
 			this.streamWriter.writeStartElement("y:NodeLabel");
-			this.streamWriter.writeAttribute("alignement", "center");
+			this.streamWriter.writeAttribute("alignement", alignment.getValue());
 			this.streamWriter.writeAttribute("fontFamily", "Dialog");
 			this.streamWriter.writeAttribute("fontSize", "12");
 			this.streamWriter.writeAttribute("fontStyle", "plain");
@@ -386,7 +387,7 @@ public final class GraphMLWriter {
 			writeGeometry(30.0f, 30.0f);
 			writeFill("#FFCC00", false);
 			writeBorderStyle("#000000", LineType.LINE, 1.0f);
-			writeNodeLabel(label);
+			writeNodeLabel(label, Alignment.CENTER);
 			writeShape(Shape.RECTANGLE);
 
 			this.streamWriter.writeEndElement(); // </y:ShapeNode>
