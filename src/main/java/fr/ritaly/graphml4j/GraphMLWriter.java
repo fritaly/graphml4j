@@ -276,6 +276,20 @@ public final class GraphMLWriter {
 		}
 	}
 
+	private void writeArrows(Arrow source, Arrow target) throws GraphMLException {
+		Validate.notNull(source, "The given source arrow is null");
+		Validate.notNull(target, "The given target arrow is null");
+
+		try {
+			// y:Arrows
+			this.streamWriter.writeEmptyElement("y:Arrows");
+			this.streamWriter.writeAttribute("source", source.getValue());
+			this.streamWriter.writeAttribute("target", target.getValue());
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
@@ -367,9 +381,7 @@ public final class GraphMLWriter {
 			writeLineStyle("#000000", LineType.LINE, 1.0f);
 
 			// y:Arrows
-			this.streamWriter.writeEmptyElement("y:Arrows");
-			this.streamWriter.writeAttribute("source", Arrow.NONE.getValue());
-			this.streamWriter.writeAttribute("target", Arrow.STANDARD.getValue());
+			writeArrows(Arrow.NONE, Arrow.STANDARD);
 
 			// y:BendStyle
 			this.streamWriter.writeEmptyElement("y:BendStyle");
