@@ -52,6 +52,8 @@ public final class GraphMLWriter {
 
 		try {
 			this.writer = writer;
+
+			// Indent the XML generated
 			this.streamWriter = new IndentingXMLStreamWriter(XMLOutputFactory.newFactory().createXMLStreamWriter(writer));
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
@@ -185,6 +187,21 @@ public final class GraphMLWriter {
 		}
 	}
 
+	// --- Internal helper methods --- //
+
+	private void writeGeometry(float height, float width) throws GraphMLException {
+		try {
+			// y:Geometry
+			this.streamWriter.writeEmptyElement("y:Geometry");
+			this.streamWriter.writeAttribute("height", String.format("%2.1f", height));
+			this.streamWriter.writeAttribute("width", String.format("%2.1f", width));
+			this.streamWriter.writeAttribute("x", "0.0");
+			this.streamWriter.writeAttribute("y", "0.0");
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
@@ -205,11 +222,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeStartElement("y:ShapeNode");
 
 			// y:Geometry
-			this.streamWriter.writeEmptyElement("y:Geometry");
-			this.streamWriter.writeAttribute("height", "30.0");
-			this.streamWriter.writeAttribute("width", "30.0");
-			this.streamWriter.writeAttribute("x", "48.0");
-			this.streamWriter.writeAttribute("y", "90.0");
+			writeGeometry(30.0f, 30.0f);
 
 			// y:Fill
 			this.streamWriter.writeEmptyElement("y:Fill");
@@ -341,11 +354,8 @@ public final class GraphMLWriter {
 			// Define the group node when closed
 			this.streamWriter.writeStartElement("y:GroupNode");
 
-			this.streamWriter.writeEmptyElement("y:Geometry");
-			this.streamWriter.writeAttribute("height", "80");
-			this.streamWriter.writeAttribute("weight", "140");
-			this.streamWriter.writeAttribute("x", "0");
-			this.streamWriter.writeAttribute("y", "0");
+			// y:Geometry
+			writeGeometry(80.0f,  140.0f);
 
 			this.streamWriter.writeEmptyElement("y:Fill");
 			this.streamWriter.writeAttribute("color", "#F5F5F5");
@@ -390,11 +400,8 @@ public final class GraphMLWriter {
 			// Define the group node when open
 			this.streamWriter.writeStartElement("y:GroupNode");
 
-			this.streamWriter.writeEmptyElement("y:Geometry");
-			this.streamWriter.writeAttribute("height", "50");
-			this.streamWriter.writeAttribute("weight", "50");
-			this.streamWriter.writeAttribute("x", "0");
-			this.streamWriter.writeAttribute("y", "0");
+			// y:Geometry
+			writeGeometry(50.0f,  50.0f);
 
 			this.streamWriter.writeEmptyElement("y:Fill");
 			this.streamWriter.writeAttribute("color", "#F5F5F5");
