@@ -231,7 +231,7 @@ public final class GraphMLWriter {
 
 			// y:Shape
 			this.streamWriter.writeEmptyElement("y:Shape");
-			this.streamWriter.writeAttribute("type", "rectangle");
+			this.streamWriter.writeAttribute("type", Shape.RECTANGLE.getValue());
 
 			this.streamWriter.writeEndElement(); // </y:ShapeNode>
 			this.streamWriter.writeEndElement(); // </data>
