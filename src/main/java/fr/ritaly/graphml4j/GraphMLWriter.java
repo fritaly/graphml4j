@@ -295,7 +295,22 @@ public final class GraphMLWriter {
 			// y:BendStyle
 			this.streamWriter.writeEmptyElement("y:BendStyle");
 			this.streamWriter.writeAttribute("smoothed", Boolean.toString(smoothed));
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
 
+	private void writeBorderInsets(float bottom, float left, float top, float right) throws GraphMLException {
+		try {
+			this.streamWriter.writeEmptyElement("y:BorderInsets");
+			this.streamWriter.writeAttribute("bottom", String.format("%.0f", bottom));
+			this.streamWriter.writeAttribute("bottomF", String.format("%.1f", bottom));
+			this.streamWriter.writeAttribute("left", String.format("%.0f", left));
+			this.streamWriter.writeAttribute("leftF", String.format("%.1f", left));
+			this.streamWriter.writeAttribute("right", String.format("%.0f", right));
+			this.streamWriter.writeAttribute("rightF", String.format("%.1f", right));
+			this.streamWriter.writeAttribute("top", String.format("%.0f", top));
+			this.streamWriter.writeAttribute("topF", String.format("%.1f", top));
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -465,15 +480,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("top", "15");
 			this.streamWriter.writeAttribute("topF", "15.0");
 
-			this.streamWriter.writeEmptyElement("y:BorderInsets");
-			this.streamWriter.writeAttribute("bottom", "0");
-			this.streamWriter.writeAttribute("bottomF", "0.0");
-			this.streamWriter.writeAttribute("left", "0");
-			this.streamWriter.writeAttribute("leftF", "0.0");
-			this.streamWriter.writeAttribute("right", "0");
-			this.streamWriter.writeAttribute("rightF", "0.0");
-			this.streamWriter.writeAttribute("top", "0");
-			this.streamWriter.writeAttribute("topF", "0.0");
+			writeBorderInsets(0, 0, 0, 0);
 
 			this.streamWriter.writeEndElement(); // </y:GroupNode>
 
@@ -508,15 +515,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("top", "5");
 			this.streamWriter.writeAttribute("topF", "5.0");
 
-			this.streamWriter.writeEmptyElement("y:BorderInsets");
-			this.streamWriter.writeAttribute("bottom", "0");
-			this.streamWriter.writeAttribute("bottomF", "0.0");
-			this.streamWriter.writeAttribute("left", "0");
-			this.streamWriter.writeAttribute("leftF", "0.0");
-			this.streamWriter.writeAttribute("right", "0");
-			this.streamWriter.writeAttribute("rightF", "0.0");
-			this.streamWriter.writeAttribute("top", "0");
-			this.streamWriter.writeAttribute("topF", "0.0");
+			writeBorderInsets(0, 0, 0, 0);
 
 			this.streamWriter.writeEndElement(); // </y:GroupNode>
 
