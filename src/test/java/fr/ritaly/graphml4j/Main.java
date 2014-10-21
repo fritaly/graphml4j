@@ -8,9 +8,7 @@ public class Main {
 		final StringWriter stringWriter = new StringWriter();
 
 		GraphMLWriter writer = new GraphMLWriter(stringWriter);
-		writer.startDocument();
 		writer.startGraph();
-
 		writer.startGroup("TEST");
 
 		String prevNodeId = null;
@@ -26,9 +24,7 @@ public class Main {
 		}
 
 		writer.endGroup();
-
 		writer.endGraph();
-		writer.endDocument();
 
 		System.out.println(stringWriter.toString());
 	}

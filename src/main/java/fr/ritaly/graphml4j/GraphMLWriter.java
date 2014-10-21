@@ -109,7 +109,7 @@ public final class GraphMLWriter {
 		this.state = newState;
 	}
 
-	public void startDocument() throws GraphMLException {
+	private void startDocument() throws GraphMLException {
 		assertState(State.INITIAL);
 
 		try {
@@ -195,7 +195,7 @@ public final class GraphMLWriter {
 		}
 	}
 
-	public void endDocument() throws GraphMLException {
+	private void endDocument() throws GraphMLException {
 		assertState(State.GRAPH_CLOSED);
 
 		try {
@@ -211,6 +211,8 @@ public final class GraphMLWriter {
 	// --- Graph --- //
 
 	public void startGraph() throws GraphMLException {
+		startDocument();
+
 		assertState(State.DOCUMENT_OPENED);
 
 		try {
@@ -237,6 +239,8 @@ public final class GraphMLWriter {
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
+
+		endDocument();
 	}
 
 	// --- Internal helper methods --- //
