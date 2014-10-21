@@ -163,7 +163,7 @@ public class GraphMLWriter {
 
 	// --- Node --- //
 
-	public String node() throws GraphMLException {
+	public String node(String label) throws GraphMLException {
 		assertNotClosed();
 
 		try {
@@ -177,6 +177,45 @@ public class GraphMLWriter {
 			// Generate the tags for rendering the node
 			this.streamWriter.writeStartElement("data");
 			this.streamWriter.writeAttribute("key", "d6");
+
+			this.streamWriter.writeStartElement("y:ShapeNode");
+
+			// y:Geometry
+			this.streamWriter.writeEmptyElement("y:Geometry");
+			this.streamWriter.writeAttribute("height", "30.0");
+			this.streamWriter.writeAttribute("width", "30.0");
+			this.streamWriter.writeAttribute("x", "48.0");
+			this.streamWriter.writeAttribute("y", "90.0");
+
+			// y:Fill
+			this.streamWriter.writeEmptyElement("y:Fill");
+			this.streamWriter.writeAttribute("color", "#FFCC00");
+			this.streamWriter.writeAttribute("transparent", "false");
+
+			// y:BorderStyle
+			this.streamWriter.writeEmptyElement("y:BorderStyle");
+			this.streamWriter.writeAttribute("color", "#000000");
+			this.streamWriter.writeAttribute("type", "line");
+			this.streamWriter.writeAttribute("width", "1.0");
+
+			// y:NodeLabel
+			this.streamWriter.writeStartElement("y:NodeLabel");
+			this.streamWriter.writeAttribute("alignement", "center");
+			this.streamWriter.writeAttribute("fontFamily", "Dialog");
+			this.streamWriter.writeAttribute("fontSize", "12");
+			this.streamWriter.writeAttribute("fontStyle", "plain");
+			this.streamWriter.writeAttribute("hasBackgroundColor", "false");
+			this.streamWriter.writeAttribute("hasLineColor", "false");
+			this.streamWriter.writeAttribute("textColor", "#000000");
+			this.streamWriter.writeAttribute("visible", "true");
+			this.streamWriter.writeCharacters(label);
+			this.streamWriter.writeEndElement(); // </y:NodeLabel>
+
+			// y:Shape
+			this.streamWriter.writeEmptyElement("y:Shape");
+			this.streamWriter.writeAttribute("type", "rectangle");
+
+			this.streamWriter.writeEndElement(); // </y:ShapeNode>
 
 			this.streamWriter.writeEndElement(); // </data>
 

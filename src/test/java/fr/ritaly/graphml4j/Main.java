@@ -12,7 +12,7 @@ public class Main {
 		writer.startGraph();
 
 		for (int i = 0; i < 5; i++) {
-			writer.node();
+			writer.node(Integer.toString(i + 1));
 		}
 
 		writer.endGraph();
