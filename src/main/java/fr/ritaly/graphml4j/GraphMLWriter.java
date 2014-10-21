@@ -368,8 +368,8 @@ public final class GraphMLWriter {
 
 			// y:Arrows
 			this.streamWriter.writeEmptyElement("y:Arrows");
-			this.streamWriter.writeAttribute("source", "none");
-			this.streamWriter.writeAttribute("target", "standard");
+			this.streamWriter.writeAttribute("source", Arrow.NONE.getValue());
+			this.streamWriter.writeAttribute("target", Arrow.STANDARD.getValue());
 
 			// y:BendStyle
 			this.streamWriter.writeEmptyElement("y:BendStyle");
