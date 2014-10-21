@@ -130,7 +130,7 @@ public final class GraphMLWriter {
 		return groupIds.size();
 	}
 
-	private boolean insideSubGraph() {
+	private boolean insideGroup() {
 		return (getDepth() > 0);
 	}
 
@@ -265,11 +265,11 @@ public final class GraphMLWriter {
 		}
 	}
 
-	// This method can only be called when not inside a sub-graph
+	// This method can only be called when not inside a group
 	public void closeGraph() throws GraphMLException {
 		assertState(State.GRAPH_OPENED);
-		if (insideSubGraph()) {
-			throw new IllegalStateException("The writer is inside a sub-graph. Close the sub-graph(s) first");
+		if (insideGroup()) {
+			throw new IllegalStateException("The writer is inside a group. Close the group(s) first");
 		}
 
 		try {
@@ -651,11 +651,11 @@ public final class GraphMLWriter {
 		}
 	}
 
-	// This method can only be called when inside a sub-graph
+	// This method can only be called when inside a group
 	public void closeGroup() throws GraphMLException {
 		assertState(State.GRAPH_OPENED);
-		if (!insideSubGraph()) {
-			throw new IllegalStateException("The writer isn't inside a sub-graph. Invalid method call");
+		if (!insideGroup()) {
+			throw new IllegalStateException("The writer isn't inside a group. Invalid method call");
 		}
 
 		try {
