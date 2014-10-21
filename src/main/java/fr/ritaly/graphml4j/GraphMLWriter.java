@@ -3,6 +3,7 @@ package fr.ritaly.graphml4j;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -40,6 +41,11 @@ public final class GraphMLWriter {
 	 * Set containing the identifiers of nodes added to the graph.
 	 */
 	private final Set<String> nodeIds = new TreeSet<String>();
+
+	/**
+	 * Stack containing the identifiers of groups.
+	 */
+	private final Stack<String> groupIds = new Stack<String>();
 
 	public GraphMLWriter(Writer writer) throws GraphMLException {
 		Validate.notNull(writer, "The given writer is null");
@@ -305,10 +311,174 @@ public final class GraphMLWriter {
 		}
 	}
 
+	// --- Group --- //
+
+	public String startGroup() throws GraphMLException {
+		assertNotClosed();
+
+		try {
+			// A group is also a node
+			final String groupId = nextNodeId();
+
+			this.streamWriter.writeStartElement("node");
+			this.streamWriter.writeAttribute("id", groupId);
+			this.streamWriter.writeAttribute("yfiles.foldertype", "group");
+
+			this.streamWriter.writeEmptyElement("data");
+			this.streamWriter.writeAttribute("key", "d4");
+
+			this.streamWriter.writeEmptyElement("data");
+			this.streamWriter.writeAttribute("key", "d5");
+
+			this.streamWriter.writeStartElement("data");
+			this.streamWriter.writeAttribute("key", "d6");
+
+			this.streamWriter.writeStartElement("y:ProxyAutoBoundsNode");
+
+			this.streamWriter.writeStartElement("y:Realizers");
+			this.streamWriter.writeAttribute("active", "0");
+
+			// Define the group node when closed
+			this.streamWriter.writeStartElement("y:GroupNode");
+
+			this.streamWriter.writeEmptyElement("y:Geometry");
+			this.streamWriter.writeAttribute("height", "80");
+			this.streamWriter.writeAttribute("weight", "140");
+			this.streamWriter.writeAttribute("x", "0");
+			this.streamWriter.writeAttribute("y", "0");
+
+			this.streamWriter.writeEmptyElement("y:Fill");
+			this.streamWriter.writeAttribute("color", "#F5F5F5");
+			this.streamWriter.writeAttribute("transparent", "false");
+
+			this.streamWriter.writeEmptyElement("y:BorderStyle");
+			this.streamWriter.writeAttribute("color", "#000000");
+			this.streamWriter.writeAttribute("type", LineType.DASHED.getValue());
+			this.streamWriter.writeAttribute("width", "1.0");
+
+			this.streamWriter.writeEmptyElement("y:Shape");
+			this.streamWriter.writeAttribute("type", Shape.ROUNDED_RECTANGLE.getValue());
+
+			this.streamWriter.writeEmptyElement("y:State");
+			this.streamWriter.writeAttribute("closed", "false");
+			this.streamWriter.writeAttribute("closedHeight", "50.0");
+			this.streamWriter.writeAttribute("closedWidth", "50.0");
+			this.streamWriter.writeAttribute("innerGraphDisplayEnabled", "false");
+
+			this.streamWriter.writeEmptyElement("y:Insets");
+			this.streamWriter.writeAttribute("bottom", "15");
+			this.streamWriter.writeAttribute("bottomF", "15.0");
+			this.streamWriter.writeAttribute("left", "15");
+			this.streamWriter.writeAttribute("leftF", "15.0");
+			this.streamWriter.writeAttribute("right", "15");
+			this.streamWriter.writeAttribute("rightF", "15.0");
+			this.streamWriter.writeAttribute("top", "15");
+			this.streamWriter.writeAttribute("topF", "15.0");
+
+			this.streamWriter.writeEmptyElement("y:BorderInsets");
+			this.streamWriter.writeAttribute("bottom", "0");
+			this.streamWriter.writeAttribute("bottomF", "0.0");
+			this.streamWriter.writeAttribute("left", "0");
+			this.streamWriter.writeAttribute("leftF", "0.0");
+			this.streamWriter.writeAttribute("right", "0");
+			this.streamWriter.writeAttribute("rightF", "0.0");
+			this.streamWriter.writeAttribute("top", "0");
+			this.streamWriter.writeAttribute("topF", "0.0");
+
+			this.streamWriter.writeEndElement(); // </y:GroupNode>
+
+			// Define the group node when open
+			this.streamWriter.writeStartElement("y:GroupNode");
+
+			this.streamWriter.writeEmptyElement("y:Geometry");
+			this.streamWriter.writeAttribute("height", "50");
+			this.streamWriter.writeAttribute("weight", "50");
+			this.streamWriter.writeAttribute("x", "0");
+			this.streamWriter.writeAttribute("y", "0");
+
+			this.streamWriter.writeEmptyElement("y:Fill");
+			this.streamWriter.writeAttribute("color", "#F5F5F5");
+			this.streamWriter.writeAttribute("transparent", "false");
+
+			this.streamWriter.writeEmptyElement("y:BorderStyle");
+			this.streamWriter.writeAttribute("color", "#000000");
+			this.streamWriter.writeAttribute("type", LineType.DASHED.getValue());
+			this.streamWriter.writeAttribute("width", "1.0");
+
+			this.streamWriter.writeEmptyElement("y:Shape");
+			this.streamWriter.writeAttribute("type", Shape.ROUNDED_RECTANGLE.getValue());
+
+			this.streamWriter.writeEmptyElement("y:State");
+			this.streamWriter.writeAttribute("closed", "true");
+			this.streamWriter.writeAttribute("closedHeight", "50.0");
+			this.streamWriter.writeAttribute("closedWidth", "50.0");
+			this.streamWriter.writeAttribute("innerGraphDisplayEnabled", "false");
+
+			this.streamWriter.writeEmptyElement("y:Insets");
+			this.streamWriter.writeAttribute("bottom", "5");
+			this.streamWriter.writeAttribute("bottomF", "5.0");
+			this.streamWriter.writeAttribute("left", "5");
+			this.streamWriter.writeAttribute("leftF", "5.0");
+			this.streamWriter.writeAttribute("right", "5");
+			this.streamWriter.writeAttribute("rightF", "5.0");
+			this.streamWriter.writeAttribute("top", "5");
+			this.streamWriter.writeAttribute("topF", "5.0");
+
+			this.streamWriter.writeEmptyElement("y:BorderInsets");
+			this.streamWriter.writeAttribute("bottom", "0");
+			this.streamWriter.writeAttribute("bottomF", "0.0");
+			this.streamWriter.writeAttribute("left", "0");
+			this.streamWriter.writeAttribute("leftF", "0.0");
+			this.streamWriter.writeAttribute("right", "0");
+			this.streamWriter.writeAttribute("rightF", "0.0");
+			this.streamWriter.writeAttribute("top", "0");
+			this.streamWriter.writeAttribute("topF", "0.0");
+
+			this.streamWriter.writeEndElement(); // </y:GroupNode>
+
+			this.streamWriter.writeEndElement(); // </y:ProxyAutoBoundsNode>
+			this.streamWriter.writeEndElement(); // </data>
+
+			this.streamWriter.writeStartElement("graph");
+			this.streamWriter.writeAttribute("edgedefault", "directed");
+			this.streamWriter.writeAttribute("id", groupId + ":");
+
+			// Store the current group id in a stack
+			this.groupIds.push(groupId);
+
+			return groupId;
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
+	public void endGroup() throws GraphMLException {
+		assertNotClosed();
+
+		try {
+			this.streamWriter.writeEndElement(); // </graph>
+			this.streamWriter.writeEndElement(); // </node>
+
+			// Pop the id of the closed group
+			this.groupIds.pop();
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
 	// --- Others --- //
 
 	private String nextNodeId() {
-		return String.format("n%d", nodeSequence.getAndIncrement());
+		if (groupIds.isEmpty()) {
+			// We're not currently in a group
+			return String.format("n%d", nodeSequence.getAndIncrement());
+		}
+
+		// What's the id of the current group ?
+		final String groupId = groupIds.peek();
+
+		// The node id looks like "<groupId>::<nodeId>"
+		return String.format("%s::n%d", groupId, nodeSequence.getAndIncrement());
 	}
 
 	private String nextEdgeId() {

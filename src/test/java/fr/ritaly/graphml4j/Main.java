@@ -11,13 +11,21 @@ public class Main {
 		writer.startDocument();
 		writer.startGraph();
 
+		writer.startGroup();
+
+		String prevNodeId = null;
+
 		for (int i = 0; i < 5; i++) {
-			writer.node(Integer.toString(i));
+			final String nodeId = writer.node(Integer.toString(i));
 
 			if ((i > 0) && (i < 4)) {
-				writer.edge("n" + (i-1), "n" + i);
+				writer.edge(prevNodeId, nodeId);
 			}
+
+			prevNodeId = nodeId;
 		}
+
+		writer.endGroup();
 
 		writer.endGraph();
 		writer.endDocument();
