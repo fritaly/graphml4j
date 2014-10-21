@@ -10,6 +10,11 @@ public class Main {
 		GraphMLWriter writer = new GraphMLWriter(stringWriter);
 		writer.startDocument();
 		writer.startGraph();
+
+		for (int i = 0; i < 5; i++) {
+			writer.node();
+		}
+
 		writer.endGraph();
 		writer.endDocument();
 

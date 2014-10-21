@@ -2,6 +2,7 @@ package fr.ritaly.graphml4j;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javanet.staxutils.IndentingXMLStreamWriter;
 
@@ -19,6 +20,8 @@ public class GraphMLWriter {
 	private final XMLStreamWriter streamWriter;
 
 	private boolean closed = false;
+
+	private final AtomicInteger nodeSequence = new AtomicInteger();
 
 	public GraphMLWriter(Writer writer) throws GraphMLException {
 		Validate.notNull(writer, "The given writer is null");
@@ -130,6 +133,8 @@ public class GraphMLWriter {
 		}
 	}
 
+	// --- Graph --- //
+
 	public void startGraph() throws GraphMLException {
 		assertNotClosed();
 
@@ -139,7 +144,7 @@ public class GraphMLWriter {
 			this.streamWriter.writeAttribute("edgedefault", "directed");
 			this.streamWriter.writeAttribute("id", "G");
 
-			// TODO Generate the <data> element for setting the description (d7)
+			// TODO Generate the <data key="d7"/>
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -154,6 +159,39 @@ public class GraphMLWriter {
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
+	}
+
+	// --- Node --- //
+
+	public String node() throws GraphMLException {
+		assertNotClosed();
+
+		try {
+			final String nodeId = nextNodeId();
+
+			this.streamWriter.writeStartElement("node");
+			this.streamWriter.writeAttribute("id", nodeId);
+
+			// TODO Generate the <data key="d5"/> (node description)
+
+			// Generate the tags for rendering the node
+			this.streamWriter.writeStartElement("data");
+			this.streamWriter.writeAttribute("key", "d6");
+
+			this.streamWriter.writeEndElement(); // </data>
+
+			this.streamWriter.writeEndElement(); // </node>
+
+			return nodeId;
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
+	// --- Others --- //
+
+	private String nextNodeId() {
+		return String.format("n%d", nodeSequence.getAndIncrement());
 	}
 
 	private void assertNotClosed() {
