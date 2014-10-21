@@ -150,9 +150,7 @@ public final class GraphMLWriter {
 		assertNotClosed();
 
 		try {
-			// Close the <graphml> root tag
-			this.streamWriter.writeEndElement();
-
+			this.streamWriter.writeEndElement(); // </graphml>
 			this.streamWriter.writeEndDocument();
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
@@ -343,9 +341,10 @@ public final class GraphMLWriter {
 		}
 	}
 
-	private void writeNodeLabel(String label, Alignment alignment) throws GraphMLException {
+	private void writeNodeLabel(String label, Alignment alignment, FontStyle fontStyle) throws GraphMLException {
 		Validate.notNull(label, "The given label is null");
 		Validate.notNull(alignment, "The given alignment is null");
+		Validate.notNull(fontStyle, "The given font style is null");
 
 		try {
 			// y:NodeLabel
@@ -353,7 +352,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("alignement", alignment.getValue());
 			this.streamWriter.writeAttribute("fontFamily", "Dialog");
 			this.streamWriter.writeAttribute("fontSize", "12");
-			this.streamWriter.writeAttribute("fontStyle", "plain");
+			this.streamWriter.writeAttribute("fontStyle", fontStyle.getValue());
 			this.streamWriter.writeAttribute("hasBackgroundColor", "false");
 			this.streamWriter.writeAttribute("hasLineColor", "false");
 			this.streamWriter.writeAttribute("textColor", "#000000");
@@ -387,7 +386,7 @@ public final class GraphMLWriter {
 			writeGeometry(30.0f, 30.0f);
 			writeFill("#FFCC00", false);
 			writeBorderStyle("#000000", LineType.LINE, 1.0f);
-			writeNodeLabel(label, Alignment.CENTER);
+			writeNodeLabel(label, Alignment.CENTER, FontStyle.PLAIN);
 			writeShape(Shape.RECTANGLE);
 
 			this.streamWriter.writeEndElement(); // </y:ShapeNode>
