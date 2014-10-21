@@ -23,6 +23,8 @@ public class GraphMLWriter {
 
 	private final AtomicInteger nodeSequence = new AtomicInteger();
 
+	private final AtomicInteger edgeSequence = new AtomicInteger();
+
 	public GraphMLWriter(Writer writer) throws GraphMLException {
 		Validate.notNull(writer, "The given writer is null");
 
@@ -216,12 +218,65 @@ public class GraphMLWriter {
 			this.streamWriter.writeAttribute("type", "rectangle");
 
 			this.streamWriter.writeEndElement(); // </y:ShapeNode>
-
 			this.streamWriter.writeEndElement(); // </data>
-
 			this.streamWriter.writeEndElement(); // </node>
 
 			return nodeId;
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
+	// --- Edge --- //
+
+	public String edge(String sourceNodeId, String targetNodeId) throws GraphMLException {
+		assertNotClosed();
+
+		try {
+			final String edgeId = nextEdgeId();
+
+			// TODO Check that the nodes exist !
+			this.streamWriter.writeStartElement("edge");
+			this.streamWriter.writeAttribute("id", edgeId);
+			this.streamWriter.writeAttribute("source", sourceNodeId);
+			this.streamWriter.writeAttribute("target", targetNodeId);
+
+			// TODO Generate the <data key="d9"/> (edge description)
+
+			// Generate the tags for rendering the edge
+			this.streamWriter.writeStartElement("data");
+			this.streamWriter.writeAttribute("key", "d10");
+
+			this.streamWriter.writeStartElement("y:PolyLineEdge");
+
+			// y:Path
+			// TODO What is this used for ?
+			this.streamWriter.writeEmptyElement("y:Path");
+			this.streamWriter.writeAttribute("sx", "0.0");
+			this.streamWriter.writeAttribute("sy", "0.0");
+			this.streamWriter.writeAttribute("tx", "0.0");
+			this.streamWriter.writeAttribute("ty", "0.0");
+
+			// y:LineStyle
+			this.streamWriter.writeEmptyElement("y:LineStyle");
+			this.streamWriter.writeAttribute("color", "#000000");
+			this.streamWriter.writeAttribute("type", "Line");
+			this.streamWriter.writeAttribute("width", "1.0");
+
+			// y:Arrows
+			this.streamWriter.writeEmptyElement("y:Arrows");
+			this.streamWriter.writeAttribute("source", "none");
+			this.streamWriter.writeAttribute("target", "standard");
+
+			// y:BendStyle
+			this.streamWriter.writeEmptyElement("y:BendStyle");
+			this.streamWriter.writeAttribute("smoothed", "false");
+
+			this.streamWriter.writeEndElement(); // </y:PolyLineEdge>
+			this.streamWriter.writeEndElement(); // </data>
+			this.streamWriter.writeEndElement(); // </edge>
+
+			return edgeId;
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -231,6 +286,10 @@ public class GraphMLWriter {
 
 	private String nextNodeId() {
 		return String.format("n%d", nodeSequence.getAndIncrement());
+	}
+
+	private String nextEdgeId() {
+		return String.format("e%d", edgeSequence.getAndIncrement());
 	}
 
 	private void assertNotClosed() {

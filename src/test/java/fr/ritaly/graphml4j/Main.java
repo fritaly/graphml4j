@@ -12,7 +12,11 @@ public class Main {
 		writer.startGraph();
 
 		for (int i = 0; i < 5; i++) {
-			writer.node(Integer.toString(i + 1));
+			writer.node(Integer.toString(i));
+
+			if ((i > 0) && (i < 4)) {
+				writer.edge("n" + i, "n" + (i+1));
+			}
 		}
 
 		writer.endGraph();
