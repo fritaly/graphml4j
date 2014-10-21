@@ -194,8 +194,8 @@ public final class GraphMLWriter {
 		try {
 			// y:Geometry
 			this.streamWriter.writeEmptyElement("y:Geometry");
-			this.streamWriter.writeAttribute("height", String.format("%2.1f", height));
-			this.streamWriter.writeAttribute("width", String.format("%2.1f", width));
+			this.streamWriter.writeAttribute("height", String.format("%.1f", height));
+			this.streamWriter.writeAttribute("width", String.format("%.1f", width));
 			this.streamWriter.writeAttribute("x", "0.0");
 			this.streamWriter.writeAttribute("y", "0.0");
 		} catch (XMLStreamException e) {
@@ -209,6 +209,18 @@ public final class GraphMLWriter {
 			this.streamWriter.writeEmptyElement("y:Fill");
 			this.streamWriter.writeAttribute("color", color);
 			this.streamWriter.writeAttribute("transparent", Boolean.toString(transparent));
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
+	private void writeBorderStyle(String color, LineType type, float width) throws GraphMLException {
+		try {
+            // y:BorderStyle
+            this.streamWriter.writeEmptyElement("y:BorderStyle");
+            this.streamWriter.writeAttribute("color", color);
+            this.streamWriter.writeAttribute("type", type.getValue());
+            this.streamWriter.writeAttribute("width", String.format("%.1f", width));
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -240,10 +252,7 @@ public final class GraphMLWriter {
 			writeFill("#FFCC00", false);
 
 			// y:BorderStyle
-			this.streamWriter.writeEmptyElement("y:BorderStyle");
-			this.streamWriter.writeAttribute("color", "#000000");
-			this.streamWriter.writeAttribute("type", LineType.LINE.getValue());
-			this.streamWriter.writeAttribute("width", "1.0");
+			writeBorderStyle("#000000", LineType.LINE, 1.0f);
 
 			// y:NodeLabel
 			this.streamWriter.writeStartElement("y:NodeLabel");
@@ -370,10 +379,8 @@ public final class GraphMLWriter {
 			// y:Fill
 			writeFill("#F5F5F5", false);
 
-			this.streamWriter.writeEmptyElement("y:BorderStyle");
-			this.streamWriter.writeAttribute("color", "#000000");
-			this.streamWriter.writeAttribute("type", LineType.DASHED.getValue());
-			this.streamWriter.writeAttribute("width", "1.0");
+			// y:BorderStyle
+			writeBorderStyle("#000000", LineType.DASHED, 1.0f);
 
 			this.streamWriter.writeEmptyElement("y:Shape");
 			this.streamWriter.writeAttribute("type", Shape.ROUNDED_RECTANGLE.getValue());
@@ -415,10 +422,8 @@ public final class GraphMLWriter {
 			// y:Fill
 			writeFill("#F5F5F5", false);
 
-			this.streamWriter.writeEmptyElement("y:BorderStyle");
-			this.streamWriter.writeAttribute("color", "#000000");
-			this.streamWriter.writeAttribute("type", LineType.DASHED.getValue());
-			this.streamWriter.writeAttribute("width", "1.0");
+			// y:BorderStyle
+			writeBorderStyle("#000000", LineType.LINE, 1.0f);
 
 			this.streamWriter.writeEmptyElement("y:Shape");
 			this.streamWriter.writeAttribute("type", Shape.ROUNDED_RECTANGLE.getValue());
