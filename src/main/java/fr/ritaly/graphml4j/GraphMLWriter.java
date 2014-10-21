@@ -290,6 +290,17 @@ public final class GraphMLWriter {
 		}
 	}
 
+	private void writeBendStyle(boolean smoothed) throws GraphMLException {
+		try {
+			// y:BendStyle
+			this.streamWriter.writeEmptyElement("y:BendStyle");
+			this.streamWriter.writeAttribute("smoothed", Boolean.toString(smoothed));
+
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
@@ -384,8 +395,7 @@ public final class GraphMLWriter {
 			writeArrows(Arrow.NONE, Arrow.STANDARD);
 
 			// y:BendStyle
-			this.streamWriter.writeEmptyElement("y:BendStyle");
-			this.streamWriter.writeAttribute("smoothed", "false");
+			writeBendStyle(false);
 
 			this.streamWriter.writeEndElement(); // </y:PolyLineEdge>
 			this.streamWriter.writeEndElement(); // </data>
