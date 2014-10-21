@@ -191,6 +191,9 @@ public final class GraphMLWriter {
 	// --- Internal helper methods --- //
 
 	private void writeGeometry(float height, float width) throws GraphMLException {
+		Validate.isTrue(height > 0, String.format("The given height (%f) must be positive", height));
+		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
+
 		try {
 			// y:Geometry
 			this.streamWriter.writeEmptyElement("y:Geometry");
@@ -204,6 +207,8 @@ public final class GraphMLWriter {
 	}
 
 	private void writeFill(String color, boolean transparent) throws GraphMLException {
+		Validate.notNull(color, "The given color is null");
+
 		try {
 			// y:Fill
 			this.streamWriter.writeEmptyElement("y:Fill");
@@ -215,6 +220,10 @@ public final class GraphMLWriter {
 	}
 
 	private void writeBorderStyle(String color, LineType type, float width) throws GraphMLException {
+		Validate.notNull(color, "The given color is null");
+		Validate.notNull(type, "The given line type is null");
+		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
+
 		try {
             // y:BorderStyle
             this.streamWriter.writeEmptyElement("y:BorderStyle");
@@ -227,6 +236,8 @@ public final class GraphMLWriter {
 	}
 
 	private void writeShape(Shape shape) throws GraphMLException {
+		Validate.notNull(shape, "The given shape is null");
+
 		try {
 			// y:Shape
 			this.streamWriter.writeEmptyElement("y:Shape");
