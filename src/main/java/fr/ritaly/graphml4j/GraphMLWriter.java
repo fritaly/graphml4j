@@ -247,6 +247,19 @@ public final class GraphMLWriter {
 		}
 	}
 
+	private void writePath(float sx, float sy, float tx, float ty) throws GraphMLException {
+		try {
+			// y:Path
+			this.streamWriter.writeEmptyElement("y:Path");
+			this.streamWriter.writeAttribute("sx", String.format("%.1f", sx));
+			this.streamWriter.writeAttribute("sy", String.format("%.1f", sy));
+			this.streamWriter.writeAttribute("tx", String.format("%.1f", tx));
+			this.streamWriter.writeAttribute("ty", String.format("%.1f", ty));
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
@@ -332,11 +345,7 @@ public final class GraphMLWriter {
 
 			// y:Path
 			// TODO What is this used for ?
-			this.streamWriter.writeEmptyElement("y:Path");
-			this.streamWriter.writeAttribute("sx", "0.0");
-			this.streamWriter.writeAttribute("sy", "0.0");
-			this.streamWriter.writeAttribute("tx", "0.0");
-			this.streamWriter.writeAttribute("ty", "0.0");
+			writePath(0.0f, 0.0f, 0.0f, 0.0f);
 
 			// y:LineStyle
 			this.streamWriter.writeEmptyElement("y:LineStyle");
