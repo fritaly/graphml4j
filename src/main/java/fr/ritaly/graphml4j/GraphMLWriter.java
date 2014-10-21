@@ -130,6 +130,32 @@ public class GraphMLWriter {
 		}
 	}
 
+	public void startGraph() throws GraphMLException {
+		assertNotClosed();
+
+		try {
+			// TODO Introduce parameters for the 2 attributes
+			this.streamWriter.writeStartElement("graph");
+			this.streamWriter.writeAttribute("edgedefault", "directed");
+			this.streamWriter.writeAttribute("id", "G");
+
+			// TODO Generate the <data> element for setting the description (d7)
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
+	public void endGraph() throws GraphMLException {
+		assertNotClosed();
+
+		try {
+			// Close the element <graph>
+			this.streamWriter.writeEndElement();
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
 	private void assertNotClosed() {
 		if (closed) {
 			throw new IllegalStateException("The writer is closed");

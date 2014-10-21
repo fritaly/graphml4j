@@ -9,6 +9,8 @@ public class Main {
 
 		GraphMLWriter writer = new GraphMLWriter(stringWriter);
 		writer.startDocument();
+		writer.startGraph();
+		writer.endGraph();
 		writer.endDocument();
 
 		System.out.println(stringWriter.toString());
