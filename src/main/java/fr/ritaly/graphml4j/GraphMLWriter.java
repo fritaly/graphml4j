@@ -19,6 +19,27 @@ import org.apache.commons.lang.Validate;
 
 public final class GraphMLWriter {
 
+	/** The id associated to the node URL property */
+	private static final String ID_NODE_URL = "d4";
+
+	/** The id associated to the node description property */
+	private static final String ID_NODE_DESCRIPTION = "d5";
+
+	/** The id associated to the node graphics property */
+	private static final String ID_NODE_GRAPHICS = "d6";
+
+	/** The id associated to the graph description property */
+	private static final String ID_GRAPH_DESCRIPTION = "d7";
+
+	/** The id associated to the edge URL property */
+	private static final String ID_EDGE_URL = "d8";
+
+	/** The id associated to the edge description property */
+	private static final String ID_EDGE_DESCRIPTION = "d9";
+
+	/** The id associated to the edge graphics property */
+	private static final String ID_EDGE_GRAPHICS = "d10";
+
 	/**
 	 * Enumeration of possible writer states.
 	 *
@@ -149,18 +170,18 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("attr.name", "url");
 			this.streamWriter.writeAttribute("attr.type", "string");
 			this.streamWriter.writeAttribute("for", "node");
-			this.streamWriter.writeAttribute("id", "d4");
+			this.streamWriter.writeAttribute("id", ID_NODE_URL);
 
 			this.streamWriter.writeEmptyElement("key");
 			this.streamWriter.writeAttribute("attr.name", "description");
 			this.streamWriter.writeAttribute("attr.type", "string");
 			this.streamWriter.writeAttribute("for", "node");
-			this.streamWriter.writeAttribute("id", "d5");
+			this.streamWriter.writeAttribute("id", ID_NODE_DESCRIPTION);
 
 			// Define the type 'node'
 			this.streamWriter.writeEmptyElement("key");
 			this.streamWriter.writeAttribute("for", "node");
-			this.streamWriter.writeAttribute("id", "d6");
+			this.streamWriter.writeAttribute("id", ID_NODE_GRAPHICS);
 			this.streamWriter.writeAttribute("yfiles.type", "nodegraphics");
 
 			// Define the attributes for type 'graph'
@@ -168,25 +189,25 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("attr.name", "Description");
 			this.streamWriter.writeAttribute("attr.type", "string");
 			this.streamWriter.writeAttribute("for", "graph");
-			this.streamWriter.writeAttribute("id", "d7");
+			this.streamWriter.writeAttribute("id", ID_GRAPH_DESCRIPTION);
 
 			// Define the attributes for type 'edge'
 			this.streamWriter.writeEmptyElement("key");
 			this.streamWriter.writeAttribute("attr.name", "url");
 			this.streamWriter.writeAttribute("attr.type", "string");
 			this.streamWriter.writeAttribute("for", "edge");
-			this.streamWriter.writeAttribute("id", "d8");
+			this.streamWriter.writeAttribute("id", ID_EDGE_URL);
 
 			this.streamWriter.writeEmptyElement("key");
 			this.streamWriter.writeAttribute("attr.name", "description");
 			this.streamWriter.writeAttribute("attr.type", "string");
 			this.streamWriter.writeAttribute("for", "edge");
-			this.streamWriter.writeAttribute("id", "d9");
+			this.streamWriter.writeAttribute("id", ID_EDGE_DESCRIPTION);
 
 			// Define the type 'edge'
 			this.streamWriter.writeEmptyElement("key");
 			this.streamWriter.writeAttribute("for", "edge");
-			this.streamWriter.writeAttribute("id", "d10");
+			this.streamWriter.writeAttribute("id", ID_EDGE_GRAPHICS);
 			this.streamWriter.writeAttribute("yfiles.type", "edgegraphics");
 
 			setState(State.DOCUMENT_OPENED);
@@ -476,7 +497,7 @@ public final class GraphMLWriter {
 
 			// Generate the tags for rendering the node
 			this.streamWriter.writeStartElement("data");
-			this.streamWriter.writeAttribute("key", "d6");
+			this.streamWriter.writeAttribute("key", ID_NODE_GRAPHICS);
 
 			this.streamWriter.writeStartElement("y:ShapeNode");
 
@@ -521,7 +542,7 @@ public final class GraphMLWriter {
 
 			// Generate the tags for rendering the edge
 			this.streamWriter.writeStartElement("data");
-			this.streamWriter.writeAttribute("key", "d10");
+			this.streamWriter.writeAttribute("key", ID_EDGE_GRAPHICS);
 
 			this.streamWriter.writeStartElement("y:PolyLineEdge");
 
@@ -554,13 +575,13 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("yfiles.foldertype", "group");
 
 			this.streamWriter.writeEmptyElement("data");
-			this.streamWriter.writeAttribute("key", "d4");
+			this.streamWriter.writeAttribute("key", ID_NODE_URL);
 
 			this.streamWriter.writeEmptyElement("data");
-			this.streamWriter.writeAttribute("key", "d5");
+			this.streamWriter.writeAttribute("key", ID_NODE_DESCRIPTION);
 
 			this.streamWriter.writeStartElement("data");
-			this.streamWriter.writeAttribute("key", "d6");
+			this.streamWriter.writeAttribute("key", ID_NODE_GRAPHICS);
 
 			this.streamWriter.writeStartElement("y:ProxyAutoBoundsNode");
 
