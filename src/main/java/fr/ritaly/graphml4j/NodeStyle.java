@@ -13,6 +13,7 @@ import fr.ritaly.graphml4j.base.LineType;
 import fr.ritaly.graphml4j.base.Placement;
 import fr.ritaly.graphml4j.base.Position;
 import fr.ritaly.graphml4j.base.Shape;
+import fr.ritaly.graphml4j.base.SizePolicy;
 
 public class NodeStyle {
 
@@ -353,5 +354,13 @@ public class NodeStyle {
 
 	public void setInsets(int value) {
 		labelObject.setInsets(value);
+	}
+
+	public SizePolicy getSizePolicy() {
+		return labelObject.getSizePolicy();
+	}
+
+	public void setSizePolicy(SizePolicy policy) {
+		labelObject.setSizePolicy(policy);
 	}
 }

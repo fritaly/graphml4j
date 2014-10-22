@@ -11,6 +11,7 @@ import fr.ritaly.graphml4j.base.Alignment;
 import fr.ritaly.graphml4j.base.FontStyle;
 import fr.ritaly.graphml4j.base.Placement;
 import fr.ritaly.graphml4j.base.Position;
+import fr.ritaly.graphml4j.base.SizePolicy;
 
 final class LabelObject {
 
@@ -40,6 +41,8 @@ final class LabelObject {
 
 	private int leftInset, rightInset, topInset, bottomInset;
 
+	private SizePolicy sizePolicy = SizePolicy.CONTENT;
+
 	public LabelObject() {
 	}
 
@@ -65,6 +68,17 @@ final class LabelObject {
 		this.rightInset = object.rightInset;
 		this.topInset = object.topInset;
 		this.bottomInset = object.bottomInset;
+		this.sizePolicy = object.sizePolicy;
+	}
+
+	public SizePolicy getSizePolicy() {
+		return sizePolicy;
+	}
+
+	public void setSizePolicy(SizePolicy policy) {
+		Validate.notNull(policy, "The given size policy is null");
+
+		this.sizePolicy = policy;
 	}
 
 	public int getBottomInset() {
@@ -224,6 +238,7 @@ final class LabelObject {
 		// y:NodeLabel
 		writer.writeStartElement("y:NodeLabel");
 		writer.writeAttribute("alignement", textAlignment.getValue());
+		writer.writeAttribute("autoSizePolicy", sizePolicy.getValue());
 		writer.writeAttribute("fontFamily", fontFamily);
 		writer.writeAttribute("fontSize", Integer.toString(fontSize));
 		writer.writeAttribute("fontStyle", fontStyle.getValue());
