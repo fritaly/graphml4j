@@ -10,7 +10,10 @@ import org.apache.commons.lang.Validate;
 import fr.ritaly.graphml4j.base.Alignment;
 import fr.ritaly.graphml4j.base.FontStyle;
 import fr.ritaly.graphml4j.base.LineType;
+import fr.ritaly.graphml4j.base.Placement;
+import fr.ritaly.graphml4j.base.Position;
 import fr.ritaly.graphml4j.base.Shape;
+import fr.ritaly.graphml4j.base.SizePolicy;
 
 public class GroupStyle extends NodeStyle {
 
@@ -34,6 +37,11 @@ public class GroupStyle extends NodeStyle {
 		setTextAlignment(Alignment.CENTER);
 		setTextColor(Color.BLACK);
 		setVisible(true);
+		setSizePolicy(SizePolicy.NODE_WIDTH);
+		setBackgroundColor(null);
+		setPlacement(Placement.INTERNAL);
+		setPosition(Position.TOP);
+		setUnderlinedText(false);
 	}
 
 	public GroupStyle(GroupStyle style) {

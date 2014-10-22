@@ -17,9 +17,6 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.Validate;
 
-import fr.ritaly.graphml4j.base.Alignment;
-import fr.ritaly.graphml4j.base.FontStyle;
-
 public final class GraphMLWriter {
 
 	/** The id associated to the node URL property */
@@ -369,38 +366,6 @@ public final class GraphMLWriter {
 		}
 	}
 
-	private void writeNodeLabel_Group(String label, Alignment alignment, FontStyle fontStyle) throws GraphMLException {
-		Validate.notNull(label, "The given label is null");
-		Validate.notNull(alignment, "The given alignment is null");
-		Validate.notNull(fontStyle, "The given font style is null");
-
-		try {
-			// y:NodeLabel
-			this.streamWriter.writeStartElement("y:NodeLabel");
-			this.streamWriter.writeAttribute("alignement", alignment.getValue());
-			this.streamWriter.writeAttribute("autoSizePolicy", "node_width");
-			this.streamWriter.writeAttribute("backgroundColor", "#EBEBEB");
-			this.streamWriter.writeAttribute("borderDistance", "0.0");
-			this.streamWriter.writeAttribute("fontFamily", "Dialog");
-			this.streamWriter.writeAttribute("fontSize", "15");
-			this.streamWriter.writeAttribute("fontStyle", fontStyle.getValue());
-			this.streamWriter.writeAttribute("hasLineColor", "false");
-			this.streamWriter.writeAttribute("height", "21.0");
-			this.streamWriter.writeAttribute("modelName", "internal");
-			this.streamWriter.writeAttribute("modelPosition", "t");
-			this.streamWriter.writeAttribute("textColor", "#000000");
-			this.streamWriter.writeAttribute("visible", "true");
-			this.streamWriter.writeAttribute("width", "200.0");
-			this.streamWriter.writeAttribute("x", "0.0");
-			this.streamWriter.writeAttribute("y", "0.0");
-			this.streamWriter.writeAttribute("underlinedText", "false");
-			this.streamWriter.writeCharacters(label);
-			this.streamWriter.writeEndElement();
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
@@ -511,9 +476,7 @@ public final class GraphMLWriter {
 			openGroupStyle.writeGeometry(streamWriter);
 			openGroupStyle.writeFill(streamWriter);
 			openGroupStyle.writeBorderStyle(streamWriter);
-
-			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
-
+			openGroupStyle.writeLabel(streamWriter, label);
 			openGroupStyle.writeShape(streamWriter);
 			openGroupStyle.writeDropShadow(streamWriter);
 
@@ -529,9 +492,7 @@ public final class GraphMLWriter {
 			closedGroupStyle.writeGeometry(streamWriter);
 			closedGroupStyle.writeFill(streamWriter);
 			closedGroupStyle.writeBorderStyle(streamWriter);
-
-			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
-
+			closedGroupStyle.writeLabel(streamWriter, label);
 			closedGroupStyle.writeShape(streamWriter);
 
 			writeState(true,  50, 50, false);
