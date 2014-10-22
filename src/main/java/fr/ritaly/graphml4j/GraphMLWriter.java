@@ -396,6 +396,7 @@ public final class GraphMLWriter {
 		}
 	}
 
+	// FIXME Move all the methods write*()
 	private void writeState(boolean closed, float height, float width, boolean innerGraphDisplayEnabled) throws GraphMLException {
 		try {
 			this.streamWriter.writeEmptyElement("y:State");
