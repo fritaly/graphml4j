@@ -14,25 +14,6 @@ import fr.ritaly.graphml4j.base.Shape;
 
 public class NodeStyle {
 
-	private float height = 30.0f;
-
-	private float width = 30.0f;
-
-	// This color is optional
-	private Color fillColor = Color.decode("#FFCC00");
-
-	// This color is optional
-	private Color fillColor2;
-
-	private boolean transparentFill = false;
-
-	// This color is optional
-	private Color borderColor = Color.BLACK;
-
-	private LineType borderType = LineType.LINE;
-
-	private float borderWidth = 1.0f;
-
 	private Alignment textAlignment = Alignment.CENTER;
 
 	private FontStyle fontStyle = FontStyle.PLAIN;
@@ -53,6 +34,8 @@ public class NodeStyle {
 
 	private int bottomInset, leftInset, rightInset, topInset;
 
+	private final GenericObject genericObject = new GenericObject();
+
 	private final ShapeObject shapeObject = new ShapeObject();
 
 	public NodeStyle() {
@@ -65,22 +48,17 @@ public class NodeStyle {
 	void apply(NodeStyle style) {
 		Validate.notNull(style, "The given style is null");
 
-		this.borderColor = style.borderColor;
-		this.borderType = style.borderType;
-		this.borderWidth = style.borderWidth;
-		this.fillColor = style.fillColor;
-		this.fillColor2 = style.fillColor2;
 		this.fontFamily = style.fontFamily;
 		this.fontSize = style.fontSize;
 		this.fontStyle = style.fontStyle;
 		this.hasBackgroundColor = style.hasBackgroundColor;
 		this.hasLineColor = style.hasLineColor;
-		this.height = style.height;
 		this.textAlignment = style.textAlignment;
 		this.textColor = style.textColor;
-		this.transparentFill = style.transparentFill;
 		this.visible = style.visible;
-		this.width = style.width;
+
+		// Apply the generic properties
+		this.genericObject.apply(style.genericObject);
 
 		// Apply the shape properties
 		this.shapeObject.apply(style.shapeObject);
@@ -218,81 +196,6 @@ public class NodeStyle {
 		this.fontStyle = fontStyle;
 	}
 
-	public float getHeight() {
-		return height;
-	}
-
-	public void setHeight(float height) {
-		Validate.isTrue(height > 0, String.format("The given height (%f) must be positive", height));
-
-		this.height = height;
-	}
-
-	public float getWidth() {
-		return width;
-	}
-
-	public void setWidth(float width) {
-		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
-
-		this.width = width;
-	}
-
-	public Color getFillColor() {
-		return fillColor;
-	}
-
-	public void setFillColor(Color color) {
-		// This color is optional
-		this.fillColor = color;
-	}
-
-	public Color getFillColor2() {
-		return fillColor2;
-	}
-
-	public void setFillColor2(Color fillColor2) {
-		// This color is optional
-		this.fillColor2 = fillColor2;
-	}
-
-	public boolean isTransparentFill() {
-		return transparentFill;
-	}
-
-	public void setTransparentFill(boolean transparentFill) {
-		this.transparentFill = transparentFill;
-	}
-
-	public Color getBorderColor() {
-		return borderColor;
-	}
-
-	public void setBorderColor(Color color) {
-		// This color is optional
-		this.borderColor = color;
-	}
-
-	public LineType getBorderType() {
-		return borderType;
-	}
-
-	public void setBorderType(LineType borderType) {
-		Validate.notNull(borderType, "The given border type is null");
-
-		this.borderType = borderType;
-	}
-
-	public float getBorderWidth() {
-		return borderWidth;
-	}
-
-	public void setBorderWidth(float borderWidth) {
-		Validate.isTrue(borderWidth > 0, String.format("The given border width (%f) must be positive", borderWidth));
-
-		this.borderWidth = borderWidth;
-	}
-
 	// --- Shape properties --- //
 
 	public Shape getShape() {
@@ -333,5 +236,83 @@ public class NodeStyle {
 
 	void writeDropShadow(XMLStreamWriter writer) throws XMLStreamException {
 		shapeObject.writeDropShadow(writer);
+	}
+
+	// --- Generic properties --- //
+
+	public float getHeight() {
+		return genericObject.getHeight();
+	}
+
+	public void setHeight(float height) {
+		genericObject.setHeight(height);
+	}
+
+	public float getWidth() {
+		return genericObject.getWidth();
+	}
+
+	public void setWidth(float width) {
+		genericObject.setWidth(width);
+	}
+
+	public Color getFillColor() {
+		return genericObject.getFillColor();
+	}
+
+	public void setFillColor(Color color) {
+		genericObject.setFillColor(color);
+	}
+
+	public Color getFillColor2() {
+		return genericObject.getFillColor2();
+	}
+
+	public void setFillColor2(Color fillColor2) {
+		genericObject.setFillColor2(fillColor2);
+	}
+
+	public Color getBorderColor() {
+		return genericObject.getBorderColor();
+	}
+
+	public void setBorderColor(Color color) {
+		genericObject.setBorderColor(color);
+	}
+
+	public LineType getBorderType() {
+		return genericObject.getBorderType();
+	}
+
+	public void setBorderType(LineType borderType) {
+		genericObject.setBorderType(borderType);
+	}
+
+	public float getBorderWidth() {
+		return genericObject.getBorderWidth();
+	}
+
+	public boolean isTransparentFill() {
+		return genericObject.isTransparentFill();
+	}
+
+	public void setTransparentFill(boolean transparentFill) {
+		genericObject.setTransparentFill(transparentFill);
+	}
+
+	public void setBorderWidth(float borderWidth) {
+		genericObject.setBorderWidth(borderWidth);
+	}
+
+	void writeGeometry(XMLStreamWriter writer) throws XMLStreamException {
+		genericObject.writeGeometry(writer);
+	}
+
+	void writeFill(XMLStreamWriter writer) throws XMLStreamException {
+		genericObject.writeFill(writer);
+	}
+
+	void writeBorderStyle(XMLStreamWriter writer) throws XMLStreamException {
+		genericObject.writeBorderStyle(writer);
 	}
 }

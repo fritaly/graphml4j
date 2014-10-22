@@ -372,59 +372,6 @@ public final class GraphMLWriter {
 
 	// --- Internal helper methods --- //
 
-	private void writeGeometry(float height, float width) throws GraphMLException {
-		Validate.isTrue(height > 0, String.format("The given height (%f) must be positive", height));
-		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
-
-		try {
-			// y:Geometry (the x & y attributes are computed when laying out the graph in yEd)
-			this.streamWriter.writeEmptyElement("y:Geometry");
-			this.streamWriter.writeAttribute("height", String.format("%.1f", height));
-			this.streamWriter.writeAttribute("width", String.format("%.1f", width));
-			this.streamWriter.writeAttribute("x", "0.0");
-			this.streamWriter.writeAttribute("y", "0.0");
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
-	private void writeFill(Color color, Color color2, boolean transparent) throws GraphMLException {
-		// The colors are optional
-		Validate.notNull(color, "The given color is null");
-
-		try {
-			// y:Fill
-			this.streamWriter.writeEmptyElement("y:Fill");
-
-			if (color != null) {
-				this.streamWriter.writeAttribute("color", encode(color));
-			}
-			if (color2 != null) {
-				this.streamWriter.writeAttribute("color2", encode(color2));
-			}
-
-			this.streamWriter.writeAttribute("transparent", Boolean.toString(transparent));
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
-	private void writeBorderStyle(Color color, LineType type, float width) throws GraphMLException {
-		Validate.notNull(color, "The given color is null");
-		Validate.notNull(type, "The given line type is null");
-		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
-
-		try {
-            // y:BorderStyle
-            this.streamWriter.writeEmptyElement("y:BorderStyle");
-            this.streamWriter.writeAttribute("color", encode(color));
-            this.streamWriter.writeAttribute("type", type.getValue());
-            this.streamWriter.writeAttribute("width", String.format("%.1f", width));
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
 	private void writePath(float sx, float sy, float tx, float ty) throws GraphMLException {
 		try {
 			// y:Path
@@ -614,9 +561,10 @@ public final class GraphMLWriter {
 
 			this.streamWriter.writeStartElement("y:ShapeNode");
 
-			writeGeometry(nodeStyle.getHeight(), nodeStyle.getWidth());
-			writeFill(nodeStyle.getFillColor(), nodeStyle.getFillColor2(), nodeStyle.isTransparentFill());
-			writeBorderStyle(nodeStyle.getBorderColor(), nodeStyle.getBorderType(), nodeStyle.getBorderWidth());
+			nodeStyle.writeGeometry(streamWriter);
+			nodeStyle.writeFill(streamWriter);
+			nodeStyle.writeBorderStyle(streamWriter);
+
 			writeNodeLabel(label);
 
 			nodeStyle.writeShape(streamWriter);
@@ -707,9 +655,10 @@ public final class GraphMLWriter {
 			// Define the group node when open
 			this.streamWriter.writeStartElement("y:GroupNode");
 
-			writeGeometry(openGroupStyle.getHeight(), openGroupStyle.getWidth());
-			writeFill(openGroupStyle.getFillColor(), openGroupStyle.getFillColor2(), openGroupStyle.isTransparentFill());
-			writeBorderStyle(openGroupStyle.getBorderColor(), openGroupStyle.getBorderType(), openGroupStyle.getBorderWidth());
+			openGroupStyle.writeGeometry(streamWriter);
+			openGroupStyle.writeFill(streamWriter);
+			openGroupStyle.writeBorderStyle(streamWriter);
+
 			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
 
 			openGroupStyle.writeShape(streamWriter);
@@ -724,9 +673,10 @@ public final class GraphMLWriter {
 			// Define the group node when closed
 			this.streamWriter.writeStartElement("y:GroupNode");
 
-			writeGeometry(closedGroupStyle.getHeight(), closedGroupStyle.getWidth());
-			writeFill(closedGroupStyle.getFillColor(), closedGroupStyle.getFillColor2(), closedGroupStyle.isTransparentFill());
-			writeBorderStyle(closedGroupStyle.getBorderColor(), closedGroupStyle.getBorderType(), closedGroupStyle.getBorderWidth());
+			closedGroupStyle.writeGeometry(streamWriter);
+			closedGroupStyle.writeFill(streamWriter);
+			closedGroupStyle.writeBorderStyle(streamWriter);
+
 			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
 
 			closedGroupStyle.writeShape(streamWriter);
