@@ -2,6 +2,9 @@ package fr.ritaly.graphml4j;
 
 import java.awt.Color;
 
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+
 import org.apache.commons.lang.Validate;
 
 import fr.ritaly.graphml4j.base.Alignment;
@@ -12,8 +15,6 @@ import fr.ritaly.graphml4j.base.Shape;
 public class GroupStyle extends NodeStyle {
 
 	private float insets = 15.0f;
-
-	private float borderInsets = 0.0f;
 
 	public GroupStyle() {
 		// Apply the default values here
@@ -47,17 +48,6 @@ public class GroupStyle extends NodeStyle {
 
 		// Apply the group-specific attributes
 		this.insets = style.insets;
-		this.borderInsets = style.borderInsets;
-	}
-
-	public float getBorderInsets() {
-		return borderInsets;
-	}
-
-	public void setBorderInsets(float value) {
-		Validate.isTrue(value >= 0, String.format("The given border insets (%f) must be positive or zero", value));
-
-		this.borderInsets = value;
 	}
 
 	public float getInsets() {
@@ -68,5 +58,19 @@ public class GroupStyle extends NodeStyle {
 		Validate.isTrue(value >= 0, String.format("The given insets (%f) must be positive or zero", value));
 
 		this.insets = value;
+	}
+
+	void writeInsets(XMLStreamWriter writer) throws XMLStreamException {
+		Validate.notNull(writer, "The given stream writer is null");
+
+		writer.writeEmptyElement("y:BorderInsets");
+		writer.writeAttribute("bottom", String.format("%.0f", insets));
+		writer.writeAttribute("bottomF", String.format("%.1f", insets));
+		writer.writeAttribute("left", String.format("%.0f", insets));
+		writer.writeAttribute("leftF", String.format("%.1f", insets));
+		writer.writeAttribute("right", String.format("%.0f", insets));
+		writer.writeAttribute("rightF", String.format("%.1f", insets));
+		writer.writeAttribute("top", String.format("%.0f", insets));
+		writer.writeAttribute("topF", String.format("%.1f", insets));
 	}
 }

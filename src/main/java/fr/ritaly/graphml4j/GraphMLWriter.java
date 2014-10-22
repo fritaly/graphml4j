@@ -356,46 +356,6 @@ public final class GraphMLWriter {
 
 	// --- Internal helper methods --- //
 
-	private void writeBorderInsets(float value) throws GraphMLException {
-		writeBorderInsets(value, value, value, value);
-	}
-
-	private void writeBorderInsets(float bottom, float left, float top, float right) throws GraphMLException {
-		try {
-			this.streamWriter.writeEmptyElement("y:BorderInsets");
-			this.streamWriter.writeAttribute("bottom", String.format("%.0f", bottom));
-			this.streamWriter.writeAttribute("bottomF", String.format("%.1f", bottom));
-			this.streamWriter.writeAttribute("left", String.format("%.0f", left));
-			this.streamWriter.writeAttribute("leftF", String.format("%.1f", left));
-			this.streamWriter.writeAttribute("right", String.format("%.0f", right));
-			this.streamWriter.writeAttribute("rightF", String.format("%.1f", right));
-			this.streamWriter.writeAttribute("top", String.format("%.0f", top));
-			this.streamWriter.writeAttribute("topF", String.format("%.1f", top));
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
-	private void writeInsets(float value) throws GraphMLException {
-		writeInsets(value, value, value, value);
-	}
-
-	private void writeInsets(float bottom, float left, float top, float right) throws GraphMLException {
-		try {
-			this.streamWriter.writeEmptyElement("y:Insets");
-			this.streamWriter.writeAttribute("bottom", String.format("%.0f", bottom));
-			this.streamWriter.writeAttribute("bottomF", String.format("%.1f", bottom));
-			this.streamWriter.writeAttribute("left", String.format("%.0f", left));
-			this.streamWriter.writeAttribute("leftF", String.format("%.1f", left));
-			this.streamWriter.writeAttribute("right", String.format("%.0f", right));
-			this.streamWriter.writeAttribute("rightF", String.format("%.1f", right));
-			this.streamWriter.writeAttribute("top", String.format("%.0f", top));
-			this.streamWriter.writeAttribute("topF", String.format("%.1f", top));
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
 	// FIXME Move all the methods write*()
 	private void writeState(boolean closed, float height, float width, boolean innerGraphDisplayEnabled) throws GraphMLException {
 		try {
@@ -558,8 +518,8 @@ public final class GraphMLWriter {
 			openGroupStyle.writeDropShadow(streamWriter);
 
 			writeState(false,  50, 50, false);
-			writeInsets(openGroupStyle.getInsets());
-			writeBorderInsets(openGroupStyle.getBorderInsets());
+
+			openGroupStyle.writeInsets(streamWriter);
 
 			this.streamWriter.writeEndElement(); // </y:GroupNode>
 
@@ -575,8 +535,8 @@ public final class GraphMLWriter {
 			closedGroupStyle.writeShape(streamWriter);
 
 			writeState(true,  50, 50, false);
-			writeInsets(closedGroupStyle.getInsets());
-			writeBorderInsets(closedGroupStyle.getBorderInsets());
+
+			closedGroupStyle.writeInsets(streamWriter);
 
 			this.streamWriter.writeEndElement(); // </y:GroupNode>
 			this.streamWriter.writeEndElement(); // </y:Realizers>
