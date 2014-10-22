@@ -433,7 +433,6 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("width", "200.0");
 			this.streamWriter.writeAttribute("x", "0.0");
 			this.streamWriter.writeAttribute("y", "0.0");
-			// TODO Support insets
 			this.streamWriter.writeAttribute("underlinedText", "false");
 			this.streamWriter.writeCharacters(label);
 			this.streamWriter.writeEndElement();

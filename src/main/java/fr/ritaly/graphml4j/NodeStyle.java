@@ -314,4 +314,44 @@ public class NodeStyle {
 	public void setPosition(Position position) {
 		labelObject.setPosition(position);
 	}
+
+	public int getBottomInset() {
+		return labelObject.getBottomInset();
+	}
+
+	public int getLeftInset() {
+		return labelObject.getLeftInset();
+	}
+
+	public int getRightInset() {
+		return labelObject.getRightInset();
+	}
+
+	public int getTopInset() {
+		return labelObject.getTopInset();
+	}
+
+	public void setBottomInset(int bottomInset) {
+		labelObject.setBottomInset(bottomInset);
+	}
+
+	public void setLeftInset(int leftInset) {
+		labelObject.setLeftInset(leftInset);
+	}
+
+	public void setRightInset(int rightInset) {
+		labelObject.setRightInset(rightInset);
+	}
+
+	public void setTopInset(int topInset) {
+		labelObject.setTopInset(topInset);
+	}
+
+	public boolean hasInsets() {
+		return labelObject.hasInsets();
+	}
+
+	public void setInsets(int value) {
+		labelObject.setInsets(value);
+	}
 }

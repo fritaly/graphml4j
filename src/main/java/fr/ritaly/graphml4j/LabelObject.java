@@ -38,6 +38,8 @@ final class LabelObject {
 
 	private Position position = Position.CENTER;
 
+	private int leftInset, rightInset, topInset, bottomInset;
+
 	public LabelObject() {
 	}
 
@@ -59,6 +61,53 @@ final class LabelObject {
 		this.lineColor = object.lineColor;
 		this.placement = object.placement;
 		this.position = object.position;
+		this.leftInset = object.leftInset;
+		this.rightInset = object.rightInset;
+		this.topInset = object.topInset;
+		this.bottomInset = object.bottomInset;
+	}
+
+	public int getBottomInset() {
+		return bottomInset;
+	}
+
+	public int getLeftInset() {
+		return leftInset;
+	}
+
+	public int getRightInset() {
+		return rightInset;
+	}
+
+	public int getTopInset() {
+		return topInset;
+	}
+
+	public void setBottomInset(int bottomInset) {
+		this.bottomInset = bottomInset;
+	}
+
+	public void setLeftInset(int leftInset) {
+		this.leftInset = leftInset;
+	}
+
+	public void setRightInset(int rightInset) {
+		this.rightInset = rightInset;
+	}
+
+	public void setTopInset(int topInset) {
+		this.topInset = topInset;
+	}
+
+	public boolean hasInsets() {
+		return (topInset != 0) || (bottomInset != 0) || (leftInset != 0) || (rightInset != 0);
+	}
+
+	public void setInsets(int value) {
+		setLeftInset(value);
+		setRightInset(value);
+		setTopInset(value);
+		setBottomInset(value);
 	}
 
 	public Placement getPlacement() {
@@ -191,6 +240,12 @@ final class LabelObject {
 		} else {
 			writer.writeAttribute("hasLineColor", "false");
 		}
+		if (hasInsets()) {
+			writer.writeAttribute("bottomInset", Integer.toString(bottomInset));
+			writer.writeAttribute("topInset", Integer.toString(topInset));
+			writer.writeAttribute("leftInset", Integer.toString(leftInset));
+			writer.writeAttribute("rightInset", Integer.toString(rightInset));
+		}
 
 		writer.writeAttribute("textColor", Utils.encode(textColor));
 		writer.writeAttribute("visible", Boolean.toString(visible));
@@ -198,12 +253,6 @@ final class LabelObject {
 		if (underlinedText) {
 			writer.writeAttribute("underlinedText", Boolean.toString(underlinedText));
 		}
-//		if (nodeStyle.hasInsets()) { TODO Implement this
-//			writer.writeAttribute("bottomInset", Integer.toString(nodeStyle.getBottomInset()));
-//			writer.writeAttribute("topInset", Integer.toString(nodeStyle.getTopInset()));
-//			writer.writeAttribute("leftInset", Integer.toString(nodeStyle.getLeftInset()));
-//			writer.writeAttribute("rightInset", Integer.toString(nodeStyle.getRightInset()));
-//		}
 
 		writer.writeCharacters(label);
 		writer.writeEndElement(); // </y:NodeLabel>
