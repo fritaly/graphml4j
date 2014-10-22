@@ -485,6 +485,18 @@ public final class GraphMLWriter {
 		}
 	}
 
+	private void writeDropShadow(Color color, int offsetX, int offsetY) throws GraphMLException {
+		try {
+			// y:DropShadow
+			this.streamWriter.writeEmptyElement("y:DropShadow");
+			this.streamWriter.writeAttribute("color", encode(color));
+			this.streamWriter.writeAttribute("offsetX", Integer.toString(offsetX));
+			this.streamWriter.writeAttribute("offsetY", Integer.toString(offsetY));
+		} catch (XMLStreamException e) {
+			throw new GraphMLException(e);
+		}
+	}
+
 	private void writeBorderInsets(float value) throws GraphMLException {
 		writeBorderInsets(value, value, value, value);
 	}
