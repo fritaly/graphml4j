@@ -383,13 +383,19 @@ public final class GraphMLWriter {
 		}
 	}
 
-	private void writeFill(Color color, boolean transparent) throws GraphMLException {
+	private void writeFill(Color color, Color color2, boolean transparent) throws GraphMLException {
+		// The second color is optional
 		Validate.notNull(color, "The given color is null");
 
 		try {
 			// y:Fill
 			this.streamWriter.writeEmptyElement("y:Fill");
 			this.streamWriter.writeAttribute("color", encode(color));
+
+			if (color2 != null) {
+				this.streamWriter.writeAttribute("color2", encode(color2));
+			}
+
 			this.streamWriter.writeAttribute("transparent", Boolean.toString(transparent));
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
@@ -477,8 +483,8 @@ public final class GraphMLWriter {
 		}
 	}
 
-	private void writeBorderInsets(float all) throws GraphMLException {
-		writeBorderInsets(all, all, all, all);
+	private void writeBorderInsets(float value) throws GraphMLException {
+		writeBorderInsets(value, value, value, value);
 	}
 
 	private void writeBorderInsets(float bottom, float left, float top, float right) throws GraphMLException {
@@ -497,8 +503,8 @@ public final class GraphMLWriter {
 		}
 	}
 
-	private void writeInsets(float all) throws GraphMLException {
-		writeInsets(all, all, all, all);
+	private void writeInsets(float value) throws GraphMLException {
+		writeInsets(value, value, value, value);
 	}
 
 	private void writeInsets(float bottom, float left, float top, float right) throws GraphMLException {
@@ -601,7 +607,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeStartElement("y:ShapeNode");
 
 			writeGeometry(nodeStyle.getHeight(), nodeStyle.getWidth());
-			writeFill(nodeStyle.getFillColor(), nodeStyle.isTransparentFill());
+			writeFill(nodeStyle.getFillColor(), nodeStyle.getFillColor2(), nodeStyle.isTransparentFill());
 			writeBorderStyle(nodeStyle.getBorderColor(), nodeStyle.getBorderType(), nodeStyle.getBorderWidth());
 			writeNodeLabel(label);
 			writeShape(nodeStyle.getShape());
@@ -692,7 +698,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeStartElement("y:GroupNode");
 
 			writeGeometry(openGroupStyle.getHeight(), openGroupStyle.getWidth());
-			writeFill(openGroupStyle.getFillColor(), openGroupStyle.isTransparentFill());
+			writeFill(openGroupStyle.getFillColor(), openGroupStyle.getFillColor2(), openGroupStyle.isTransparentFill());
 			writeBorderStyle(openGroupStyle.getBorderColor(), openGroupStyle.getBorderType(), openGroupStyle.getBorderWidth());
 			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
 			writeShape(openGroupStyle.getShape());
@@ -706,7 +712,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeStartElement("y:GroupNode");
 
 			writeGeometry(closedGroupStyle.getHeight(), closedGroupStyle.getWidth());
-			writeFill(closedGroupStyle.getFillColor(), closedGroupStyle.isTransparentFill());
+			writeFill(closedGroupStyle.getFillColor(), closedGroupStyle.getFillColor2(), closedGroupStyle.isTransparentFill());
 			writeBorderStyle(closedGroupStyle.getBorderColor(), closedGroupStyle.getBorderType(), closedGroupStyle.getBorderWidth());
 			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
 			writeShape(closedGroupStyle.getShape());

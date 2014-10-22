@@ -12,6 +12,9 @@ public class NodeStyle {
 
 	private Color fillColor = Color.decode("#FFCC00");
 
+	// This color is optional
+	private Color fillColor2;
+
 	private boolean transparentFill = false;
 
 	private Color borderColor = Color.BLACK;
@@ -52,6 +55,7 @@ public class NodeStyle {
 		this.borderType = style.borderType;
 		this.borderWidth = style.borderWidth;
 		this.fillColor = style.fillColor;
+		this.fillColor2 = style.fillColor2;
 		this.fontFamily = style.fontFamily;
 		this.fontSize = style.fontSize;
 		this.fontStyle = style.fontStyle;
@@ -168,6 +172,15 @@ public class NodeStyle {
 		Validate.notNull(color, "The given fill color is null");
 
 		this.fillColor = color;
+	}
+
+	public Color getFillColor2() {
+		return fillColor2;
+	}
+
+	public void setFillColor2(Color fillColor2) {
+		// This color is optional
+		this.fillColor2 = fillColor2;
 	}
 
 	public boolean isTransparentFill() {
