@@ -109,6 +109,11 @@ public final class GraphMLWriter {
 	 */
 	private final NodeStyle nodeStyle = new NodeStyle();
 
+	/**
+	 * The style applied to edges.
+	 */
+	private final EdgeStyle edgeStyle = new EdgeStyle();
+
 	public GraphMLWriter(Writer writer) throws GraphMLException {
 		Validate.notNull(writer, "The given writer is null");
 
@@ -134,6 +139,18 @@ public final class GraphMLWriter {
 
 		// Defensive recopy
 		this.nodeStyle.apply(style);
+	}
+
+	public EdgeStyle getEdgeStyle() {
+		// Defensive recopy
+		return new EdgeStyle(edgeStyle);
+	}
+
+	public void setEdgeStyle(EdgeStyle style) {
+		Validate.notNull(style, "The given style is null");
+
+		// Defensive recopy
+		this.edgeStyle.apply(style);
 	}
 
 	/**
@@ -580,10 +597,11 @@ public final class GraphMLWriter {
 
 			this.streamWriter.writeStartElement("y:PolyLineEdge");
 
+			// What is the path used for ?
 			writePath(0.0f, 0.0f, 0.0f, 0.0f);
-			writeLineStyle("#000000", LineType.LINE, 1.0f);
-			writeArrows(Arrow.NONE, Arrow.STANDARD);
-			writeBendStyle(false);
+			writeLineStyle(edgeStyle.getColor(), edgeStyle.getType(), edgeStyle.getWidth());
+			writeArrows(edgeStyle.getSourceArrow(), edgeStyle.getTargetArrow());
+			writeBendStyle(edgeStyle.isSmoothed());
 
 			this.streamWriter.writeEndElement(); // </y:PolyLineEdge>
 			this.streamWriter.writeEndElement(); // </data>
