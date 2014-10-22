@@ -18,6 +18,11 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.Validate;
 
+import fr.ritaly.graphml4j.base.Alignment;
+import fr.ritaly.graphml4j.base.Arrow;
+import fr.ritaly.graphml4j.base.FontStyle;
+import fr.ritaly.graphml4j.base.LineType;
+
 public final class GraphMLWriter {
 
 	/** The id associated to the node URL property */

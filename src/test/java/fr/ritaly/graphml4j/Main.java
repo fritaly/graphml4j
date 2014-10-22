@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import fr.ritaly.graphml4j.base.Alignment;
+import fr.ritaly.graphml4j.base.Arrow;
+import fr.ritaly.graphml4j.base.LineType;
+import fr.ritaly.graphml4j.base.Shape;
+
 public class Main {
 
 	public static void main(String[] args) throws Exception {

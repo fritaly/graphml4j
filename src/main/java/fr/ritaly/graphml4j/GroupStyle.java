@@ -4,6 +4,11 @@ import java.awt.Color;
 
 import org.apache.commons.lang.Validate;
 
+import fr.ritaly.graphml4j.base.Alignment;
+import fr.ritaly.graphml4j.base.FontStyle;
+import fr.ritaly.graphml4j.base.LineType;
+import fr.ritaly.graphml4j.base.Shape;
+
 public class GroupStyle extends NodeStyle {
 
 	private float insets = 15.0f;

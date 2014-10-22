@@ -4,6 +4,9 @@ import java.awt.Color;
 
 import org.apache.commons.lang.Validate;
 
+import fr.ritaly.graphml4j.base.Arrow;
+import fr.ritaly.graphml4j.base.LineType;
+
 public final class EdgeStyle {
 
 	private Color color = Color.BLACK;

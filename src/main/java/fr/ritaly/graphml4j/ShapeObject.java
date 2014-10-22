@@ -7,6 +7,8 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.Validate;
 
+import fr.ritaly.graphml4j.base.Shape;
+
 final class ShapeObject {
 
 	private Shape shape = Shape.RECTANGLE;

@@ -1,4 +1,4 @@
-package fr.ritaly.graphml4j;
+package fr.ritaly.graphml4j.base;
 
 public enum FontStyle {
 	PLAIN("plain"),

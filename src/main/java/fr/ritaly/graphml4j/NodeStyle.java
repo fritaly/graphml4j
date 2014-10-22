@@ -7,6 +7,11 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.Validate;
 
+import fr.ritaly.graphml4j.base.Alignment;
+import fr.ritaly.graphml4j.base.FontStyle;
+import fr.ritaly.graphml4j.base.LineType;
+import fr.ritaly.graphml4j.base.Shape;
+
 public class NodeStyle {
 
 	private float height = 30.0f;
