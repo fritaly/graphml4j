@@ -17,12 +17,15 @@ public class Main {
 		final NodeStyle nodeStyle = writer.getNodeStyle();
 		nodeStyle.setBorderType(LineType.LINE);
 		nodeStyle.setBorderWidth(2.0f);
-		nodeStyle.setFillColor(Color.GRAY);
+		nodeStyle.setFillColor(Color.GRAY.brighter());
 		nodeStyle.setFontSize(13);
 		nodeStyle.setHeight(60.0f);
 		nodeStyle.setWidth(60.0f);
 		nodeStyle.setShape(Shape.ROUNDED_RECTANGLE);
 		nodeStyle.setTextAlignment(Alignment.CENTER);
+		nodeStyle.setShadowColor(Color.GRAY);
+		nodeStyle.setShadowOffsetX(5);
+		nodeStyle.setShadowOffsetY(5);
 
 		writer.setNodeStyle(nodeStyle);
 

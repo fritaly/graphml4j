@@ -487,6 +487,11 @@ public final class GraphMLWriter {
 
 	private void writeDropShadow(Color color, int offsetX, int offsetY) throws GraphMLException {
 		try {
+			if ((color == null) || ((offsetX == 0) && (offsetY == 0))) {
+				// Nothing to render
+				return;
+			}
+
 			// y:DropShadow
 			this.streamWriter.writeEmptyElement("y:DropShadow");
 			this.streamWriter.writeAttribute("color", encode(color));
@@ -625,6 +630,7 @@ public final class GraphMLWriter {
 			writeBorderStyle(nodeStyle.getBorderColor(), nodeStyle.getBorderType(), nodeStyle.getBorderWidth());
 			writeNodeLabel(label);
 			writeShape(nodeStyle.getShape());
+			writeDropShadow(nodeStyle.getShadowColor(), nodeStyle.getShadowOffsetX(), nodeStyle.getShadowOffsetY());
 
 			this.streamWriter.writeEndElement(); // </y:ShapeNode>
 			this.streamWriter.writeEndElement(); // </data>
@@ -716,6 +722,7 @@ public final class GraphMLWriter {
 			writeBorderStyle(openGroupStyle.getBorderColor(), openGroupStyle.getBorderType(), openGroupStyle.getBorderWidth());
 			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
 			writeShape(openGroupStyle.getShape());
+			writeDropShadow(openGroupStyle.getShadowColor(), openGroupStyle.getShadowOffsetX(), openGroupStyle.getShadowOffsetY());
 			writeState(false,  50, 50, false);
 			writeInsets(openGroupStyle.getInsets());
 			writeBorderInsets(openGroupStyle.getBorderInsets());

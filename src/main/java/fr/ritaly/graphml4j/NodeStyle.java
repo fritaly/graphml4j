@@ -43,6 +43,11 @@ public class NodeStyle {
 
 	private boolean visible = true;
 
+	// This color is optional
+	private Color shadowColor;
+
+	private int shadowOffsetX, shadowOffsetY;
+
 	public NodeStyle() {
 	}
 
@@ -70,6 +75,35 @@ public class NodeStyle {
 		this.transparentFill = style.transparentFill;
 		this.visible = style.visible;
 		this.width = style.width;
+
+		this.shadowColor = style.shadowColor;
+		this.shadowOffsetX = style.shadowOffsetX;
+		this.shadowOffsetY = style.shadowOffsetY;
+	}
+
+	public Color getShadowColor() {
+		return shadowColor;
+	}
+
+	public int getShadowOffsetX() {
+		return shadowOffsetX;
+	}
+
+	public int getShadowOffsetY() {
+		return shadowOffsetY;
+	}
+
+	public void setShadowColor(Color color) {
+		// This color is optional
+		this.shadowColor = color;
+	}
+
+	public void setShadowOffsetX(int value) {
+		this.shadowOffsetX = value;
+	}
+
+	public void setShadowOffsetY(int value) {
+		this.shadowOffsetY = value;
 	}
 
 	public boolean isVisible() {
