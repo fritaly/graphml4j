@@ -280,4 +280,12 @@ public class NodeStyle {
 	void writeLabel(XMLStreamWriter writer, String label) throws XMLStreamException {
 		labelObject.writeTo(writer, label);
 	}
+
+	public Color getBackgroundColor() {
+		return labelObject.getBackgroundColor();
+	}
+
+	public void setBackgroundColor(Color backgroundColor) {
+		labelObject.setBackgroundColor(backgroundColor);
+	}
 }

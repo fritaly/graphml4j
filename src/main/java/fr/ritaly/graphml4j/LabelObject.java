@@ -16,6 +16,9 @@ final class LabelObject {
 
 	private Color textColor = Color.BLACK;
 
+	// This color is optional
+	private Color backgroundColor = null;
+
 	private Alignment textAlignment = Alignment.CENTER;
 
 	private FontStyle fontStyle = FontStyle.PLAIN;
@@ -43,6 +46,16 @@ final class LabelObject {
 		this.fontFamily = object.fontFamily;
 		this.fontSize = object.fontSize;
 		this.underlinedText = object.underlinedText;
+		this.backgroundColor = object.backgroundColor;
+	}
+
+	public Color getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(Color backgroundColor) {
+		// This color is optional
+		this.backgroundColor = backgroundColor;
 	}
 
 	public boolean isUnderlinedText() {
@@ -120,7 +133,13 @@ final class LabelObject {
 		writer.writeAttribute("fontFamily", fontFamily);
 		writer.writeAttribute("fontSize", Integer.toString(fontSize));
 		writer.writeAttribute("fontStyle", fontStyle.getValue());
-		writer.writeAttribute("hasBackgroundColor", Boolean.toString(false)); // TODO Implement this
+
+		if (backgroundColor != null) {
+			writer.writeAttribute("backgroundColor", Utils.encode(backgroundColor));
+		} else {
+			writer.writeAttribute("hasBackgroundColor", "false");
+		}
+
 		writer.writeAttribute("hasLineColor", Boolean.toString(false)); // TODO Implement this
 		writer.writeAttribute("textColor", Utils.encode(textColor));
 		writer.writeAttribute("visible", Boolean.toString(visible));
