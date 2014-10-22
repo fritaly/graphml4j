@@ -159,6 +159,6 @@ final class GenericObject {
         writer.writeEmptyElement("y:BorderStyle");
         writer.writeAttribute("color", Utils.encode(borderColor));
         writer.writeAttribute("type", borderType.getValue());
-        writer.writeAttribute("width", String.format("%.1f", width));
+        writer.writeAttribute("width", String.format("%.1f", borderWidth));
 	}
 }

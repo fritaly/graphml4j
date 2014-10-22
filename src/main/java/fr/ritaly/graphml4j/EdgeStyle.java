@@ -108,10 +108,10 @@ public final class EdgeStyle {
 
 		// y:Path
 		writer.writeEmptyElement("y:Path");
-		writer.writeAttribute("sx", String.format("%.1f", 0));
-		writer.writeAttribute("sy", String.format("%.1f", 0));
-		writer.writeAttribute("tx", String.format("%.1f", 0));
-		writer.writeAttribute("ty", String.format("%.1f", 0));
+		writer.writeAttribute("sx", String.format("%.1f", 0.0f));
+		writer.writeAttribute("sy", String.format("%.1f", 0.0f));
+		writer.writeAttribute("tx", String.format("%.1f", 0.0f));
+		writer.writeAttribute("ty", String.format("%.1f", 0.0f));
 
 		// y:LineStyle
 		writer.writeEmptyElement("y:LineStyle");
