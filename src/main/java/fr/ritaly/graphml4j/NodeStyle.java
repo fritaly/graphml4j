@@ -43,6 +43,10 @@ public class NodeStyle {
 
 	private boolean visible = true;
 
+	private boolean underlinedText = false;
+
+	private int bottomInset, leftInset, rightInset, topInset;
+
 	// This color is optional
 	private Color shadowColor;
 
@@ -79,6 +83,64 @@ public class NodeStyle {
 		this.shadowColor = style.shadowColor;
 		this.shadowOffsetX = style.shadowOffsetX;
 		this.shadowOffsetY = style.shadowOffsetY;
+
+		this.underlinedText = style.underlinedText;
+
+		this.bottomInset = style.bottomInset;
+		this.leftInset = style.leftInset;
+		this.rightInset = style.rightInset;
+		this.topInset = style.topInset;
+	}
+
+	public void setInsets(int value) {
+		setBottomInset(value);
+		setTopInset(value);
+		setLeftInset(value);
+		setRightInset(value);
+	}
+
+	public boolean hasInsets() {
+		return (bottomInset != 0) || (topInset != 0) || (leftInset != 0) || (rightInset != 0);
+	}
+
+	public int getBottomInset() {
+		return bottomInset;
+	}
+
+	public int getLeftInset() {
+		return leftInset;
+	}
+
+	public int getRightInset() {
+		return rightInset;
+	}
+
+	public int getTopInset() {
+		return topInset;
+	}
+
+	public void setBottomInset(int value) {
+		this.bottomInset = value;
+	}
+
+	public void setLeftInset(int value) {
+		this.leftInset = value;
+	}
+
+	public void setRightInset(int value) {
+		this.rightInset = value;
+	}
+
+	public void setTopInset(int value) {
+		this.topInset = value;
+	}
+
+	public boolean isUnderlinedText() {
+		return underlinedText;
+	}
+
+	public void setUnderlinedText(boolean value) {
+		this.underlinedText = value;
 	}
 
 	public Color getShadowColor() {

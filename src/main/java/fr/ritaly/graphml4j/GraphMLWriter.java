@@ -568,6 +568,17 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("hasLineColor", Boolean.toString(nodeStyle.isHasLineColor()));
 			this.streamWriter.writeAttribute("textColor", encode(nodeStyle.getTextColor()));
 			this.streamWriter.writeAttribute("visible", Boolean.toString(nodeStyle.isVisible()));
+
+			if (nodeStyle.isUnderlinedText()) {
+				this.streamWriter.writeAttribute("underlinedText", Boolean.toString(nodeStyle.isUnderlinedText()));
+			}
+			if (nodeStyle.hasInsets()) {
+				this.streamWriter.writeAttribute("bottomInset", Integer.toString(nodeStyle.getBottomInset()));
+				this.streamWriter.writeAttribute("topInset", Integer.toString(nodeStyle.getTopInset()));
+				this.streamWriter.writeAttribute("leftInset", Integer.toString(nodeStyle.getLeftInset()));
+				this.streamWriter.writeAttribute("rightInset", Integer.toString(nodeStyle.getRightInset()));
+			}
+
 			this.streamWriter.writeCharacters(label);
 			this.streamWriter.writeEndElement(); // </y:NodeLabel>
 		} catch (XMLStreamException e) {
@@ -599,6 +610,8 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("width", "200.0");
 			this.streamWriter.writeAttribute("x", "0.0");
 			this.streamWriter.writeAttribute("y", "0.0");
+			// TODO Support insets
+			this.streamWriter.writeAttribute("underlinedText", "false");
 			this.streamWriter.writeCharacters(label);
 			this.streamWriter.writeEndElement();
 		} catch (XMLStreamException e) {
