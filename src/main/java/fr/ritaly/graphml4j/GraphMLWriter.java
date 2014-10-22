@@ -1,5 +1,6 @@
 package fr.ritaly.graphml4j;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.EnumSet;
@@ -137,6 +138,23 @@ public final class GraphMLWriter {
 		} catch (FactoryConfigurationError e) {
 			throw new GraphMLException(e);
 		}
+	}
+
+	public static void main(String[] args) {
+		System.out.println(encode(Color.BLUE));
+	}
+
+	/**
+	 * Encodes the given color into an hexadecimal string like "#RRGGBB".
+	 *
+	 * @param color
+	 *            a color to encode. Can't be null.
+	 * @return a string representing the encoded color.
+	 */
+	private static String encode(Color color) {
+		Validate.notNull(color, "The given color is null");
+
+		return String.format("#%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue());
 	}
 
 	public GroupStyle getClosedGroupStyle() {
