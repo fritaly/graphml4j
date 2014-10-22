@@ -384,14 +384,16 @@ public final class GraphMLWriter {
 	}
 
 	private void writeFill(Color color, Color color2, boolean transparent) throws GraphMLException {
-		// The second color is optional
+		// The colors are optional
 		Validate.notNull(color, "The given color is null");
 
 		try {
 			// y:Fill
 			this.streamWriter.writeEmptyElement("y:Fill");
-			this.streamWriter.writeAttribute("color", encode(color));
 
+			if (color != null) {
+				this.streamWriter.writeAttribute("color", encode(color));
+			}
 			if (color2 != null) {
 				this.streamWriter.writeAttribute("color2", encode(color2));
 			}

@@ -10,6 +10,7 @@ public class NodeStyle {
 
 	private float width = 30.0f;
 
+	// This color is optional
 	private Color fillColor = Color.decode("#FFCC00");
 
 	// This color is optional
@@ -169,8 +170,7 @@ public class NodeStyle {
 	}
 
 	public void setFillColor(Color color) {
-		Validate.notNull(color, "The given fill color is null");
-
+		// This color is optional
 		this.fillColor = color;
 	}
 
