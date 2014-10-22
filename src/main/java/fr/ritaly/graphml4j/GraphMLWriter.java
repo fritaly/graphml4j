@@ -1,6 +1,5 @@
 package fr.ritaly.graphml4j;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.EnumSet;
@@ -141,19 +140,6 @@ public final class GraphMLWriter {
 		} catch (FactoryConfigurationError e) {
 			throw new GraphMLException(e);
 		}
-	}
-
-	/**
-	 * Encodes the given color into an hexadecimal string like "#RRGGBB".
-	 *
-	 * @param color
-	 *            a color to encode. Can't be null.
-	 * @return a string representing the encoded color.
-	 */
-	private static String encode(Color color) {
-		Validate.notNull(color, "The given color is null");
-
-		return String.format("#%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue());
 	}
 
 	public GroupStyle getClosedGroupStyle() {
@@ -422,38 +408,6 @@ public final class GraphMLWriter {
 		}
 	}
 
-	private void writeNodeLabel(String label) throws GraphMLException {
-		Validate.notNull(label, "The given label is null");
-
-		try {
-			// y:NodeLabel
-			this.streamWriter.writeStartElement("y:NodeLabel");
-			this.streamWriter.writeAttribute("alignement", nodeStyle.getTextAlignment().getValue());
-			this.streamWriter.writeAttribute("fontFamily", nodeStyle.getFontFamily());
-			this.streamWriter.writeAttribute("fontSize", Integer.toString(nodeStyle.getFontSize()));
-			this.streamWriter.writeAttribute("fontStyle", nodeStyle.getFontStyle().getValue());
-			this.streamWriter.writeAttribute("hasBackgroundColor", Boolean.toString(nodeStyle.isHasBackgroundColor()));
-			this.streamWriter.writeAttribute("hasLineColor", Boolean.toString(nodeStyle.isHasLineColor()));
-			this.streamWriter.writeAttribute("textColor", encode(nodeStyle.getTextColor()));
-			this.streamWriter.writeAttribute("visible", Boolean.toString(nodeStyle.isVisible()));
-
-			if (nodeStyle.isUnderlinedText()) {
-				this.streamWriter.writeAttribute("underlinedText", Boolean.toString(nodeStyle.isUnderlinedText()));
-			}
-			if (nodeStyle.hasInsets()) {
-				this.streamWriter.writeAttribute("bottomInset", Integer.toString(nodeStyle.getBottomInset()));
-				this.streamWriter.writeAttribute("topInset", Integer.toString(nodeStyle.getTopInset()));
-				this.streamWriter.writeAttribute("leftInset", Integer.toString(nodeStyle.getLeftInset()));
-				this.streamWriter.writeAttribute("rightInset", Integer.toString(nodeStyle.getRightInset()));
-			}
-
-			this.streamWriter.writeCharacters(label);
-			this.streamWriter.writeEndElement(); // </y:NodeLabel>
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
 	private void writeNodeLabel_Group(String label, Alignment alignment, FontStyle fontStyle) throws GraphMLException {
 		Validate.notNull(label, "The given label is null");
 		Validate.notNull(alignment, "The given alignment is null");
@@ -509,9 +463,7 @@ public final class GraphMLWriter {
 			nodeStyle.writeGeometry(streamWriter);
 			nodeStyle.writeFill(streamWriter);
 			nodeStyle.writeBorderStyle(streamWriter);
-
-			writeNodeLabel(label);
-
+			nodeStyle.writeLabel(streamWriter, label);
 			nodeStyle.writeShape(streamWriter);
 			nodeStyle.writeDropShadow(streamWriter);
 

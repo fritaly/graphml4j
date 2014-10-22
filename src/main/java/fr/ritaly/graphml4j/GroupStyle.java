@@ -28,8 +28,8 @@ public class GroupStyle extends NodeStyle {
 		setFontFamily("Dialog");
 		setFontSize(15);
 		setFontStyle(FontStyle.PLAIN);
-		setHasBackgroundColor(false);
-		setHasLineColor(false);
+//		TODO setHasBackgroundColor(false);
+//		TODO setHasLineColor(false);
 		setTextAlignment(Alignment.CENTER);
 		setTextColor(Color.BLACK);
 		setVisible(true);

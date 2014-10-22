@@ -14,29 +14,11 @@ import fr.ritaly.graphml4j.base.Shape;
 
 public class NodeStyle {
 
-	private Alignment textAlignment = Alignment.CENTER;
-
-	private FontStyle fontStyle = FontStyle.PLAIN;
-
-	private String fontFamily = "Dialog";
-
-	private int fontSize = 12;
-
-	private Color textColor = Color.BLACK;
-
-	private boolean hasBackgroundColor = false;
-
-	private boolean hasLineColor = false;
-
-	private boolean visible = true;
-
-	private boolean underlinedText = false;
-
-	private int bottomInset, leftInset, rightInset, topInset;
-
 	private final GenericObject genericObject = new GenericObject();
 
 	private final ShapeObject shapeObject = new ShapeObject();
+
+	private final LabelObject labelObject = new LabelObject();
 
 	public NodeStyle() {
 	}
@@ -48,153 +30,74 @@ public class NodeStyle {
 	void apply(NodeStyle style) {
 		Validate.notNull(style, "The given style is null");
 
-		this.fontFamily = style.fontFamily;
-		this.fontSize = style.fontSize;
-		this.fontStyle = style.fontStyle;
-		this.hasBackgroundColor = style.hasBackgroundColor;
-		this.hasLineColor = style.hasLineColor;
-		this.textAlignment = style.textAlignment;
-		this.textColor = style.textColor;
-		this.visible = style.visible;
+		// Apply the label properties
+		this.labelObject.apply(style.labelObject);
 
 		// Apply the generic properties
 		this.genericObject.apply(style.genericObject);
 
 		// Apply the shape properties
 		this.shapeObject.apply(style.shapeObject);
-
-		this.underlinedText = style.underlinedText;
-
-		this.bottomInset = style.bottomInset;
-		this.leftInset = style.leftInset;
-		this.rightInset = style.rightInset;
-		this.topInset = style.topInset;
 	}
 
-	public void setInsets(int value) {
-		setBottomInset(value);
-		setTopInset(value);
-		setLeftInset(value);
-		setRightInset(value);
-	}
+//	public void setInsets(int value) {
+//		setBottomInset(value);
+//		setTopInset(value);
+//		setLeftInset(value);
+//		setRightInset(value);
+//	}
+//
+//	public boolean hasInsets() {
+//		return (bottomInset != 0) || (topInset != 0) || (leftInset != 0) || (rightInset != 0);
+//	}
+//
+//	public int getBottomInset() {
+//		return bottomInset;
+//	}
+//
+//	public int getLeftInset() {
+//		return leftInset;
+//	}
+//
+//	public int getRightInset() {
+//		return rightInset;
+//	}
+//
+//	public int getTopInset() {
+//		return topInset;
+//	}
+//
+//	public void setBottomInset(int value) {
+//		this.bottomInset = value;
+//	}
+//
+//	public void setLeftInset(int value) {
+//		this.leftInset = value;
+//	}
+//
+//	public void setRightInset(int value) {
+//		this.rightInset = value;
+//	}
+//
+//	public void setTopInset(int value) {
+//		this.topInset = value;
+//	}
 
-	public boolean hasInsets() {
-		return (bottomInset != 0) || (topInset != 0) || (leftInset != 0) || (rightInset != 0);
-	}
-
-	public int getBottomInset() {
-		return bottomInset;
-	}
-
-	public int getLeftInset() {
-		return leftInset;
-	}
-
-	public int getRightInset() {
-		return rightInset;
-	}
-
-	public int getTopInset() {
-		return topInset;
-	}
-
-	public void setBottomInset(int value) {
-		this.bottomInset = value;
-	}
-
-	public void setLeftInset(int value) {
-		this.leftInset = value;
-	}
-
-	public void setRightInset(int value) {
-		this.rightInset = value;
-	}
-
-	public void setTopInset(int value) {
-		this.topInset = value;
-	}
-
-	public boolean isUnderlinedText() {
-		return underlinedText;
-	}
-
-	public void setUnderlinedText(boolean value) {
-		this.underlinedText = value;
-	}
-
-	public boolean isVisible() {
-		return visible;
-	}
-
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
-
-	public boolean isHasBackgroundColor() {
-		return hasBackgroundColor;
-	}
-
-	public void setHasBackgroundColor(boolean hasBackgroundColor) {
-		this.hasBackgroundColor = hasBackgroundColor;
-	}
-
-	public boolean isHasLineColor() {
-		return hasLineColor;
-	}
-
-	public void setHasLineColor(boolean hasLineColor) {
-		this.hasLineColor = hasLineColor;
-	}
-
-	public Color getTextColor() {
-		return textColor;
-	}
-
-	public void setTextColor(Color color) {
-		Validate.notNull(color, "The given text color is null");
-
-		this.textColor = color;
-	}
-
-	public int getFontSize() {
-		return fontSize;
-	}
-
-	public void setFontSize(int fontSize) {
-		Validate.isTrue(fontSize > 0, String.format("The given font size (%d) must be positive", fontSize));
-
-		this.fontSize = fontSize;
-	}
-
-	public String getFontFamily() {
-		return fontFamily;
-	}
-
-	public void setFontFamily(String fontFamily) {
-		Validate.notNull(fontFamily, "The given font family is null");
-
-		this.fontFamily = fontFamily;
-	}
-
-	public Alignment getTextAlignment() {
-		return textAlignment;
-	}
-
-	public void setTextAlignment(Alignment textAlignment) {
-		Validate.notNull(textAlignment, "The given text alignment is null");
-
-		this.textAlignment = textAlignment;
-	}
-
-	public FontStyle getFontStyle() {
-		return fontStyle;
-	}
-
-	public void setFontStyle(FontStyle fontStyle) {
-		Validate.notNull(fontStyle, "The given font style is null");
-
-		this.fontStyle = fontStyle;
-	}
+//	public boolean isHasBackgroundColor() {
+//		return hasBackgroundColor;
+//	}
+//
+//	public void setHasBackgroundColor(boolean hasBackgroundColor) {
+//		this.hasBackgroundColor = hasBackgroundColor;
+//	}
+//
+//	public boolean isHasLineColor() {
+//		return hasLineColor;
+//	}
+//
+//	public void setHasLineColor(boolean hasLineColor) {
+//		this.hasLineColor = hasLineColor;
+//	}
 
 	// --- Shape properties --- //
 
@@ -314,5 +217,67 @@ public class NodeStyle {
 
 	void writeBorderStyle(XMLStreamWriter writer) throws XMLStreamException {
 		genericObject.writeBorderStyle(writer);
+	}
+
+	// --- Label properties --- //
+
+	public boolean isUnderlinedText() {
+		return labelObject.isUnderlinedText();
+	}
+
+	public void setUnderlinedText(boolean value) {
+		labelObject.setUnderlinedText(value);
+	}
+
+	public boolean isVisible() {
+		return labelObject.isVisible();
+	}
+
+	public void setVisible(boolean visible) {
+		labelObject.setVisible(visible);
+	}
+
+	public Color getTextColor() {
+		return labelObject.getTextColor();
+	}
+
+	public void setTextColor(Color color) {
+		labelObject.setTextColor(color);
+	}
+
+	public int getFontSize() {
+		return labelObject.getFontSize();
+	}
+
+	public void setFontSize(int fontSize) {
+		labelObject.setFontSize(fontSize);
+	}
+
+	public String getFontFamily() {
+		return labelObject.getFontFamily();
+	}
+
+	public void setFontFamily(String fontFamily) {
+		labelObject.setFontFamily(fontFamily);
+	}
+
+	public Alignment getTextAlignment() {
+		return labelObject.getTextAlignment();
+	}
+
+	public void setTextAlignment(Alignment textAlignment) {
+		labelObject.setTextAlignment(textAlignment);
+	}
+
+	public FontStyle getFontStyle() {
+		return labelObject.getFontStyle();
+	}
+
+	public void setFontStyle(FontStyle fontStyle) {
+		labelObject.setFontStyle(fontStyle);
+	}
+
+	void writeLabel(XMLStreamWriter writer, String label) throws XMLStreamException {
+		labelObject.writeTo(writer, label);
 	}
 }
