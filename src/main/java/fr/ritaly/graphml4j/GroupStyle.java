@@ -29,7 +29,7 @@ public class GroupStyle extends NodeStyle {
 		setFontSize(15);
 		setFontStyle(FontStyle.PLAIN);
 		setBackgroundColor(null);
-//		TODO setHasLineColor(false);
+		setLineColor(null);
 		setTextAlignment(Alignment.CENTER);
 		setTextColor(Color.BLACK);
 		setVisible(true);

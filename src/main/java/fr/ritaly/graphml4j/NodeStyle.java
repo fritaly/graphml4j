@@ -288,4 +288,12 @@ public class NodeStyle {
 	public void setBackgroundColor(Color backgroundColor) {
 		labelObject.setBackgroundColor(backgroundColor);
 	}
+
+	public Color getLineColor() {
+		return labelObject.getLineColor();
+	}
+
+	public void setLineColor(Color lineColor) {
+		labelObject.setLineColor(lineColor);
+	}
 }
