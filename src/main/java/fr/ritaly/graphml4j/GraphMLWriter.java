@@ -104,6 +104,11 @@ public final class GraphMLWriter {
 	 */
 	private final Stack<String> groupIds = new Stack<String>();
 
+	/**
+	 * The style applied to nodes.
+	 */
+	private final NodeStyle nodeStyle = new NodeStyle();
+
 	public GraphMLWriter(Writer writer) throws GraphMLException {
 		Validate.notNull(writer, "The given writer is null");
 
@@ -117,6 +122,18 @@ public final class GraphMLWriter {
 		} catch (FactoryConfigurationError e) {
 			throw new GraphMLException(e);
 		}
+	}
+
+	public NodeStyle getNodeStyle() {
+		// Defensive recopy
+		return new NodeStyle(nodeStyle);
+	}
+
+	public void setNodeStyle(NodeStyle style) {
+		Validate.notNull(style, "The given style is null");
+
+		// Defensive recopy
+		this.nodeStyle.apply(style);
 	}
 
 	/**
@@ -447,22 +464,20 @@ public final class GraphMLWriter {
 		}
 	}
 
-	private void writeNodeLabel(String label, Alignment alignment, FontStyle fontStyle) throws GraphMLException {
+	private void writeNodeLabel(String label) throws GraphMLException {
 		Validate.notNull(label, "The given label is null");
-		Validate.notNull(alignment, "The given alignment is null");
-		Validate.notNull(fontStyle, "The given font style is null");
 
 		try {
 			// y:NodeLabel
 			this.streamWriter.writeStartElement("y:NodeLabel");
-			this.streamWriter.writeAttribute("alignement", alignment.getValue());
-			this.streamWriter.writeAttribute("fontFamily", "Dialog");
-			this.streamWriter.writeAttribute("fontSize", "12");
-			this.streamWriter.writeAttribute("fontStyle", fontStyle.getValue());
-			this.streamWriter.writeAttribute("hasBackgroundColor", "false");
-			this.streamWriter.writeAttribute("hasLineColor", "false");
-			this.streamWriter.writeAttribute("textColor", "#000000");
-			this.streamWriter.writeAttribute("visible", "true");
+			this.streamWriter.writeAttribute("alignement", nodeStyle.getTextAlignment().getValue());
+			this.streamWriter.writeAttribute("fontFamily", nodeStyle.getFontFamily());
+			this.streamWriter.writeAttribute("fontSize", Integer.toString(nodeStyle.getFontSize()));
+			this.streamWriter.writeAttribute("fontStyle", nodeStyle.getFontStyle().getValue());
+			this.streamWriter.writeAttribute("hasBackgroundColor", Boolean.toString(nodeStyle.isHasBackgroundColor()));
+			this.streamWriter.writeAttribute("hasLineColor", Boolean.toString(nodeStyle.isHasLineColor()));
+			this.streamWriter.writeAttribute("textColor", nodeStyle.getTextColor());
+			this.streamWriter.writeAttribute("visible", Boolean.toString(nodeStyle.isVisible()));
 			this.streamWriter.writeCharacters(label);
 			this.streamWriter.writeEndElement(); // </y:NodeLabel>
 		} catch (XMLStreamException e) {
@@ -520,11 +535,11 @@ public final class GraphMLWriter {
 
 			this.streamWriter.writeStartElement("y:ShapeNode");
 
-			writeGeometry(30.0f, 30.0f);
-			writeFill("#FFCC00", false);
-			writeBorderStyle("#000000", LineType.LINE, 1.0f);
-			writeNodeLabel(label, Alignment.CENTER, FontStyle.PLAIN);
-			writeShape(Shape.RECTANGLE);
+			writeGeometry(nodeStyle.getHeight(), nodeStyle.getWidth());
+			writeFill(nodeStyle.getFillColor(), nodeStyle.isTransparentFill());
+			writeBorderStyle(nodeStyle.getBorderColor(), nodeStyle.getBorderType(), nodeStyle.getBorderWidth());
+			writeNodeLabel(label);
+			writeShape(nodeStyle.getShape());
 
 			this.streamWriter.writeEndElement(); // </y:ShapeNode>
 			this.streamWriter.writeEndElement(); // </data>
