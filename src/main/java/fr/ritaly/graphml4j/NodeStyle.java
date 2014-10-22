@@ -2,6 +2,9 @@ package fr.ritaly.graphml4j;
 
 import java.awt.Color;
 
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+
 import org.apache.commons.lang.Validate;
 
 public class NodeStyle {
@@ -317,5 +320,13 @@ public class NodeStyle {
 
 	public void setShadowOffsetY(int value) {
 		shapeObject.setShadowOffsetY(value);
+	}
+
+	void writeShape(XMLStreamWriter writer) throws XMLStreamException {
+		shapeObject.writeShape(writer);
+	}
+
+	void writeDropShadow(XMLStreamWriter writer) throws XMLStreamException {
+		shapeObject.writeDropShadow(writer);
 	}
 }

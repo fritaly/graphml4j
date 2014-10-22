@@ -420,18 +420,6 @@ public final class GraphMLWriter {
 		}
 	}
 
-	private void writeShape(Shape shape) throws GraphMLException {
-		Validate.notNull(shape, "The given shape is null");
-
-		try {
-			// y:Shape
-			this.streamWriter.writeEmptyElement("y:Shape");
-			this.streamWriter.writeAttribute("type", shape.getValue());
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
 	private void writePath(float sx, float sy, float tx, float ty) throws GraphMLException {
 		try {
 			// y:Path
@@ -480,23 +468,6 @@ public final class GraphMLWriter {
 			// y:BendStyle
 			this.streamWriter.writeEmptyElement("y:BendStyle");
 			this.streamWriter.writeAttribute("smoothed", Boolean.toString(smoothed));
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
-	private void writeDropShadow(Color color, int offsetX, int offsetY) throws GraphMLException {
-		try {
-			if ((color == null) || ((offsetX == 0) && (offsetY == 0))) {
-				// Nothing to render
-				return;
-			}
-
-			// y:DropShadow
-			this.streamWriter.writeEmptyElement("y:DropShadow");
-			this.streamWriter.writeAttribute("color", encode(color));
-			this.streamWriter.writeAttribute("offsetX", Integer.toString(offsetX));
-			this.streamWriter.writeAttribute("offsetY", Integer.toString(offsetY));
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
@@ -642,8 +613,9 @@ public final class GraphMLWriter {
 			writeFill(nodeStyle.getFillColor(), nodeStyle.getFillColor2(), nodeStyle.isTransparentFill());
 			writeBorderStyle(nodeStyle.getBorderColor(), nodeStyle.getBorderType(), nodeStyle.getBorderWidth());
 			writeNodeLabel(label);
-			writeShape(nodeStyle.getShape());
-			writeDropShadow(nodeStyle.getShadowColor(), nodeStyle.getShadowOffsetX(), nodeStyle.getShadowOffsetY());
+
+			nodeStyle.writeShape(streamWriter);
+			nodeStyle.writeDropShadow(streamWriter);
 
 			this.streamWriter.writeEndElement(); // </y:ShapeNode>
 			this.streamWriter.writeEndElement(); // </data>
@@ -734,8 +706,10 @@ public final class GraphMLWriter {
 			writeFill(openGroupStyle.getFillColor(), openGroupStyle.getFillColor2(), openGroupStyle.isTransparentFill());
 			writeBorderStyle(openGroupStyle.getBorderColor(), openGroupStyle.getBorderType(), openGroupStyle.getBorderWidth());
 			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
-			writeShape(openGroupStyle.getShape());
-			writeDropShadow(openGroupStyle.getShadowColor(), openGroupStyle.getShadowOffsetX(), openGroupStyle.getShadowOffsetY());
+
+			openGroupStyle.writeShape(streamWriter);
+			openGroupStyle.writeDropShadow(streamWriter);
+
 			writeState(false,  50, 50, false);
 			writeInsets(openGroupStyle.getInsets());
 			writeBorderInsets(openGroupStyle.getBorderInsets());
@@ -749,7 +723,9 @@ public final class GraphMLWriter {
 			writeFill(closedGroupStyle.getFillColor(), closedGroupStyle.getFillColor2(), closedGroupStyle.isTransparentFill());
 			writeBorderStyle(closedGroupStyle.getBorderColor(), closedGroupStyle.getBorderType(), closedGroupStyle.getBorderWidth());
 			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
-			writeShape(closedGroupStyle.getShape());
+
+			closedGroupStyle.writeShape(streamWriter);
+
 			writeState(true,  50, 50, false);
 			writeInsets(closedGroupStyle.getInsets());
 			writeBorderInsets(closedGroupStyle.getBorderInsets());
