@@ -114,6 +114,16 @@ public final class GraphMLWriter {
 	 */
 	private final EdgeStyle edgeStyle = new EdgeStyle();
 
+	/**
+	 * The style applied to open group nodes.
+	 */
+	private final GroupStyle openGroupStyle = new GroupStyle();
+
+	/**
+	 * The style applied to closed group nodes.
+	 */
+	private final GroupStyle closedGroupStyle = new GroupStyle();
+
 	public GraphMLWriter(Writer writer) throws GraphMLException {
 		Validate.notNull(writer, "The given writer is null");
 
@@ -127,6 +137,30 @@ public final class GraphMLWriter {
 		} catch (FactoryConfigurationError e) {
 			throw new GraphMLException(e);
 		}
+	}
+
+	public GroupStyle getClosedGroupStyle() {
+		// Defensive recopy
+		return new GroupStyle(closedGroupStyle);
+	}
+
+	public void setClosedGroupStyle(GroupStyle style) {
+		Validate.notNull(style, "The given style is null");
+
+		// Defensive recopy
+		this.closedGroupStyle.apply(style);
+	}
+
+	public GroupStyle getOpenGroupStyle() {
+		// Defensive recopy
+		return new GroupStyle(openGroupStyle);
+	}
+
+	public void setOpenGroupStyle(GroupStyle style) {
+		Validate.notNull(style, "The given style is null");
+
+		// Defensive recopy
+		this.openGroupStyle.apply(style);
 	}
 
 	public NodeStyle getNodeStyle() {
@@ -640,31 +674,31 @@ public final class GraphMLWriter {
 			this.streamWriter.writeStartElement("y:Realizers");
 			this.streamWriter.writeAttribute("active", "0");
 
-			// Define the group node when closed
-			this.streamWriter.writeStartElement("y:GroupNode");
-
-			writeGeometry(80.0f,  140.0f);
-			writeFill("#F5F5F5", false);
-			writeBorderStyle("#000000", LineType.DASHED, 1.0f);
-			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
-			writeShape(Shape.ROUNDED_RECTANGLE);
-			writeState(false,  50, 50, false);
-			writeInsets(15);
-			writeBorderInsets(0);
-
-			this.streamWriter.writeEndElement(); // </y:GroupNode>
-
 			// Define the group node when open
 			this.streamWriter.writeStartElement("y:GroupNode");
 
-			writeGeometry(50.0f,  50.0f);
-			writeFill("#F5F5F5", false);
-			writeBorderStyle("#000000", LineType.LINE, 1.0f);
+			writeGeometry(openGroupStyle.getHeight(), openGroupStyle.getWidth());
+			writeFill(openGroupStyle.getFillColor(), openGroupStyle.isTransparentFill());
+			writeBorderStyle(openGroupStyle.getBorderColor(), openGroupStyle.getBorderType(), openGroupStyle.getBorderWidth());
 			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
-			writeShape(Shape.ROUNDED_RECTANGLE);
+			writeShape(openGroupStyle.getShape());
+			writeState(false,  50, 50, false);
+			writeInsets(openGroupStyle.getInsets());
+			writeBorderInsets(openGroupStyle.getBorderInsets());
+
+			this.streamWriter.writeEndElement(); // </y:GroupNode>
+
+			// Define the group node when closed
+			this.streamWriter.writeStartElement("y:GroupNode");
+
+			writeGeometry(closedGroupStyle.getHeight(), closedGroupStyle.getWidth());
+			writeFill(closedGroupStyle.getFillColor(), closedGroupStyle.isTransparentFill());
+			writeBorderStyle(closedGroupStyle.getBorderColor(), closedGroupStyle.getBorderType(), closedGroupStyle.getBorderWidth());
+			writeNodeLabel_Group(label, Alignment.RIGHT, FontStyle.PLAIN);
+			writeShape(closedGroupStyle.getShape());
 			writeState(true,  50, 50, false);
-			writeInsets(5);
-			writeBorderInsets(0);
+			writeInsets(closedGroupStyle.getInsets());
+			writeBorderInsets(closedGroupStyle.getBorderInsets());
 
 			this.streamWriter.writeEndElement(); // </y:GroupNode>
 			this.streamWriter.writeEndElement(); // </y:Realizers>

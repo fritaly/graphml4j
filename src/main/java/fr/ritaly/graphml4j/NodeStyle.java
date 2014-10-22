@@ -2,7 +2,7 @@ package fr.ritaly.graphml4j;
 
 import org.apache.commons.lang.Validate;
 
-public final class NodeStyle {
+public class NodeStyle {
 
 	private float height = 30.0f;
 
