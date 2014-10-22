@@ -10,6 +10,8 @@ import org.apache.commons.lang.Validate;
 import fr.ritaly.graphml4j.base.Alignment;
 import fr.ritaly.graphml4j.base.FontStyle;
 import fr.ritaly.graphml4j.base.LineType;
+import fr.ritaly.graphml4j.base.Placement;
+import fr.ritaly.graphml4j.base.Position;
 import fr.ritaly.graphml4j.base.Shape;
 
 public class NodeStyle {
@@ -295,5 +297,21 @@ public class NodeStyle {
 
 	public void setLineColor(Color lineColor) {
 		labelObject.setLineColor(lineColor);
+	}
+
+	public Placement getPlacement() {
+		return labelObject.getPlacement();
+	}
+
+	public Position getPosition() {
+		return labelObject.getPosition();
+	}
+
+	public void setPlacement(Placement placement) {
+		labelObject.setPlacement(placement);
+	}
+
+	public void setPosition(Position position) {
+		labelObject.setPosition(position);
 	}
 }

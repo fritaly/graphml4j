@@ -9,6 +9,8 @@ import java.util.List;
 import fr.ritaly.graphml4j.base.Alignment;
 import fr.ritaly.graphml4j.base.Arrow;
 import fr.ritaly.graphml4j.base.LineType;
+import fr.ritaly.graphml4j.base.Placement;
+import fr.ritaly.graphml4j.base.Position;
 import fr.ritaly.graphml4j.base.Shape;
 
 public class Main {
@@ -31,6 +33,8 @@ public class Main {
 		nodeStyle.setShadowColor(Color.GRAY);
 		nodeStyle.setShadowOffsetX(5);
 		nodeStyle.setShadowOffsetY(5);
+		nodeStyle.setPlacement(Placement.INTERNAL);
+		nodeStyle.setPosition(Position.LEFT);
 
 		writer.setNodeStyle(nodeStyle);
 

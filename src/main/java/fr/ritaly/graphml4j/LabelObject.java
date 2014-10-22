@@ -9,6 +9,8 @@ import org.apache.commons.lang.Validate;
 
 import fr.ritaly.graphml4j.base.Alignment;
 import fr.ritaly.graphml4j.base.FontStyle;
+import fr.ritaly.graphml4j.base.Placement;
+import fr.ritaly.graphml4j.base.Position;
 
 final class LabelObject {
 
@@ -32,6 +34,10 @@ final class LabelObject {
 
 	private boolean underlinedText = false;
 
+	private Placement placement = Placement.INTERNAL;
+
+	private Position position = Position.CENTER;
+
 	public LabelObject() {
 	}
 
@@ -51,6 +57,32 @@ final class LabelObject {
 		this.underlinedText = object.underlinedText;
 		this.backgroundColor = object.backgroundColor;
 		this.lineColor = object.lineColor;
+		this.placement = object.placement;
+		this.position = object.position;
+	}
+
+	public Placement getPlacement() {
+		return placement;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPlacement(Placement placement) {
+		if (placement == null) {
+			this.placement = Placement.INTERNAL;
+		} else {
+			this.placement = placement;
+		}
+	}
+
+	public void setPosition(Position position) {
+		if (position == null) {
+			this.position = Position.CENTER;
+		} else {
+			this.position = position;
+		}
 	}
 
 	public Color getLineColor() {
@@ -146,6 +178,8 @@ final class LabelObject {
 		writer.writeAttribute("fontFamily", fontFamily);
 		writer.writeAttribute("fontSize", Integer.toString(fontSize));
 		writer.writeAttribute("fontStyle", fontStyle.getValue());
+		writer.writeAttribute("modelName", placement.getValue());
+		writer.writeAttribute("modelPosition", position.getValue());
 
 		if (backgroundColor != null) {
 			writer.writeAttribute("backgroundColor", Utils.encode(backgroundColor));
