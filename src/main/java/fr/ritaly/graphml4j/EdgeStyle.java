@@ -2,6 +2,9 @@ package fr.ritaly.graphml4j;
 
 import java.awt.Color;
 
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+
 import org.apache.commons.lang.Validate;
 
 import fr.ritaly.graphml4j.base.Arrow;
@@ -52,7 +55,7 @@ public final class EdgeStyle {
 	}
 
 	public void setSourceArrow(Arrow arrow) {
-		Validate.notNull(arrow, "The given aroow is null");
+		Validate.notNull(arrow, "The given arrow is null");
 
 		this.sourceArrow = arrow;
 	}
@@ -62,7 +65,7 @@ public final class EdgeStyle {
 	}
 
 	public void setTargetArrow(Arrow arrow) {
-		Validate.notNull(arrow, "The given aroow is null");
+		Validate.notNull(arrow, "The given arrow is null");
 
 		this.targetArrow = arrow;
 	}
@@ -95,5 +98,34 @@ public final class EdgeStyle {
 		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
 
 		this.width = width;
+	}
+
+	void writeTo(XMLStreamWriter writer) throws XMLStreamException {
+		Validate.notNull(writer, "The given stream writer is null");
+
+		// What is the path used for ?
+		// TODO Create properties for sx, sy, tx and ty
+
+		// y:Path
+		writer.writeEmptyElement("y:Path");
+		writer.writeAttribute("sx", String.format("%.1f", 0));
+		writer.writeAttribute("sy", String.format("%.1f", 0));
+		writer.writeAttribute("tx", String.format("%.1f", 0));
+		writer.writeAttribute("ty", String.format("%.1f", 0));
+
+		// y:LineStyle
+		writer.writeEmptyElement("y:LineStyle");
+		writer.writeAttribute("color", Utils.encode(color));
+		writer.writeAttribute("type", type.getValue());
+		writer.writeAttribute("width", String.format("%.1f", width));
+
+		// y:Arrows
+		writer.writeEmptyElement("y:Arrows");
+		writer.writeAttribute("source", sourceArrow.getValue());
+		writer.writeAttribute("target", targetArrow.getValue());
+
+		// y:BendStyle
+		writer.writeEmptyElement("y:BendStyle");
+		writer.writeAttribute("smoothed", Boolean.toString(smoothed));
 	}
 }

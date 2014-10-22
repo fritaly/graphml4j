@@ -19,9 +19,7 @@ import javax.xml.stream.XMLStreamWriter;
 import org.apache.commons.lang.Validate;
 
 import fr.ritaly.graphml4j.base.Alignment;
-import fr.ritaly.graphml4j.base.Arrow;
 import fr.ritaly.graphml4j.base.FontStyle;
-import fr.ritaly.graphml4j.base.LineType;
 
 public final class GraphMLWriter {
 
@@ -372,59 +370,6 @@ public final class GraphMLWriter {
 
 	// --- Internal helper methods --- //
 
-	private void writePath(float sx, float sy, float tx, float ty) throws GraphMLException {
-		try {
-			// y:Path
-			this.streamWriter.writeEmptyElement("y:Path");
-			this.streamWriter.writeAttribute("sx", String.format("%.1f", sx));
-			this.streamWriter.writeAttribute("sy", String.format("%.1f", sy));
-			this.streamWriter.writeAttribute("tx", String.format("%.1f", tx));
-			this.streamWriter.writeAttribute("ty", String.format("%.1f", ty));
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
-	private void writeLineStyle(Color color, LineType type, float width) throws GraphMLException {
-		Validate.notNull(color, "The given color is null");
-		Validate.notNull(type, "The given line type is null");
-		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
-
-		try {
-            // y:LineStyle
-            this.streamWriter.writeEmptyElement("y:LineStyle");
-            this.streamWriter.writeAttribute("color", encode(color));
-            this.streamWriter.writeAttribute("type", type.getValue());
-            this.streamWriter.writeAttribute("width", String.format("%.1f", width));
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
-	private void writeArrows(Arrow source, Arrow target) throws GraphMLException {
-		Validate.notNull(source, "The given source arrow is null");
-		Validate.notNull(target, "The given target arrow is null");
-
-		try {
-			// y:Arrows
-			this.streamWriter.writeEmptyElement("y:Arrows");
-			this.streamWriter.writeAttribute("source", source.getValue());
-			this.streamWriter.writeAttribute("target", target.getValue());
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
-	private void writeBendStyle(boolean smoothed) throws GraphMLException {
-		try {
-			// y:BendStyle
-			this.streamWriter.writeEmptyElement("y:BendStyle");
-			this.streamWriter.writeAttribute("smoothed", Boolean.toString(smoothed));
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
 	private void writeBorderInsets(float value) throws GraphMLException {
 		writeBorderInsets(value, value, value, value);
 	}
@@ -609,11 +554,7 @@ public final class GraphMLWriter {
 
 			this.streamWriter.writeStartElement("y:PolyLineEdge");
 
-			// What is the path used for ?
-			writePath(0.0f, 0.0f, 0.0f, 0.0f);
-			writeLineStyle(edgeStyle.getColor(), edgeStyle.getType(), edgeStyle.getWidth());
-			writeArrows(edgeStyle.getSourceArrow(), edgeStyle.getTargetArrow());
-			writeBendStyle(edgeStyle.isSmoothed());
+			edgeStyle.writeTo(streamWriter);
 
 			this.streamWriter.writeEndElement(); // </y:PolyLineEdge>
 			this.streamWriter.writeEndElement(); // </data>
