@@ -2,6 +2,9 @@ package fr.ritaly.graphml4j;
 
 import java.awt.Color;
 
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+
 import org.apache.commons.lang.Validate;
 
 final class ShapeObject {
@@ -62,5 +65,28 @@ final class ShapeObject {
 
 	public void setShadowOffsetY(int value) {
 		this.shadowOffsetY = value;
+	}
+
+	void writeShape(XMLStreamWriter writer) throws XMLStreamException {
+		Validate.notNull(writer, "The given stream writer is null");
+
+		// y:Shape
+		writer.writeEmptyElement("y:Shape");
+		writer.writeAttribute("type", shape.getValue());
+	}
+
+	void writeDropShadow(XMLStreamWriter writer) throws XMLStreamException {
+		Validate.notNull(writer, "The given stream writer is null");
+
+		if ((shadowColor == null) || ((shadowOffsetX == 0) && (shadowOffsetY == 0))) {
+			// Nothing to render
+			return;
+		}
+
+		// y:DropShadow
+		writer.writeEmptyElement("y:DropShadow");
+		writer.writeAttribute("color", Utils.encode(shadowColor));
+		writer.writeAttribute("offsetX", Integer.toString(shadowOffsetX));
+		writer.writeAttribute("offsetY", Integer.toString(shadowOffsetY));
 	}
 }
