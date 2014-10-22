@@ -1,10 +1,12 @@
 package fr.ritaly.graphml4j;
 
+import java.awt.Color;
+
 import org.apache.commons.lang.Validate;
 
 public final class EdgeStyle {
 
-	private String color = "#000000";
+	private Color color = Color.BLACK;
 
 	private LineType type = LineType.LINE;
 
@@ -62,11 +64,11 @@ public final class EdgeStyle {
 		this.targetArrow = arrow;
 	}
 
-	public String getColor() {
+	public Color getColor() {
 		return color;
 	}
 
-	public void setColor(String color) {
+	public void setColor(Color color) {
 		Validate.notNull(color, "The given color is null");
 
 		this.color = color;

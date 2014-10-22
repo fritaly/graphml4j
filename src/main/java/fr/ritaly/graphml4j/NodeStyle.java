@@ -1,5 +1,7 @@
 package fr.ritaly.graphml4j;
 
+import java.awt.Color;
+
 import org.apache.commons.lang.Validate;
 
 public class NodeStyle {
@@ -8,11 +10,11 @@ public class NodeStyle {
 
 	private float width = 30.0f;
 
-	private String fillColor = "#FFCC00";
+	private Color fillColor = Color.decode("#FFCC00");
 
 	private boolean transparentFill = false;
 
-	private String borderColor = "#000000";
+	private Color borderColor = Color.BLACK;
 
 	private LineType borderType = LineType.LINE;
 
@@ -28,7 +30,7 @@ public class NodeStyle {
 
 	private int fontSize = 12;
 
-	private String textColor = "#000000";
+	private Color textColor = Color.BLACK;
 
 	private boolean hasBackgroundColor = false;
 
@@ -88,14 +90,14 @@ public class NodeStyle {
 		this.hasLineColor = hasLineColor;
 	}
 
-	public String getTextColor() {
+	public Color getTextColor() {
 		return textColor;
 	}
 
-	public void setTextColor(String textColor) {
-		Validate.notNull(textColor, "The given text color is null");
+	public void setTextColor(Color color) {
+		Validate.notNull(color, "The given text color is null");
 
-		this.textColor = textColor;
+		this.textColor = color;
 	}
 
 	public int getFontSize() {
@@ -158,14 +160,14 @@ public class NodeStyle {
 		this.width = width;
 	}
 
-	public String getFillColor() {
+	public Color getFillColor() {
 		return fillColor;
 	}
 
-	public void setFillColor(String fillColor) {
-		Validate.notNull(fillColor, "The given fill color is null");
+	public void setFillColor(Color color) {
+		Validate.notNull(color, "The given fill color is null");
 
-		this.fillColor = fillColor;
+		this.fillColor = color;
 	}
 
 	public boolean isTransparentFill() {
@@ -176,14 +178,14 @@ public class NodeStyle {
 		this.transparentFill = transparentFill;
 	}
 
-	public String getBorderColor() {
+	public Color getBorderColor() {
 		return borderColor;
 	}
 
-	public void setBorderColor(String borderColor) {
-		Validate.notNull(borderColor, "The given border color is null");
+	public void setBorderColor(Color color) {
+		Validate.notNull(color, "The given border color is null");
 
-		this.borderColor = borderColor;
+		this.borderColor = color;
 	}
 
 	public LineType getBorderType() {

@@ -1,5 +1,6 @@
 package fr.ritaly.graphml4j;
 
+import java.awt.Color;
 import java.io.StringWriter;
 
 public class Main {
@@ -13,7 +14,7 @@ public class Main {
 		final NodeStyle nodeStyle = writer.getNodeStyle();
 		nodeStyle.setBorderType(LineType.LINE);
 		nodeStyle.setBorderWidth(2.0f);
-		nodeStyle.setFillColor("#CCCCCC");
+		nodeStyle.setFillColor(Color.GRAY);
 		nodeStyle.setFontSize(13);
 		nodeStyle.setHeight(60.0f);
 		nodeStyle.setWidth(60.0f);
@@ -23,7 +24,7 @@ public class Main {
 		writer.setNodeStyle(nodeStyle);
 
 		final EdgeStyle edgeStyle = writer.getEdgeStyle();
-		edgeStyle.setColor("#000000");
+		edgeStyle.setColor(Color.BLACK);
 		edgeStyle.setSmoothed(true);
 		edgeStyle.setSourceArrow(Arrow.CIRCLE);
 		edgeStyle.setTargetArrow(Arrow.DELTA);

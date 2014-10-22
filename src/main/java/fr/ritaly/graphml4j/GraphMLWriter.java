@@ -140,10 +140,6 @@ public final class GraphMLWriter {
 		}
 	}
 
-	public static void main(String[] args) {
-		System.out.println(encode(Color.BLUE));
-	}
-
 	/**
 	 * Encodes the given color into an hexadecimal string like "#RRGGBB".
 	 *
@@ -387,20 +383,20 @@ public final class GraphMLWriter {
 		}
 	}
 
-	private void writeFill(String color, boolean transparent) throws GraphMLException {
+	private void writeFill(Color color, boolean transparent) throws GraphMLException {
 		Validate.notNull(color, "The given color is null");
 
 		try {
 			// y:Fill
 			this.streamWriter.writeEmptyElement("y:Fill");
-			this.streamWriter.writeAttribute("color", color);
+			this.streamWriter.writeAttribute("color", encode(color));
 			this.streamWriter.writeAttribute("transparent", Boolean.toString(transparent));
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
 		}
 	}
 
-	private void writeBorderStyle(String color, LineType type, float width) throws GraphMLException {
+	private void writeBorderStyle(Color color, LineType type, float width) throws GraphMLException {
 		Validate.notNull(color, "The given color is null");
 		Validate.notNull(type, "The given line type is null");
 		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
@@ -408,7 +404,7 @@ public final class GraphMLWriter {
 		try {
             // y:BorderStyle
             this.streamWriter.writeEmptyElement("y:BorderStyle");
-            this.streamWriter.writeAttribute("color", color);
+            this.streamWriter.writeAttribute("color", encode(color));
             this.streamWriter.writeAttribute("type", type.getValue());
             this.streamWriter.writeAttribute("width", String.format("%.1f", width));
 		} catch (XMLStreamException e) {
@@ -441,7 +437,7 @@ public final class GraphMLWriter {
 		}
 	}
 
-	private void writeLineStyle(String color, LineType type, float width) throws GraphMLException {
+	private void writeLineStyle(Color color, LineType type, float width) throws GraphMLException {
 		Validate.notNull(color, "The given color is null");
 		Validate.notNull(type, "The given line type is null");
 		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
@@ -449,7 +445,7 @@ public final class GraphMLWriter {
 		try {
             // y:LineStyle
             this.streamWriter.writeEmptyElement("y:LineStyle");
-            this.streamWriter.writeAttribute("color", color);
+            this.streamWriter.writeAttribute("color", encode(color));
             this.streamWriter.writeAttribute("type", type.getValue());
             this.streamWriter.writeAttribute("width", String.format("%.1f", width));
 		} catch (XMLStreamException e) {
@@ -545,7 +541,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeAttribute("fontStyle", nodeStyle.getFontStyle().getValue());
 			this.streamWriter.writeAttribute("hasBackgroundColor", Boolean.toString(nodeStyle.isHasBackgroundColor()));
 			this.streamWriter.writeAttribute("hasLineColor", Boolean.toString(nodeStyle.isHasLineColor()));
-			this.streamWriter.writeAttribute("textColor", nodeStyle.getTextColor());
+			this.streamWriter.writeAttribute("textColor", encode(nodeStyle.getTextColor()));
 			this.streamWriter.writeAttribute("visible", Boolean.toString(nodeStyle.isVisible()));
 			this.streamWriter.writeCharacters(label);
 			this.streamWriter.writeEndElement(); // </y:NodeLabel>

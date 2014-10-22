@@ -1,5 +1,7 @@
 package fr.ritaly.graphml4j;
 
+import java.awt.Color;
+
 import org.apache.commons.lang.Validate;
 
 public class GroupStyle extends NodeStyle {
@@ -12,9 +14,9 @@ public class GroupStyle extends NodeStyle {
 		// Apply the default values here
 		setHeight(80.0f);
 		setWidth(140.0f);
-		setFillColor("#F5F5F5");
+		setFillColor(Color.decode("#F5F5F5"));
 		setTransparentFill(false);
-		setBorderColor("#000000");
+		setBorderColor(Color.BLACK);
 		setBorderType(LineType.DASHED);
 		setBorderWidth(1.0f);
 		setShape(Shape.ROUNDED_RECTANGLE);
@@ -24,7 +26,7 @@ public class GroupStyle extends NodeStyle {
 		setHasBackgroundColor(false);
 		setHasLineColor(false);
 		setTextAlignment(Alignment.CENTER);
-		setTextColor("#000000");
+		setTextColor(Color.BLACK);
 		setVisible(true);
 	}
 
