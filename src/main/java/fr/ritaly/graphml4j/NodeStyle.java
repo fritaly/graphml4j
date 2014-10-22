@@ -43,65 +43,6 @@ public class NodeStyle {
 		this.shapeObject.apply(style.shapeObject);
 	}
 
-//	public void setInsets(int value) {
-//		setBottomInset(value);
-//		setTopInset(value);
-//		setLeftInset(value);
-//		setRightInset(value);
-//	}
-//
-//	public boolean hasInsets() {
-//		return (bottomInset != 0) || (topInset != 0) || (leftInset != 0) || (rightInset != 0);
-//	}
-//
-//	public int getBottomInset() {
-//		return bottomInset;
-//	}
-//
-//	public int getLeftInset() {
-//		return leftInset;
-//	}
-//
-//	public int getRightInset() {
-//		return rightInset;
-//	}
-//
-//	public int getTopInset() {
-//		return topInset;
-//	}
-//
-//	public void setBottomInset(int value) {
-//		this.bottomInset = value;
-//	}
-//
-//	public void setLeftInset(int value) {
-//		this.leftInset = value;
-//	}
-//
-//	public void setRightInset(int value) {
-//		this.rightInset = value;
-//	}
-//
-//	public void setTopInset(int value) {
-//		this.topInset = value;
-//	}
-
-//	public boolean isHasBackgroundColor() {
-//		return hasBackgroundColor;
-//	}
-//
-//	public void setHasBackgroundColor(boolean hasBackgroundColor) {
-//		this.hasBackgroundColor = hasBackgroundColor;
-//	}
-//
-//	public boolean isHasLineColor() {
-//		return hasLineColor;
-//	}
-//
-//	public void setHasLineColor(boolean hasLineColor) {
-//		this.hasLineColor = hasLineColor;
-//	}
-
 	// --- Shape properties --- //
 
 	public Shape getShape() {
