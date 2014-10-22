@@ -18,6 +18,7 @@ public class NodeStyle {
 
 	private boolean transparentFill = false;
 
+	// This color is optional
 	private Color borderColor = Color.BLACK;
 
 	private LineType borderType = LineType.LINE;
@@ -196,8 +197,7 @@ public class NodeStyle {
 	}
 
 	public void setBorderColor(Color color) {
-		Validate.notNull(color, "The given border color is null");
-
+		// This color is optional
 		this.borderColor = color;
 	}
 
