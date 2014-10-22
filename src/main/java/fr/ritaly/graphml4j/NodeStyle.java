@@ -25,8 +25,6 @@ public class NodeStyle {
 
 	private float borderWidth = 1.0f;
 
-	private Shape shape = Shape.RECTANGLE;
-
 	private Alignment textAlignment = Alignment.CENTER;
 
 	private FontStyle fontStyle = FontStyle.PLAIN;
@@ -47,10 +45,7 @@ public class NodeStyle {
 
 	private int bottomInset, leftInset, rightInset, topInset;
 
-	// This color is optional
-	private Color shadowColor;
-
-	private int shadowOffsetX, shadowOffsetY;
+	private final ShapeObject shapeObject = new ShapeObject();
 
 	public NodeStyle() {
 	}
@@ -73,16 +68,14 @@ public class NodeStyle {
 		this.hasBackgroundColor = style.hasBackgroundColor;
 		this.hasLineColor = style.hasLineColor;
 		this.height = style.height;
-		this.shape = style.shape;
 		this.textAlignment = style.textAlignment;
 		this.textColor = style.textColor;
 		this.transparentFill = style.transparentFill;
 		this.visible = style.visible;
 		this.width = style.width;
 
-		this.shadowColor = style.shadowColor;
-		this.shadowOffsetX = style.shadowOffsetX;
-		this.shadowOffsetY = style.shadowOffsetY;
+		// Apply the shape properties
+		this.shapeObject.apply(style.shapeObject);
 
 		this.underlinedText = style.underlinedText;
 
@@ -141,31 +134,6 @@ public class NodeStyle {
 
 	public void setUnderlinedText(boolean value) {
 		this.underlinedText = value;
-	}
-
-	public Color getShadowColor() {
-		return shadowColor;
-	}
-
-	public int getShadowOffsetX() {
-		return shadowOffsetX;
-	}
-
-	public int getShadowOffsetY() {
-		return shadowOffsetY;
-	}
-
-	public void setShadowColor(Color color) {
-		// This color is optional
-		this.shadowColor = color;
-	}
-
-	public void setShadowOffsetX(int value) {
-		this.shadowOffsetX = value;
-	}
-
-	public void setShadowOffsetY(int value) {
-		this.shadowOffsetY = value;
 	}
 
 	public boolean isVisible() {
@@ -317,14 +285,37 @@ public class NodeStyle {
 		this.borderWidth = borderWidth;
 	}
 
+	// --- Shape properties --- //
+
 	public Shape getShape() {
-		return shape;
+		return shapeObject.getShape();
 	}
 
 	public void setShape(Shape shape) {
-		Validate.notNull(shape, "The given shape is null");
-
-		this.shape = shape;
+		shapeObject.setShape(shape);
 	}
 
+	public Color getShadowColor() {
+		return shapeObject.getShadowColor();
+	}
+
+	public int getShadowOffsetX() {
+		return shapeObject.getShadowOffsetX();
+	}
+
+	public int getShadowOffsetY() {
+		return shapeObject.getShadowOffsetY();
+	}
+
+	public void setShadowColor(Color color) {
+		shapeObject.setShadowColor(color);
+	}
+
+	public void setShadowOffsetX(int value) {
+		shapeObject.setShadowOffsetX(value);
+	}
+
+	public void setShadowOffsetY(int value) {
+		shapeObject.setShadowOffsetY(value);
+	}
 }
