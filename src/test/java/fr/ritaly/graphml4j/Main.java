@@ -2,6 +2,9 @@ package fr.ritaly.graphml4j;
 
 import java.awt.Color;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Main {
 
@@ -33,23 +36,29 @@ public class Main {
 
 		writer.setEdgeStyle(edgeStyle);
 
-		// Generate the graph
+		// Generate a random graph
 		writer.graph();
-		writer.group("TEST");
 
-		String prevNodeId = null;
+		final List<String> nodeIds = new ArrayList<String>();
 
-		for (int i = 0; i < 5; i++) {
-			final String nodeId = writer.node(Integer.toString(i));
+		// Generate some nodes
+		for (int i = 0; i < 3; i++) {
+			writer.group(String.format("G%d", i + 1));
 
-			if ((i > 0) && (i < 4)) {
-				writer.edge(prevNodeId, nodeId);
+			for (int j = 0; j < 5; j++) {
+				nodeIds.add(writer.node(String.format("N%d", (i * 5) + j + 1)));
 			}
 
-			prevNodeId = nodeId;
+			writer.closeGroup();
 		}
 
-		writer.closeGroup();
+		// Generate some edges
+		for (int i = 0; i < 15; i++) {
+			Collections.shuffle(nodeIds);
+
+			writer.edge(nodeIds.get(0), nodeIds.get(1));
+		}
+
 		writer.closeGraph();
 
 		System.out.println(stringWriter.toString());
