@@ -17,50 +17,54 @@ import fr.ritaly.graphml4j.base.Shape;
 
 public class Main {
 
+	private static final boolean CUSTOMIZE_STYLES = false;
+
 	public static void main(String[] args) throws Exception {
 		final StringWriter stringWriter = new StringWriter();
 
 		GraphMLWriter writer = new GraphMLWriter(stringWriter);
 
-		// Customize the rendering of nodes
-		final NodeStyle nodeStyle = writer.getNodeStyle();
-		nodeStyle.setBorderType(LineType.LINE);
-		nodeStyle.setBorderWidth(2.0f);
-		nodeStyle.setFillColor(Color.GRAY.brighter());
-		nodeStyle.setFontSize(13);
-		nodeStyle.setHeight(60.0f);
-		nodeStyle.setWidth(60.0f);
-		nodeStyle.setShape(Shape.ROUNDED_RECTANGLE);
-		nodeStyle.setTextAlignment(Alignment.CENTER);
-		nodeStyle.setShadowColor(Color.GRAY);
-		nodeStyle.setShadowOffsetX(5);
-		nodeStyle.setShadowOffsetY(5);
-		nodeStyle.setPlacement(Placement.INTERNAL);
-		nodeStyle.setPosition(Position.LEFT);
+		if (CUSTOMIZE_STYLES) {
+			// Customize the rendering of nodes
+			final NodeStyle nodeStyle = writer.getNodeStyle();
+			nodeStyle.setBorderType(LineType.LINE);
+			nodeStyle.setBorderWidth(2.0f);
+			nodeStyle.setFillColor(Color.GRAY.brighter());
+			nodeStyle.setFontSize(13);
+			nodeStyle.setHeight(60.0f);
+			nodeStyle.setWidth(60.0f);
+			nodeStyle.setShape(Shape.ROUNDED_RECTANGLE);
+			nodeStyle.setTextAlignment(Alignment.CENTER);
+			nodeStyle.setShadowColor(Color.GRAY);
+			nodeStyle.setShadowOffsetX(5);
+			nodeStyle.setShadowOffsetY(5);
+			nodeStyle.setPlacement(Placement.INTERNAL);
+			nodeStyle.setPosition(Position.LEFT);
 
-		writer.setNodeStyle(nodeStyle);
+			writer.setNodeStyle(nodeStyle);
 
-		// Customize the rendering of edges
-		final EdgeStyle edgeStyle = writer.getEdgeStyle();
-		edgeStyle.setColor(Color.BLACK);
-		edgeStyle.setSmoothed(true);
-		edgeStyle.setSourceArrow(Arrow.CIRCLE);
-		edgeStyle.setTargetArrow(Arrow.DELTA);
-		edgeStyle.setType(LineType.LINE);
-		edgeStyle.setWidth(2.0f);
+			// Customize the rendering of edges
+			final EdgeStyle edgeStyle = writer.getEdgeStyle();
+			edgeStyle.setColor(Color.BLACK);
+			edgeStyle.setSmoothed(true);
+			edgeStyle.setSourceArrow(Arrow.CIRCLE);
+			edgeStyle.setTargetArrow(Arrow.DELTA);
+			edgeStyle.setType(LineType.LINE);
+			edgeStyle.setWidth(2.0f);
 
-		writer.setEdgeStyle(edgeStyle);
+			writer.setEdgeStyle(edgeStyle);
 
-		// Customize the rendering of groups
-		final GroupStyles groupStyles = writer.getGroupStyles();
-		groupStyles.setBackgroundColor(Color.GRAY.brighter());
-		groupStyles.setBorderColor(Color.BLACK);
-		groupStyles.setBorderType(LineType.DASHED);
-		groupStyles.setBorderWidth(2.0f);
-		groupStyles.setFillColor(Color.GREEN.brighter());
-		groupStyles.setFontStyle(FontStyle.BOLD);
+			// Customize the rendering of groups
+			final GroupStyles groupStyles = writer.getGroupStyles();
+			groupStyles.setBackgroundColor(Color.GRAY.brighter());
+			groupStyles.setBorderColor(Color.BLACK);
+			groupStyles.setBorderType(LineType.DASHED);
+			groupStyles.setBorderWidth(2.0f);
+			groupStyles.setFillColor(Color.GREEN.brighter());
+			groupStyles.setFontStyle(FontStyle.BOLD);
 
-		writer.setGroupStyles(groupStyles);
+			writer.setGroupStyles(groupStyles);
+		}
 
 		// Generate a random graph
 		writer.graph();
