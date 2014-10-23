@@ -1,5 +1,10 @@
 package fr.ritaly.graphml4j.base;
 
+/**
+ * Enumeration of possible line / border types.
+ *
+ * @author francois_ritaly
+ */
 public enum LineType {
 	LINE("line"),
 	DASHED("dashed"),

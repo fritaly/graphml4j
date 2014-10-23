@@ -1,5 +1,10 @@
 package fr.ritaly.graphml4j.base;
 
+/**
+ * Enumeration of possible text alignments.
+ *
+ * @author francois_ritaly
+ */
 public enum Alignment {
 	CENTER("center"),
 	LEFT("left"),

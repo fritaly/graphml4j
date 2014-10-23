@@ -1,5 +1,10 @@
 package fr.ritaly.graphml4j.base;
 
+/**
+ * Enumeration of possible font styles.
+ *
+ * @author francois_ritaly
+ */
 public enum FontStyle {
 	PLAIN("plain"),
 	BOLD("bold"),

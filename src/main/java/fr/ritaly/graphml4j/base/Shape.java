@@ -1,5 +1,10 @@
 package fr.ritaly.graphml4j.base;
 
+/**
+ * Enumeration of possible shapes (for rendering nodes & groups).
+ *
+ * @author francois_ritaly
+ */
 public enum Shape {
 	RECTANGLE("rectangle"),
 	TRIANGLE("triangle"),

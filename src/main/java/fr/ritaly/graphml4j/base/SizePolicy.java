@@ -1,5 +1,10 @@
 package fr.ritaly.graphml4j.base;
 
+/**
+ * Enumeration of possible sizing policies.
+ *
+ * @author francois_ritaly
+ */
 public enum SizePolicy {
 	CONTENT("content"),
 	NODE_WIDTH("node_width"),

@@ -1,5 +1,10 @@
 package fr.ritaly.graphml4j.base;
 
+/**
+ * Enumeration of possible arrows (for rendering edges).
+ *
+ * @author francois_ritaly
+ */
 public enum Arrow {
 	NONE("none"),
 	STANDARD("standard"),

@@ -1,5 +1,10 @@
 package fr.ritaly.graphml4j.base;
 
+/**
+ * Enumeration of possible placement strategies.
+ *
+ * @author francois_ritaly
+ */
 public enum Placement {
 	INTERNAL("internal"),
 	CUSTOM("custom"),
