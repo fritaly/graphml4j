@@ -24,7 +24,7 @@ final class GeneralStyle {
 	private float width = 30.0f;
 
 	// This color is optional
-	private Color fillColor = Color.decode("#FFCC00");
+	private Color fillColor = Utils.decode("#FFCC00");
 
 	// This color is optional
 	private Color fillColor2;

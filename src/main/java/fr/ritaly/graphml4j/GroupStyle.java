@@ -23,7 +23,7 @@ public class GroupStyle extends NodeStyle {
 		// Apply the default values here
 		setHeight(80.0f);
 		setWidth(140.0f);
-		setFillColor(Color.decode("#F5F5F5"));
+		setFillColor(Utils.decode("#F5F5F5"));
 		setTransparentFill(false);
 		setBorderColor(Color.BLACK);
 		setBorderType(LineType.DASHED);
