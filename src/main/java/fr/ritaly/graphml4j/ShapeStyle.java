@@ -16,12 +16,12 @@ import fr.ritaly.graphml4j.base.Shape;
  */
 final class ShapeStyle {
 
-	private Shape shape = Shape.RECTANGLE;
+	private Shape shape = Shape.ROUNDED_RECTANGLE;
 
 	// This color is optional
 	private Color shadowColor = Utils.decode("#B3A691");
 
-	private int shadowOffsetX, shadowOffsetY;
+	private int shadowOffsetX = 3, shadowOffsetY = 3;
 
 	public ShapeStyle() {
 	}

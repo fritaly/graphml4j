@@ -19,12 +19,12 @@ final class GeneralStyle {
 	// The properties x & y aren't defined here because they're not style
 	// properties
 
-	private float height = 30.0f;
+	private float height = 40.0f;
 
-	private float width = 30.0f;
+	private float width = 40.0f;
 
 	// This color is optional
-	private Color fillColor = Utils.decode("#FFCC00");
+	private Color fillColor = Utils.decode("#99CC00");
 
 	// This color is optional
 	private Color fillColor2;
@@ -34,7 +34,7 @@ final class GeneralStyle {
 
 	private LineType borderType = LineType.LINE;
 
-	private float borderWidth = 1.0f;
+	private float borderWidth = 2.0f;
 
 	private boolean transparentFill = false;
 
