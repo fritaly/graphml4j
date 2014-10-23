@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import fr.ritaly.graphml4j.base.Alignment;
 import fr.ritaly.graphml4j.base.Arrow;
@@ -55,7 +56,7 @@ public class Main {
 
 		// Generate some nodes
 		for (int i = 0; i < 3; i++) {
-			writer.group(String.format("G%d", i + 1));
+			writer.group(String.format("G%d", i + 1), new Random().nextBoolean());
 
 			for (int j = 0; j < 5; j++) {
 				nodeIds.add(writer.node(String.format("N%d", (i * 5) + j + 1)));

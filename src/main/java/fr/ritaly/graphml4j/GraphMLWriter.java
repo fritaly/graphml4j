@@ -445,7 +445,7 @@ public final class GraphMLWriter {
 
 	// --- Group --- //
 
-	public String group(String label) throws GraphMLException {
+	public String group(String label, boolean open) throws GraphMLException {
 		assertState(State.GRAPH_OPENED);
 
 		try {
@@ -454,7 +454,7 @@ public final class GraphMLWriter {
 
 			this.streamWriter.writeStartElement("node");
 			this.streamWriter.writeAttribute("id", groupId);
-			this.streamWriter.writeAttribute("yfiles.foldertype", "group");
+			this.streamWriter.writeAttribute("yfiles.foldertype", open ? "group" : "folder");
 
 			this.streamWriter.writeEmptyElement("data");
 			this.streamWriter.writeAttribute("key", ID_NODE_URL);
@@ -468,7 +468,7 @@ public final class GraphMLWriter {
 			this.streamWriter.writeStartElement("y:ProxyAutoBoundsNode");
 
 			this.streamWriter.writeStartElement("y:Realizers");
-			this.streamWriter.writeAttribute("active", "0");
+			this.streamWriter.writeAttribute("active", open ? "0" : "1");
 
 			// Define the group node when open
 			this.streamWriter.writeStartElement("y:GroupNode");
