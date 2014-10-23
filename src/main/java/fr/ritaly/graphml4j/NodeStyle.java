@@ -17,7 +17,7 @@ import fr.ritaly.graphml4j.base.SizePolicy;
 
 public class NodeStyle {
 
-	private final GenericObject genericObject = new GenericObject();
+	private final GeneralStyle generalStyle = new GeneralStyle();
 
 	private final ShapeStyle shapeStyle = new ShapeStyle();
 
@@ -37,7 +37,7 @@ public class NodeStyle {
 		this.labelStyle.apply(style.labelStyle);
 
 		// Apply the generic properties
-		this.genericObject.apply(style.genericObject);
+		this.generalStyle.apply(style.generalStyle);
 
 		// Apply the shape properties
 		this.shapeStyle.apply(style.shapeStyle);
@@ -88,79 +88,79 @@ public class NodeStyle {
 	// --- Generic properties --- //
 
 	public float getHeight() {
-		return genericObject.getHeight();
+		return generalStyle.getHeight();
 	}
 
 	public void setHeight(float height) {
-		genericObject.setHeight(height);
+		generalStyle.setHeight(height);
 	}
 
 	public float getWidth() {
-		return genericObject.getWidth();
+		return generalStyle.getWidth();
 	}
 
 	public void setWidth(float width) {
-		genericObject.setWidth(width);
+		generalStyle.setWidth(width);
 	}
 
 	public Color getFillColor() {
-		return genericObject.getFillColor();
+		return generalStyle.getFillColor();
 	}
 
 	public void setFillColor(Color color) {
-		genericObject.setFillColor(color);
+		generalStyle.setFillColor(color);
 	}
 
 	public Color getFillColor2() {
-		return genericObject.getFillColor2();
+		return generalStyle.getFillColor2();
 	}
 
 	public void setFillColor2(Color fillColor2) {
-		genericObject.setFillColor2(fillColor2);
+		generalStyle.setFillColor2(fillColor2);
 	}
 
 	public Color getBorderColor() {
-		return genericObject.getBorderColor();
+		return generalStyle.getBorderColor();
 	}
 
 	public void setBorderColor(Color color) {
-		genericObject.setBorderColor(color);
+		generalStyle.setBorderColor(color);
 	}
 
 	public LineType getBorderType() {
-		return genericObject.getBorderType();
+		return generalStyle.getBorderType();
 	}
 
 	public void setBorderType(LineType borderType) {
-		genericObject.setBorderType(borderType);
+		generalStyle.setBorderType(borderType);
 	}
 
 	public float getBorderWidth() {
-		return genericObject.getBorderWidth();
+		return generalStyle.getBorderWidth();
 	}
 
 	public boolean isTransparentFill() {
-		return genericObject.isTransparentFill();
+		return generalStyle.isTransparentFill();
 	}
 
 	public void setTransparentFill(boolean transparentFill) {
-		genericObject.setTransparentFill(transparentFill);
+		generalStyle.setTransparentFill(transparentFill);
 	}
 
 	public void setBorderWidth(float borderWidth) {
-		genericObject.setBorderWidth(borderWidth);
+		generalStyle.setBorderWidth(borderWidth);
 	}
 
 	void writeGeometry(XMLStreamWriter writer) throws XMLStreamException {
-		genericObject.writeGeometry(writer);
+		generalStyle.writeGeometry(writer);
 	}
 
 	void writeFill(XMLStreamWriter writer) throws XMLStreamException {
-		genericObject.writeFill(writer);
+		generalStyle.writeFill(writer);
 	}
 
 	void writeBorderStyle(XMLStreamWriter writer) throws XMLStreamException {
-		genericObject.writeBorderStyle(writer);
+		generalStyle.writeBorderStyle(writer);
 	}
 
 	// --- Label properties --- //

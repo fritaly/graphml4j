@@ -9,7 +9,7 @@ import org.apache.commons.lang.Validate;
 
 import fr.ritaly.graphml4j.base.LineType;
 
-final class GenericObject {
+final class GeneralStyle {
 
 	private float height = 30.0f;
 
@@ -30,24 +30,24 @@ final class GenericObject {
 
 	private boolean transparentFill = false;
 
-	public GenericObject() {
+	public GeneralStyle() {
 	}
 
-	public GenericObject(GenericObject object) {
-		apply(object);
+	public GeneralStyle(GeneralStyle style) {
+		apply(style);
 	}
 
-	void apply(GenericObject object) {
-		Validate.notNull(object, "The given object is null");
+	void apply(GeneralStyle style) {
+		Validate.notNull(style, "The given style is null");
 
-		this.borderColor = object.borderColor;
-		this.borderType = object.borderType;
-		this.borderWidth = object.borderWidth;
-		this.fillColor = object.fillColor;
-		this.fillColor2 = object.fillColor2;
-		this.height = object.height;
-		this.transparentFill = object.transparentFill;
-		this.width = object.width;
+		this.borderColor = style.borderColor;
+		this.borderType = style.borderType;
+		this.borderWidth = style.borderWidth;
+		this.fillColor = style.fillColor;
+		this.fillColor2 = style.fillColor2;
+		this.height = style.height;
+		this.transparentFill = style.transparentFill;
+		this.width = style.width;
 	}
 
 	public boolean isTransparentFill() {
