@@ -77,14 +77,6 @@ public class NodeStyle {
 		shapeStyle.setShadowOffsetY(value);
 	}
 
-	void writeShape(XMLStreamWriter writer) throws XMLStreamException {
-		shapeStyle.writeShape(writer);
-	}
-
-	void writeDropShadow(XMLStreamWriter writer) throws XMLStreamException {
-		shapeStyle.writeDropShadow(writer);
-	}
-
 	// --- Generic properties --- //
 
 	public float getHeight() {
@@ -151,16 +143,10 @@ public class NodeStyle {
 		generalStyle.setBorderWidth(borderWidth);
 	}
 
-	void writeGeometry(XMLStreamWriter writer, float x, float y) throws XMLStreamException {
-		generalStyle.writeGeometry(writer, x, y);
-	}
-
-	void writeFill(XMLStreamWriter writer) throws XMLStreamException {
-		generalStyle.writeFill(writer);
-	}
-
-	void writeBorderStyle(XMLStreamWriter writer) throws XMLStreamException {
-		generalStyle.writeBorderStyle(writer);
+	void writeTo(XMLStreamWriter writer, String label, float x, float y) throws XMLStreamException {
+		generalStyle.writeTo(writer, x, y);
+		labelStyle.writeTo(writer, label);
+		shapeStyle.writeTo(writer);
 	}
 
 	// --- Label properties --- //
@@ -219,10 +205,6 @@ public class NodeStyle {
 
 	public void setFontStyle(FontStyle fontStyle) {
 		labelStyle.setFontStyle(fontStyle);
-	}
-
-	void writeLabel(XMLStreamWriter writer, String label) throws XMLStreamException {
-		labelStyle.writeTo(writer, label);
 	}
 
 	public Color getBackgroundColor() {

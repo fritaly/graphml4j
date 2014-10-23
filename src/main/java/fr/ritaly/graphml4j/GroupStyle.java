@@ -68,7 +68,7 @@ public class GroupStyle extends NodeStyle {
 		this.insets = value;
 	}
 
-	void writeInsets(XMLStreamWriter writer) throws XMLStreamException {
+	private void writeInsets(XMLStreamWriter writer) throws XMLStreamException {
 		Validate.notNull(writer, "The given stream writer is null");
 
 		writer.writeEmptyElement("y:BorderInsets");
@@ -95,12 +95,10 @@ public class GroupStyle extends NodeStyle {
 	void writeTo(XMLStreamWriter writer, String label, boolean closed, float x, float y) throws XMLStreamException {
 		Validate.notNull(writer, "The given stream writer is null");
 
-		writeGeometry(writer, x, y);
-		writeFill(writer);
-		writeBorderStyle(writer);
-		writeLabel(writer, label);
-		writeShape(writer);
-		writeDropShadow(writer);
+		// Write the node elements
+		writeTo(writer, label, x, y);
+
+		// ... and the group-specific ones
 		writeState(writer, closed);
 		writeInsets(writer);
 	}

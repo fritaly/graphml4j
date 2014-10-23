@@ -133,7 +133,15 @@ final class GeneralStyle {
 		this.borderWidth = borderWidth;
 	}
 
-	void writeGeometry(XMLStreamWriter writer, float x, float y) throws XMLStreamException {
+	void writeTo(XMLStreamWriter writer, float x, float y) throws XMLStreamException {
+		Validate.notNull(writer, "The given stream writer is null");
+
+		writeGeometry(writer, x, y);
+		writeFill(writer);
+		writeBorderStyle(writer);
+	}
+
+	private void writeGeometry(XMLStreamWriter writer, float x, float y) throws XMLStreamException {
 		Validate.notNull(writer, "The given stream writer is null");
 
 		// y:Geometry (the x & y attributes are computed when laying out the graph in yEd)
@@ -144,7 +152,7 @@ final class GeneralStyle {
 		writer.writeAttribute("y", String.format("%.1f", y));
 	}
 
-	void writeFill(XMLStreamWriter writer) throws XMLStreamException {
+	private void writeFill(XMLStreamWriter writer) throws XMLStreamException {
 		Validate.notNull(writer, "The given stream writer is null");
 
 		// y:Fill
@@ -160,7 +168,7 @@ final class GeneralStyle {
 		writer.writeAttribute("transparent", Boolean.toString(transparentFill));
 	}
 
-	void writeBorderStyle(XMLStreamWriter writer) throws XMLStreamException {
+	private void writeBorderStyle(XMLStreamWriter writer) throws XMLStreamException {
 		Validate.notNull(writer, "The given stream writer is null");
 
         // y:BorderStyle

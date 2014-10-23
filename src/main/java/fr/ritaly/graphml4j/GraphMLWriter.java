@@ -354,12 +354,7 @@ public final class GraphMLWriter {
 
 			this.streamWriter.writeStartElement("y:ShapeNode");
 
-			nodeStyle.writeGeometry(streamWriter, x, y);
-			nodeStyle.writeFill(streamWriter);
-			nodeStyle.writeBorderStyle(streamWriter);
-			nodeStyle.writeLabel(streamWriter, label);
-			nodeStyle.writeShape(streamWriter);
-			nodeStyle.writeDropShadow(streamWriter);
+			nodeStyle.writeTo(streamWriter, label, x, y);
 
 			this.streamWriter.writeEndElement(); // </y:ShapeNode>
 			this.streamWriter.writeEndElement(); // </data>

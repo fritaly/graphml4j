@@ -74,7 +74,14 @@ final class ShapeStyle {
 		this.shadowOffsetY = value;
 	}
 
-	void writeShape(XMLStreamWriter writer) throws XMLStreamException {
+	void writeTo(XMLStreamWriter writer) throws XMLStreamException {
+		Validate.notNull(writer, "The given stream writer is null");
+
+		writeShape(writer);
+		writeDropShadow(writer);
+	}
+
+	private void writeShape(XMLStreamWriter writer) throws XMLStreamException {
 		Validate.notNull(writer, "The given stream writer is null");
 
 		// y:Shape
@@ -82,7 +89,7 @@ final class ShapeStyle {
 		writer.writeAttribute("type", shape.getValue());
 	}
 
-	void writeDropShadow(XMLStreamWriter writer) throws XMLStreamException {
+	private void writeDropShadow(XMLStreamWriter writer) throws XMLStreamException {
 		Validate.notNull(writer, "The given stream writer is null");
 
 		if ((shadowColor == null) || ((shadowOffsetX == 0) && (shadowOffsetY == 0))) {
