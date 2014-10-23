@@ -13,7 +13,7 @@ import fr.ritaly.graphml4j.base.Placement;
 import fr.ritaly.graphml4j.base.Position;
 import fr.ritaly.graphml4j.base.SizePolicy;
 
-final class LabelObject {
+final class LabelStyle {
 
 	private boolean visible = true;
 
@@ -43,32 +43,32 @@ final class LabelObject {
 
 	private SizePolicy sizePolicy = SizePolicy.CONTENT;
 
-	public LabelObject() {
+	public LabelStyle() {
 	}
 
-	public LabelObject(LabelObject object) {
-		apply(object);
+	public LabelStyle(LabelStyle style) {
+		apply(style);
 	}
 
-	void apply(LabelObject object) {
-		Validate.notNull(object, "The given shape object is null");
+	void apply(LabelStyle style) {
+		Validate.notNull(style, "The given label style is null");
 
-		this.visible = object.visible;
-		this.textColor = object.textColor;
-		this.textAlignment = object.textAlignment;
-		this.fontStyle = object.fontStyle;
-		this.fontFamily = object.fontFamily;
-		this.fontSize = object.fontSize;
-		this.underlinedText = object.underlinedText;
-		this.backgroundColor = object.backgroundColor;
-		this.lineColor = object.lineColor;
-		this.placement = object.placement;
-		this.position = object.position;
-		this.leftInset = object.leftInset;
-		this.rightInset = object.rightInset;
-		this.topInset = object.topInset;
-		this.bottomInset = object.bottomInset;
-		this.sizePolicy = object.sizePolicy;
+		this.visible = style.visible;
+		this.textColor = style.textColor;
+		this.textAlignment = style.textAlignment;
+		this.fontStyle = style.fontStyle;
+		this.fontFamily = style.fontFamily;
+		this.fontSize = style.fontSize;
+		this.underlinedText = style.underlinedText;
+		this.backgroundColor = style.backgroundColor;
+		this.lineColor = style.lineColor;
+		this.placement = style.placement;
+		this.position = style.position;
+		this.leftInset = style.leftInset;
+		this.rightInset = style.rightInset;
+		this.topInset = style.topInset;
+		this.bottomInset = style.bottomInset;
+		this.sizePolicy = style.sizePolicy;
 	}
 
 	public SizePolicy getSizePolicy() {

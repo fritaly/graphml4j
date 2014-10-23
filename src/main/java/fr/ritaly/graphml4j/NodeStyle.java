@@ -21,7 +21,7 @@ public class NodeStyle {
 
 	private final ShapeStyle shapeStyle = new ShapeStyle();
 
-	private final LabelObject labelObject = new LabelObject();
+	private final LabelStyle labelStyle = new LabelStyle();
 
 	public NodeStyle() {
 	}
@@ -34,7 +34,7 @@ public class NodeStyle {
 		Validate.notNull(style, "The given style is null");
 
 		// Apply the label properties
-		this.labelObject.apply(style.labelObject);
+		this.labelStyle.apply(style.labelStyle);
 
 		// Apply the generic properties
 		this.genericObject.apply(style.genericObject);
@@ -166,142 +166,142 @@ public class NodeStyle {
 	// --- Label properties --- //
 
 	public boolean isUnderlinedText() {
-		return labelObject.isUnderlinedText();
+		return labelStyle.isUnderlinedText();
 	}
 
 	public void setUnderlinedText(boolean value) {
-		labelObject.setUnderlinedText(value);
+		labelStyle.setUnderlinedText(value);
 	}
 
 	public boolean isVisible() {
-		return labelObject.isVisible();
+		return labelStyle.isVisible();
 	}
 
 	public void setVisible(boolean visible) {
-		labelObject.setVisible(visible);
+		labelStyle.setVisible(visible);
 	}
 
 	public Color getTextColor() {
-		return labelObject.getTextColor();
+		return labelStyle.getTextColor();
 	}
 
 	public void setTextColor(Color color) {
-		labelObject.setTextColor(color);
+		labelStyle.setTextColor(color);
 	}
 
 	public int getFontSize() {
-		return labelObject.getFontSize();
+		return labelStyle.getFontSize();
 	}
 
 	public void setFontSize(int fontSize) {
-		labelObject.setFontSize(fontSize);
+		labelStyle.setFontSize(fontSize);
 	}
 
 	public String getFontFamily() {
-		return labelObject.getFontFamily();
+		return labelStyle.getFontFamily();
 	}
 
 	public void setFontFamily(String fontFamily) {
-		labelObject.setFontFamily(fontFamily);
+		labelStyle.setFontFamily(fontFamily);
 	}
 
 	public Alignment getTextAlignment() {
-		return labelObject.getTextAlignment();
+		return labelStyle.getTextAlignment();
 	}
 
 	public void setTextAlignment(Alignment textAlignment) {
-		labelObject.setTextAlignment(textAlignment);
+		labelStyle.setTextAlignment(textAlignment);
 	}
 
 	public FontStyle getFontStyle() {
-		return labelObject.getFontStyle();
+		return labelStyle.getFontStyle();
 	}
 
 	public void setFontStyle(FontStyle fontStyle) {
-		labelObject.setFontStyle(fontStyle);
+		labelStyle.setFontStyle(fontStyle);
 	}
 
 	void writeLabel(XMLStreamWriter writer, String label) throws XMLStreamException {
-		labelObject.writeTo(writer, label);
+		labelStyle.writeTo(writer, label);
 	}
 
 	public Color getBackgroundColor() {
-		return labelObject.getBackgroundColor();
+		return labelStyle.getBackgroundColor();
 	}
 
 	public void setBackgroundColor(Color backgroundColor) {
-		labelObject.setBackgroundColor(backgroundColor);
+		labelStyle.setBackgroundColor(backgroundColor);
 	}
 
 	public Color getLineColor() {
-		return labelObject.getLineColor();
+		return labelStyle.getLineColor();
 	}
 
 	public void setLineColor(Color lineColor) {
-		labelObject.setLineColor(lineColor);
+		labelStyle.setLineColor(lineColor);
 	}
 
 	public Placement getPlacement() {
-		return labelObject.getPlacement();
+		return labelStyle.getPlacement();
 	}
 
 	public Position getPosition() {
-		return labelObject.getPosition();
+		return labelStyle.getPosition();
 	}
 
 	public void setPlacement(Placement placement) {
-		labelObject.setPlacement(placement);
+		labelStyle.setPlacement(placement);
 	}
 
 	public void setPosition(Position position) {
-		labelObject.setPosition(position);
+		labelStyle.setPosition(position);
 	}
 
 	public int getBottomInset() {
-		return labelObject.getBottomInset();
+		return labelStyle.getBottomInset();
 	}
 
 	public int getLeftInset() {
-		return labelObject.getLeftInset();
+		return labelStyle.getLeftInset();
 	}
 
 	public int getRightInset() {
-		return labelObject.getRightInset();
+		return labelStyle.getRightInset();
 	}
 
 	public int getTopInset() {
-		return labelObject.getTopInset();
+		return labelStyle.getTopInset();
 	}
 
 	public void setBottomInset(int bottomInset) {
-		labelObject.setBottomInset(bottomInset);
+		labelStyle.setBottomInset(bottomInset);
 	}
 
 	public void setLeftInset(int leftInset) {
-		labelObject.setLeftInset(leftInset);
+		labelStyle.setLeftInset(leftInset);
 	}
 
 	public void setRightInset(int rightInset) {
-		labelObject.setRightInset(rightInset);
+		labelStyle.setRightInset(rightInset);
 	}
 
 	public void setTopInset(int topInset) {
-		labelObject.setTopInset(topInset);
+		labelStyle.setTopInset(topInset);
 	}
 
 	public boolean hasInsets() {
-		return labelObject.hasInsets();
+		return labelStyle.hasInsets();
 	}
 
 	public void setInsets(int value) {
-		labelObject.setInsets(value);
+		labelStyle.setInsets(value);
 	}
 
 	public SizePolicy getSizePolicy() {
-		return labelObject.getSizePolicy();
+		return labelStyle.getSizePolicy();
 	}
 
 	public void setSizePolicy(SizePolicy policy) {
-		labelObject.setSizePolicy(policy);
+		labelStyle.setSizePolicy(policy);
 	}
 }
