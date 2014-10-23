@@ -114,15 +114,7 @@ public final class GraphMLWriter {
 	 */
 	private final EdgeStyle edgeStyle = new EdgeStyle();
 
-	/**
-	 * The style applied to open group nodes.
-	 */
-	private final GroupStyle openGroupStyle = new GroupStyle();
-
-	/**
-	 * The style applied to closed group nodes.
-	 */
-	private final GroupStyle closedGroupStyle = new GroupStyle();
+	private final GroupStyles groupStyles = new GroupStyles();
 
 	public GraphMLWriter(Writer writer) throws GraphMLException {
 		Validate.notNull(writer, "The given writer is null");
@@ -139,28 +131,16 @@ public final class GraphMLWriter {
 		}
 	}
 
-	public GroupStyle getClosedGroupStyle() {
+	public GroupStyles getGroupStyles() {
 		// Defensive recopy
-		return new GroupStyle(closedGroupStyle);
+		return new GroupStyles(groupStyles);
 	}
 
-	public void setClosedGroupStyle(GroupStyle style) {
-		Validate.notNull(style, "The given style is null");
+	public void setGroupStyles(GroupStyles styles) {
+		Validate.notNull(styles, "The given groups styles is null");
 
 		// Defensive recopy
-		this.closedGroupStyle.apply(style);
-	}
-
-	public GroupStyle getOpenGroupStyle() {
-		// Defensive recopy
-		return new GroupStyle(openGroupStyle);
-	}
-
-	public void setOpenGroupStyle(GroupStyle style) {
-		Validate.notNull(style, "The given style is null");
-
-		// Defensive recopy
-		this.openGroupStyle.apply(style);
+		this.groupStyles.apply(styles);
 	}
 
 	public NodeStyle getNodeStyle() {
@@ -351,21 +331,6 @@ public final class GraphMLWriter {
 		endDocument();
 	}
 
-	// --- Internal helper methods --- //
-
-	// FIXME Move all the methods write*()
-	private void writeState(boolean closed, float height, float width, boolean innerGraphDisplayEnabled) throws GraphMLException {
-		try {
-			this.streamWriter.writeEmptyElement("y:State");
-			this.streamWriter.writeAttribute("closed", Boolean.toString(closed));
-			this.streamWriter.writeAttribute("closedHeight", String.format("%.1f", height));
-			this.streamWriter.writeAttribute("closedWidth", String.format("%.1f", width));
-			this.streamWriter.writeAttribute("innerGraphDisplayEnabled", Boolean.toString(innerGraphDisplayEnabled));
-		} catch (XMLStreamException e) {
-			throw new GraphMLException(e);
-		}
-	}
-
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
@@ -481,33 +446,17 @@ public final class GraphMLWriter {
 			// Define the group node when open
 			this.streamWriter.writeStartElement("y:GroupNode");
 
-			openGroupStyle.writeGeometry(streamWriter, x, y);
-			openGroupStyle.writeFill(streamWriter);
-			openGroupStyle.writeBorderStyle(streamWriter);
-			openGroupStyle.writeLabel(streamWriter, label);
-			openGroupStyle.writeShape(streamWriter);
-			openGroupStyle.writeDropShadow(streamWriter);
-
-			writeState(false,  50, 50, false);
-
-			openGroupStyle.writeInsets(streamWriter);
+			groupStyles.getOpenStyle().writeTo(streamWriter, label, false, x, y);
 
 			this.streamWriter.writeEndElement(); // </y:GroupNode>
 
 			// Define the group node when closed
 			this.streamWriter.writeStartElement("y:GroupNode");
 
-			closedGroupStyle.writeGeometry(streamWriter, x, y);
-			closedGroupStyle.writeFill(streamWriter);
-			closedGroupStyle.writeBorderStyle(streamWriter);
-			closedGroupStyle.writeLabel(streamWriter, label);
-			closedGroupStyle.writeShape(streamWriter);
-
-			writeState(true,  50, 50, false);
-
-			closedGroupStyle.writeInsets(streamWriter);
+			groupStyles.getClosedStyle().writeTo(streamWriter, label, true, x, y);
 
 			this.streamWriter.writeEndElement(); // </y:GroupNode>
+
 			this.streamWriter.writeEndElement(); // </y:Realizers>
 			this.streamWriter.writeEndElement(); // </y:ProxyAutoBoundsNode>
 			this.streamWriter.writeEndElement(); // </data>

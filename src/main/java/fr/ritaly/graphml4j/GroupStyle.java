@@ -81,4 +81,27 @@ public class GroupStyle extends NodeStyle {
 		writer.writeAttribute("top", String.format("%.0f", insets));
 		writer.writeAttribute("topF", String.format("%.1f", insets));
 	}
+
+	private void writeState(XMLStreamWriter writer, boolean closed) throws XMLStreamException {
+		Validate.notNull(writer, "The given stream writer is null");
+
+		writer.writeEmptyElement("y:State");
+		writer.writeAttribute("closed", Boolean.toString(closed));
+		writer.writeAttribute("closedHeight", String.format("%.1f", 50.0f)); // TODO Create property for closedHeight
+		writer.writeAttribute("closedWidth", String.format("%.1f", 50.0f)); // TODO Create property for closedWidth
+		writer.writeAttribute("innerGraphDisplayEnabled", Boolean.toString(false)); // TODO Create property here
+	}
+
+	void writeTo(XMLStreamWriter writer, String label, boolean closed, float x, float y) throws XMLStreamException {
+		Validate.notNull(writer, "The given stream writer is null");
+
+		writeGeometry(writer, x, y);
+		writeFill(writer);
+		writeBorderStyle(writer);
+		writeLabel(writer, label);
+		writeShape(writer);
+		writeDropShadow(writer);
+		writeState(writer, closed);
+		writeInsets(writer);
+	}
 }
