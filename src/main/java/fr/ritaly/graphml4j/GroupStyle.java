@@ -89,7 +89,9 @@ public class GroupStyle extends NodeStyle {
 		writer.writeAttribute("closed", Boolean.toString(closed));
 		writer.writeAttribute("closedHeight", String.format("%.1f", 50.0f)); // TODO Create property for closedHeight
 		writer.writeAttribute("closedWidth", String.format("%.1f", 50.0f)); // TODO Create property for closedWidth
-		writer.writeAttribute("innerGraphDisplayEnabled", Boolean.toString(false)); // TODO Create property here
+
+		// Infer the property innerGraphDisplayEnabled from the closed flag
+		writer.writeAttribute("innerGraphDisplayEnabled", Boolean.toString(!closed));
 	}
 
 	void writeTo(XMLStreamWriter writer, String label, boolean closed, float x, float y) throws XMLStreamException {

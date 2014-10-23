@@ -6,8 +6,8 @@ package fr.ritaly.graphml4j.base;
  * @author francois_ritaly
  */
 public enum Alignment {
-	CENTER("center"),
 	LEFT("left"),
+	CENTER("center"),
 	RIGHT("right")
 	;
 
