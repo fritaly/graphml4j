@@ -9,7 +9,7 @@ import org.apache.commons.lang.Validate;
 
 import fr.ritaly.graphml4j.base.Shape;
 
-final class ShapeObject {
+final class ShapeStyle {
 
 	private Shape shape = Shape.RECTANGLE;
 
@@ -18,14 +18,14 @@ final class ShapeObject {
 
 	private int shadowOffsetX, shadowOffsetY;
 
-	public ShapeObject() {
+	public ShapeStyle() {
 	}
 
-	public ShapeObject(ShapeObject object) {
-		apply(object);
+	public ShapeStyle(ShapeStyle style) {
+		apply(style);
 	}
 
-	void apply(ShapeObject object) {
+	void apply(ShapeStyle object) {
 		Validate.notNull(object, "The given shape object is null");
 
 		this.shape = object.shape;

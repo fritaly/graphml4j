@@ -19,7 +19,7 @@ public class NodeStyle {
 
 	private final GenericObject genericObject = new GenericObject();
 
-	private final ShapeObject shapeObject = new ShapeObject();
+	private final ShapeStyle shapeStyle = new ShapeStyle();
 
 	private final LabelObject labelObject = new LabelObject();
 
@@ -40,49 +40,49 @@ public class NodeStyle {
 		this.genericObject.apply(style.genericObject);
 
 		// Apply the shape properties
-		this.shapeObject.apply(style.shapeObject);
+		this.shapeStyle.apply(style.shapeStyle);
 	}
 
 	// --- Shape properties --- //
 
 	public Shape getShape() {
-		return shapeObject.getShape();
+		return shapeStyle.getShape();
 	}
 
 	public void setShape(Shape shape) {
-		shapeObject.setShape(shape);
+		shapeStyle.setShape(shape);
 	}
 
 	public Color getShadowColor() {
-		return shapeObject.getShadowColor();
+		return shapeStyle.getShadowColor();
 	}
 
 	public int getShadowOffsetX() {
-		return shapeObject.getShadowOffsetX();
+		return shapeStyle.getShadowOffsetX();
 	}
 
 	public int getShadowOffsetY() {
-		return shapeObject.getShadowOffsetY();
+		return shapeStyle.getShadowOffsetY();
 	}
 
 	public void setShadowColor(Color color) {
-		shapeObject.setShadowColor(color);
+		shapeStyle.setShadowColor(color);
 	}
 
 	public void setShadowOffsetX(int value) {
-		shapeObject.setShadowOffsetX(value);
+		shapeStyle.setShadowOffsetX(value);
 	}
 
 	public void setShadowOffsetY(int value) {
-		shapeObject.setShadowOffsetY(value);
+		shapeStyle.setShadowOffsetY(value);
 	}
 
 	void writeShape(XMLStreamWriter writer) throws XMLStreamException {
-		shapeObject.writeShape(writer);
+		shapeStyle.writeShape(writer);
 	}
 
 	void writeDropShadow(XMLStreamWriter writer) throws XMLStreamException {
-		shapeObject.writeDropShadow(writer);
+		shapeStyle.writeDropShadow(writer);
 	}
 
 	// --- Generic properties --- //
