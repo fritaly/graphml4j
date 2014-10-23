@@ -40,6 +40,8 @@ final class LabelStyle {
 
 	private float borderDistance = 0.0f;
 
+	private float rotationAngle = 0.0f;
+
 	private boolean underlinedText = false;
 
 	private Placement placement = Placement.INTERNAL;
@@ -77,6 +79,15 @@ final class LabelStyle {
 		this.bottomInset = style.bottomInset;
 		this.sizePolicy = style.sizePolicy;
 		this.borderDistance = style.borderDistance;
+		this.rotationAngle = style.rotationAngle;
+	}
+
+	public float getRotationAngle() {
+		return rotationAngle;
+	}
+
+	public void setRotationAngle(float rotationAngle) {
+		this.rotationAngle = rotationAngle;
 	}
 
 	public float getBorderDistance() {
@@ -260,7 +271,13 @@ final class LabelStyle {
 		writer.writeAttribute("fontStyle", fontStyle.getValue());
 		writer.writeAttribute("modelName", placement.getValue());
 		writer.writeAttribute("modelPosition", position.getValue());
-		writer.writeAttribute("borderDistance", String.format("%.1f", borderDistance));
+
+		if (borderDistance != 0.0f) {
+			writer.writeAttribute("borderDistance", String.format("%.1f", borderDistance));
+		}
+		if (rotationAngle != 0.0f) {
+			writer.writeAttribute("rotationAngle", String.format("%.1f", rotationAngle));
+		}
 
 		if (backgroundColor != null) {
 			writer.writeAttribute("backgroundColor", Utils.encode(backgroundColor));

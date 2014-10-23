@@ -47,6 +47,7 @@ public class Main {
 				nodeStyle.setShadowOffsetY(5);
 				nodeStyle.setPlacement(Placement.INTERNAL);
 				nodeStyle.setPosition(Position.LEFT);
+				nodeStyle.setRotationAngle(new Random().nextInt(90));
 
 				writer.setNodeStyle(nodeStyle);
 

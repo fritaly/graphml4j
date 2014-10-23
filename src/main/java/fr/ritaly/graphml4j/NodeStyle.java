@@ -294,4 +294,12 @@ public class NodeStyle {
 	public void setBorderDistance(float borderDistance) {
 		labelStyle.setBorderDistance(borderDistance);
 	}
+
+	public float getRotationAngle() {
+		return labelStyle.getRotationAngle();
+	}
+
+	public void setRotationAngle(float rotationAngle) {
+		labelStyle.setRotationAngle(rotationAngle);
+	}
 }
