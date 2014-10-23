@@ -16,6 +16,9 @@ import fr.ritaly.graphml4j.base.LineType;
  */
 final class GeneralStyle {
 
+	// The properties x & y aren't defined here because they're not style
+	// properties
+
 	private float height = 30.0f;
 
 	private float width = 30.0f;

@@ -19,7 +19,7 @@ final class ShapeStyle {
 	private Shape shape = Shape.RECTANGLE;
 
 	// This color is optional
-	private Color shadowColor;
+	private Color shadowColor = Color.decode("#B3A691");
 
 	private int shadowOffsetX, shadowOffsetY;
 
