@@ -133,15 +133,15 @@ final class GeneralStyle {
 		this.borderWidth = borderWidth;
 	}
 
-	void writeGeometry(XMLStreamWriter writer) throws XMLStreamException {
+	void writeGeometry(XMLStreamWriter writer, float x, float y) throws XMLStreamException {
 		Validate.notNull(writer, "The given stream writer is null");
 
 		// y:Geometry (the x & y attributes are computed when laying out the graph in yEd)
 		writer.writeEmptyElement("y:Geometry");
 		writer.writeAttribute("height", String.format("%.1f", height));
 		writer.writeAttribute("width", String.format("%.1f", width));
-		writer.writeAttribute("x", "0.0");
-		writer.writeAttribute("y", "0.0");
+		writer.writeAttribute("x", String.format("%.1f", x));
+		writer.writeAttribute("y", String.format("%.1f", y));
 	}
 
 	void writeFill(XMLStreamWriter writer) throws XMLStreamException {

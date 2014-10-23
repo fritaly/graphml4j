@@ -369,6 +369,10 @@ public final class GraphMLWriter {
 	// --- Node --- //
 
 	public String node(String label) throws GraphMLException {
+		return node(label, 0.0f, 0.0f);
+	}
+
+	public String node(String label, float x, float y) throws GraphMLException {
 		assertState(State.GRAPH_OPENED);
 
 		try {
@@ -385,7 +389,7 @@ public final class GraphMLWriter {
 
 			this.streamWriter.writeStartElement("y:ShapeNode");
 
-			nodeStyle.writeGeometry(streamWriter);
+			nodeStyle.writeGeometry(streamWriter, x, y);
 			nodeStyle.writeFill(streamWriter);
 			nodeStyle.writeBorderStyle(streamWriter);
 			nodeStyle.writeLabel(streamWriter, label);
@@ -446,6 +450,10 @@ public final class GraphMLWriter {
 	// --- Group --- //
 
 	public String group(String label, boolean open) throws GraphMLException {
+		return group(label, open, 0.0f, 0.0f);
+	}
+
+	public String group(String label, boolean open, float x, float y) throws GraphMLException {
 		assertState(State.GRAPH_OPENED);
 
 		try {
@@ -473,7 +481,7 @@ public final class GraphMLWriter {
 			// Define the group node when open
 			this.streamWriter.writeStartElement("y:GroupNode");
 
-			openGroupStyle.writeGeometry(streamWriter);
+			openGroupStyle.writeGeometry(streamWriter, x, y);
 			openGroupStyle.writeFill(streamWriter);
 			openGroupStyle.writeBorderStyle(streamWriter);
 			openGroupStyle.writeLabel(streamWriter, label);
@@ -489,7 +497,7 @@ public final class GraphMLWriter {
 			// Define the group node when closed
 			this.streamWriter.writeStartElement("y:GroupNode");
 
-			closedGroupStyle.writeGeometry(streamWriter);
+			closedGroupStyle.writeGeometry(streamWriter, x, y);
 			closedGroupStyle.writeFill(streamWriter);
 			closedGroupStyle.writeBorderStyle(streamWriter);
 			closedGroupStyle.writeLabel(streamWriter, label);

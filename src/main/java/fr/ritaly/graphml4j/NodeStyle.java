@@ -151,8 +151,8 @@ public class NodeStyle {
 		generalStyle.setBorderWidth(borderWidth);
 	}
 
-	void writeGeometry(XMLStreamWriter writer) throws XMLStreamException {
-		generalStyle.writeGeometry(writer);
+	void writeGeometry(XMLStreamWriter writer, float x, float y) throws XMLStreamException {
+		generalStyle.writeGeometry(writer, x, y);
 	}
 
 	void writeFill(XMLStreamWriter writer) throws XMLStreamException {
