@@ -9,6 +9,7 @@ import java.util.Random;
 
 import fr.ritaly.graphml4j.base.Alignment;
 import fr.ritaly.graphml4j.base.Arrow;
+import fr.ritaly.graphml4j.base.FontStyle;
 import fr.ritaly.graphml4j.base.LineType;
 import fr.ritaly.graphml4j.base.Placement;
 import fr.ritaly.graphml4j.base.Position;
@@ -21,7 +22,7 @@ public class Main {
 
 		GraphMLWriter writer = new GraphMLWriter(stringWriter);
 
-		// Customize the rendering
+		// Customize the rendering of nodes
 		final NodeStyle nodeStyle = writer.getNodeStyle();
 		nodeStyle.setBorderType(LineType.LINE);
 		nodeStyle.setBorderWidth(2.0f);
@@ -39,6 +40,7 @@ public class Main {
 
 		writer.setNodeStyle(nodeStyle);
 
+		// Customize the rendering of edges
 		final EdgeStyle edgeStyle = writer.getEdgeStyle();
 		edgeStyle.setColor(Color.BLACK);
 		edgeStyle.setSmoothed(true);
@@ -48,6 +50,17 @@ public class Main {
 		edgeStyle.setWidth(2.0f);
 
 		writer.setEdgeStyle(edgeStyle);
+
+		// Customize the rendering of groups
+		final GroupStyles groupStyles = writer.getGroupStyles();
+		groupStyles.setBackgroundColor(Color.GRAY.brighter());
+		groupStyles.setBorderColor(Color.BLACK);
+		groupStyles.setBorderType(LineType.DASHED);
+		groupStyles.setBorderWidth(2.0f);
+		groupStyles.setFillColor(Color.GREEN.brighter());
+		groupStyles.setFontStyle(FontStyle.BOLD);
+
+		writer.setGroupStyles(groupStyles);
 
 		// Generate a random graph
 		writer.graph();
