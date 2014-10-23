@@ -13,6 +13,11 @@ import fr.ritaly.graphml4j.base.Placement;
 import fr.ritaly.graphml4j.base.Position;
 import fr.ritaly.graphml4j.base.SizePolicy;
 
+/**
+ * An object defining the style properties in the "Label" tab in yEd.
+ *
+ * @author francois_ritaly
+ */
 final class LabelStyle {
 
 	private boolean visible = true;

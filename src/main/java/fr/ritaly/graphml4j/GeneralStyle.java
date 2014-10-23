@@ -9,6 +9,11 @@ import org.apache.commons.lang.Validate;
 
 import fr.ritaly.graphml4j.base.LineType;
 
+/**
+ * An object defining the style properties in the "General" tab in yEd.
+ *
+ * @author francois_ritaly
+ */
 final class GeneralStyle {
 
 	private float height = 30.0f;

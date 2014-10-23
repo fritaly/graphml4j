@@ -9,6 +9,11 @@ import org.apache.commons.lang.Validate;
 
 import fr.ritaly.graphml4j.base.Shape;
 
+/**
+ * An object defining the style properties in the "Shape" tab in yEd.
+ *
+ * @author francois_ritaly
+ */
 final class ShapeStyle {
 
 	private Shape shape = Shape.RECTANGLE;
