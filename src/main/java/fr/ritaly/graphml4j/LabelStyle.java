@@ -38,6 +38,8 @@ final class LabelStyle {
 
 	private int fontSize = 12;
 
+	private float borderDistance = 0.0f;
+
 	private boolean underlinedText = false;
 
 	private Placement placement = Placement.INTERNAL;
@@ -74,6 +76,15 @@ final class LabelStyle {
 		this.topInset = style.topInset;
 		this.bottomInset = style.bottomInset;
 		this.sizePolicy = style.sizePolicy;
+		this.borderDistance = style.borderDistance;
+	}
+
+	public float getBorderDistance() {
+		return borderDistance;
+	}
+
+	public void setBorderDistance(float borderDistance) {
+		this.borderDistance = borderDistance;
 	}
 
 	public SizePolicy getSizePolicy() {
@@ -249,6 +260,7 @@ final class LabelStyle {
 		writer.writeAttribute("fontStyle", fontStyle.getValue());
 		writer.writeAttribute("modelName", placement.getValue());
 		writer.writeAttribute("modelPosition", position.getValue());
+		writer.writeAttribute("borderDistance", String.format("%.1f", borderDistance));
 
 		if (backgroundColor != null) {
 			writer.writeAttribute("backgroundColor", Utils.encode(backgroundColor));

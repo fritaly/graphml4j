@@ -42,6 +42,9 @@ public class GroupStyle extends NodeStyle {
 		setPlacement(Placement.INTERNAL);
 		setPosition(Position.TOP);
 		setUnderlinedText(false);
+
+		// This distance is necessary because the group has rounded corners
+		setBorderDistance(1.0f);
 	}
 
 	public GroupStyle(GroupStyle style) {

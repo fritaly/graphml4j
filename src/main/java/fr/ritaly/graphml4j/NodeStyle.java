@@ -286,4 +286,12 @@ public class NodeStyle {
 	public void setSizePolicy(SizePolicy policy) {
 		labelStyle.setSizePolicy(policy);
 	}
+
+	public float getBorderDistance() {
+		return labelStyle.getBorderDistance();
+	}
+
+	public void setBorderDistance(float borderDistance) {
+		labelStyle.setBorderDistance(borderDistance);
+	}
 }

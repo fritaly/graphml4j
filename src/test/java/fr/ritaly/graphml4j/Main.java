@@ -73,7 +73,7 @@ public class Main {
 
 		// Generate some nodes
 		for (int i = 0; i < 3; i++) {
-			writer.group(String.format("G%d", i + 1), new Random().nextBoolean());
+			writer.group(String.format("Group #%d", i + 1), new Random().nextBoolean());
 
 			for (int j = 0; j < 5; j++) {
 				nodeIds.add(writer.node(String.format("N%d", (i * 5) + j + 1)));
