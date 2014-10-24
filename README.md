@@ -25,7 +25,7 @@ What this API is not
 How do I build ?
 ================
 
-To build the project, open a command project in the root directory and issue "./gradlew build" (for Unix / OSX) or "gradlew.bat build" (on Windows). Gradle will auto-install on-the-fly and build the project.
+To build the project, open a command prompt in the root directory and issue "./gradlew build" (on Unix / OSX) or "gradlew.bat build" (on Windows). Gradle will auto-install on-the-fly and build the project.
 
 How do I use the API ?
 ======================
