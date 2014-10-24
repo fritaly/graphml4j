@@ -18,6 +18,17 @@ dependencies {
   compile 'net.java.dev.stax-utils:stax-utils:20070216'
 }
 
+jar {
+  manifest {
+    attributes += [ "Artifact-Group": "${project.group}" ]
+    attributes += [ "Artifact-Name": "${project.name}" ]
+    attributes += [ "Artifact-Version": "${project.version}" ]
+    attributes += [ "Built-On": "${new java.text.SimpleDateFormat('yyyy-MM-dd HH:mm:ss (Z)').format(new Date())}" ]
+    attributes += [ "Built-By": "${System.properties['user.name']}" ]
+    attributes += [ "Java-Version": "${System.properties['java.version']}" ]
+  }
+}
+
 sourceSets {
   samples {
     java {
