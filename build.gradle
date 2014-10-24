@@ -2,6 +2,11 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 
+repositories {
+  // Fetch the dependencies from Maven Central
+  mavenCentral()
+}
+
 sourceCompatibility = targetCompatibility = '1.6'
 
 task wrapper(type: Wrapper) {
@@ -16,10 +21,30 @@ dependencies {
 sourceSets {
   samples {
     java {
-      // The samples need the main classes to compile
+      // The samples need the main classes to compile & the compile dependencies
       compileClasspath += sourceSets.main.output + configurations.compile
     }
   }
 }
 
-assemble.dependsOn samplesClasses
+// Compile the samples before packaging them
+task distribution(type: Zip, dependsOn: samplesClasses) {
+  classifier = 'dist'
+  from jar, {
+    into 'lib'
+  }
+  from javadoc, {
+    into 'docs/javadoc'
+  }
+  from sourceSets.samples.allSource, {
+    into 'samples'
+  }
+  from file('LICENSE')
+}
+
+artifacts {
+  // Upload the distribution file too
+  archives tasks.distribution
+}
+
+build.dependsOn distribution
