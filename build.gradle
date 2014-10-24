@@ -12,3 +12,14 @@ dependencies {
   compile 'commons-lang:commons-lang:2.4'
   compile 'net.java.dev.stax-utils:stax-utils:20070216'
 }
+
+sourceSets {
+  samples {
+    java {
+      // The samples need the main classes to compile
+      compileClasspath += sourceSets.main.output
+    }
+  }
+}
+
+assemble.dependsOn samplesClasses

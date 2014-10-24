@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.ritaly.graphml4j;
+package fr.ritaly.graphml4j.samples;
 
 import java.awt.Color;
 import java.io.File;
@@ -24,6 +24,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import fr.ritaly.graphml4j.EdgeStyle;
+import fr.ritaly.graphml4j.GraphMLWriter;
+import fr.ritaly.graphml4j.GroupStyles;
+import fr.ritaly.graphml4j.NodeStyle;
 import fr.ritaly.graphml4j.base.Alignment;
 import fr.ritaly.graphml4j.base.Arrow;
 import fr.ritaly.graphml4j.base.FontStyle;
