@@ -16,6 +16,11 @@
  */
 package fr.ritaly.graphml4j;
 
+/**
+ * Exception thrown when generating a GraphML file.
+ *
+ * @author francois_ritaly
+ */
 public class GraphMLException extends Exception {
 
 	private static final long serialVersionUID = 6783323986366115671L;

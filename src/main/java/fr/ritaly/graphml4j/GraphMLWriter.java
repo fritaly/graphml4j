@@ -33,6 +33,31 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.Validate;
 
+/**
+ * <p>This class is a stream writer ("a la Stax") used for generating GraphML
+ * markup language for yEd.</p>
+ * <p>Check the samples for examples of how to use this class.</p>
+ * <p>
+ * The typical sequence looks like:
+ * <ul>
+ * <li>Create a new graph writer</li>
+ * <li>Open the graph</li>
+ * <li>Create some nodes</li>
+ * <li>Possibly
+ * <ul>
+ * <li>Open a group</li>
+ * <li>Create some nodes inside the group</li>
+ * <li>Close the group</li>
+ * </ul>
+ * </li>
+ * <li>Create some edges</li>
+ * <li>Close the graph</li>
+ * <li>Close the graph writer</li>
+ * </ul>
+ * </p>
+ *
+ * @author francois_ritaly
+ */
 public final class GraphMLWriter {
 
 	/** The id associated to the node URL property */
@@ -132,6 +157,16 @@ public final class GraphMLWriter {
 
 	private final GroupStyles groupStyles = new GroupStyles();
 
+	/**
+	 * Creates a new instance of {@link GraphMLWriter} using the given writer to
+	 * generate the GraphML markup language.
+	 *
+	 * @param writer
+	 *            a {@link Writer} where the GraphML markup language will be
+	 *            written. Can't be null.
+	 * @throws GraphMLException
+	 *             if an error occurs when initializing the writer.
+	 */
 	public GraphMLWriter(Writer writer) throws GraphMLException {
 		Validate.notNull(writer, "The given writer is null");
 
@@ -147,11 +182,28 @@ public final class GraphMLWriter {
 		}
 	}
 
+	/**
+	 * <p>
+	 * Returns the styles applied to new groups.
+	 * </p>
+	 * <p>
+	 * Note: In order to preserve encapsulation, the returned style is a copy of
+	 * the "live" style. To apply a new style, one needs to call the method
+	 * {@link #setGroupStyles(GroupStyles)}.
+	 * </p>
+	 *
+	 * @return a new instance {@link GroupStyles}. Never returns null.
+	 */
 	public GroupStyles getGroupStyles() {
 		// Defensive recopy
 		return new GroupStyles(groupStyles);
 	}
 
+	/**
+	 * <p>Sets the styles to be applied to new groups.</p>
+	 *
+	 * @param styles the style for rendering new groups. Can't be null.
+	 */
 	public void setGroupStyles(GroupStyles styles) {
 		Validate.notNull(styles, "The given groups styles is null");
 
@@ -159,11 +211,28 @@ public final class GraphMLWriter {
 		this.groupStyles.apply(styles);
 	}
 
+	/**
+	 * <p>
+	 * Returns the style applied to new nodes.
+	 * </p>
+	 * <p>
+	 * Note: In order to preserve encapsulation, the returned style is a copy of
+	 * the "live" style. To apply a new style, one needs to call the method
+	 * {@link #setNodeStyle(NodeStyle)}.
+	 * </p>
+	 *
+	 * @return a new instance {@link NodeStyle}. Never returns null.
+	 */
 	public NodeStyle getNodeStyle() {
 		// Defensive recopy
 		return new NodeStyle(nodeStyle);
 	}
 
+	/**
+	 * <p>Sets the style to be applied to new nodes.</p>
+	 *
+	 * @param style the style for rendering new nodes. Can't be null.
+	 */
 	public void setNodeStyle(NodeStyle style) {
 		Validate.notNull(style, "The given style is null");
 
@@ -171,11 +240,28 @@ public final class GraphMLWriter {
 		this.nodeStyle.apply(style);
 	}
 
+	/**
+	 * <p>
+	 * Returns the style applied to new edges.
+	 * </p>
+	 * <p>
+	 * Note: In order to preserve encapsulation, the returned style is a copy of
+	 * the "live" style. To apply a new style, one needs to call the method
+	 * {@link #setEdgeStyle(EdgeStyle)}.
+	 * </p>
+	 *
+	 * @return a new instance {@link EdgeStyle}. Never returns null.
+	 */
 	public EdgeStyle getEdgeStyle() {
 		// Defensive recopy
 		return new EdgeStyle(edgeStyle);
 	}
 
+	/**
+	 * <p>Sets the style to be applied to new edges.</p>
+	 *
+	 * @param style the style for rendering new edges. Can't be null.
+	 */
 	public void setEdgeStyle(EdgeStyle style) {
 		Validate.notNull(style, "The given style is null");
 
@@ -310,6 +396,17 @@ public final class GraphMLWriter {
 
 	// --- Graph --- //
 
+	/**
+	 * <p>
+	 * Opens the graph. The graph can only be opened once.
+	 * </p>
+	 * <p>
+	 * This method will fail if the graph has already been opened.
+	 * </p>
+	 *
+	 * @throws GraphMLException
+	 *             if an error occurs when opening the graph.
+	 */
 	public void graph() throws GraphMLException {
 		startDocument();
 
@@ -329,8 +426,21 @@ public final class GraphMLWriter {
 		}
 	}
 
-	// This method can only be called when not inside a group
+	/**
+	 * <p>
+	 * Closes the current graph. Once closed, the graph can't be reopened.
+	 * </p>
+	 * <p>
+	 * This method will fail if the graph hasn't been opened or if a group is
+	 * currently open.
+	 * </p>
+	 *
+	 * @throws GraphMLException
+	 *             if an error occurs when closing the graph.
+	 * @see #graph()
+	 */
 	public void closeGraph() throws GraphMLException {
+		// This method can only be called when not inside a group
 		assertState(State.GRAPH_OPENED);
 		if (insideGroup()) {
 			throw new IllegalStateException("The writer is inside a group. Close the group(s) first");
@@ -349,11 +459,24 @@ public final class GraphMLWriter {
 
 	// --- Node --- //
 
+	/**
+	 * <p>Creates a new node with the given label and returns the identifier
+	 * assigned to the node.</p>
+	 *
+	 * @param label
+	 *            a string representing the node label. Can't be null.
+	 * @return a string identifying the newly created node in the graph. Never
+	 *         returns null.
+	 * @throws GraphMLException
+	 *             if an error occurs when creating the node.
+	 */
 	public String node(String label) throws GraphMLException {
 		return node(label, 0.0f, 0.0f);
 	}
 
 	public String node(String label, float x, float y) throws GraphMLException {
+		Validate.notNull(label, "The given label is null");
+
 		assertState(State.GRAPH_OPENED);
 
 		try {
@@ -387,6 +510,22 @@ public final class GraphMLWriter {
 
 	// --- Edge --- //
 
+	/**
+	 * <p>Creates a new edge between the 2 nodes identified by the provided node
+	 * ids and returns the id assigned to the edge.</p>
+	 * <p>This method will fail if the graph hasn't been opened.</p>
+	 *
+	 * @param sourceNodeId
+	 *            a string representing the id of the edge's source node. Can't
+	 *            be null.
+	 * @param targetNodeId
+	 *            a string representing the id of the edge's target node. Can't
+	 *            be null.
+	 * @return a string corresponding to the id assigned to the newly created
+	 *         edge. Never returns null.
+	 * @throws GraphMLException
+	 *             if an error occurs when creating the edge.
+	 */
 	public String edge(String sourceNodeId, String targetNodeId) throws GraphMLException {
 		Validate.isTrue(nodeIds.contains(sourceNodeId),
 				String.format("The (source) node with given id '%s' doesn't exist", sourceNodeId));
@@ -425,11 +564,29 @@ public final class GraphMLWriter {
 
 	// --- Group --- //
 
+	/**
+	 * <p>
+	 * Creates a new group (of nodes) with the given label and returns the
+	 * identifier assigned to the group.
+	 * </p>
+	 *
+	 * @param label
+	 *            a string representing the group label. Can't be null.
+	 * @param open
+	 *            whether the group should be rendered as open or closed.
+	 * @return a string identifying the newly created group node in the graph.
+	 *         Never returns null.
+	 * @throws GraphMLException
+	 *             if an error occurs when creating the group.
+	 * @see #closeGroup()
+	 */
 	public String group(String label, boolean open) throws GraphMLException {
 		return group(label, open, 0.0f, 0.0f);
 	}
 
 	public String group(String label, boolean open, float x, float y) throws GraphMLException {
+		Validate.notNull(label, "The given label is null");
+
 		assertState(State.GRAPH_OPENED);
 
 		try {
@@ -485,8 +642,22 @@ public final class GraphMLWriter {
 		}
 	}
 
-	// This method can only be called when inside a group
+	/**
+	 * <p>
+	 * Closes the current group. Once closed, the group can't be reopened.
+	 * </p>
+	 * <p>
+	 * This method will fail if the graph hasn't been opened or if a group isn't
+	 * currently open.
+	 * </p>
+	 *
+	 * @throws GraphMLException
+	 *             if an error occurs when closing the group.
+	 * @see #group(String, boolean)
+	 * @see #group(String, boolean, float, float)
+	 */
 	public void closeGroup() throws GraphMLException {
+		// This method can only be called when inside a group
 		assertState(State.GRAPH_OPENED);
 		if (!insideGroup()) {
 			throw new IllegalStateException("The writer isn't inside a group. Invalid method call");
@@ -535,6 +706,12 @@ public final class GraphMLWriter {
 		}
 	}
 
+	/**
+	 * <p>
+	 * Closes the graph writer and all underlying resources. Once closed, the
+	 * graph writer can't be reopened.
+	 * </p>
+	 */
 	public void close() {
 		assertNotState(State.CLOSED);
 
