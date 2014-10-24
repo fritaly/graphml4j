@@ -161,4 +161,39 @@ public class GraphMLWriterTest {
 		// The generated XML should be well-formed
 		def root = new XmlSlurper().parseText(text)
 	}
+
+	@Test
+	public void "building a graph with some nodes, edges and groups should succeed"() throws Exception {
+		graphWriter.graph()
+
+		def n1 = graphWriter.node("N1")
+		def n2 = graphWriter.node("N2")
+		def n3 = graphWriter.node("N3")
+
+		// Create a group with 2 nodes
+		graphWriter.group("G1", true)
+
+		def n4 = graphWriter.node("N4")
+		def n5 = graphWriter.node("N5")
+
+		graphWriter.closeGroup()
+
+		// Create some edges
+		graphWriter.edge(n1, n2)
+		graphWriter.edge(n1, n3)
+		graphWriter.edge(n2, n4)
+		graphWriter.edge(n4, n5)
+
+		graphWriter.closeGraph()
+		graphWriter.close()
+
+		String text = stringWriter.toString()
+
+		// The output shouldn't be empty
+		assertNotNull(text)
+		assertTrue(text.length() > 0)
+
+		// The generated XML should be well-formed
+		def root = new XmlSlurper().parseText(text)
+	}
 }
