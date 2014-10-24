@@ -38,7 +38,7 @@ import org.apache.commons.lang.Validate;
  * markup language for yEd.</p>
  * <p>Check the samples for examples of how to use this class.</p>
  * <p>
- * The typical sequence looks like:
+ * The typical usage looks like:
  * <ul>
  * <li>Create a new graph writer</li>
  * <li>Open the graph</li>
@@ -86,7 +86,7 @@ public final class GraphMLWriter {
 	 *
 	 * @author francois_ritaly
 	 */
-	private static enum State {
+	static enum State {
 		INITIAL, DOCUMENT_OPENED, GRAPH_OPENED, GRAPH_CLOSED, DOCUMENT_CLOSED, CLOSED;
 
 		/**
@@ -180,6 +180,11 @@ public final class GraphMLWriter {
 		} catch (FactoryConfigurationError e) {
 			throw new GraphMLException(e);
 		}
+	}
+
+	State getState() {
+		// Getter mainly for unit tests
+		return state;
 	}
 
 	/**
