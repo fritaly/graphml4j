@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
+apply plugin: 'jacoco'
 
 repositories {
   // Fetch the dependencies from Maven Central
@@ -16,7 +17,7 @@ task wrapper(type: Wrapper) {
 
 dependencies {
   compile 'commons-lang:commons-lang:2.4'
-  compile 'net.java.dev.stax-utils:stax-utils:20070216'
+  compile 'net.java.dev.stax-utils:stax-utils:20070216@jar'
 
   testCompile localGroovy()
   testCompile 'junit:junit:4.8.1'
@@ -62,4 +63,8 @@ artifacts {
   archives tasks.distribution
 }
 
-build.dependsOn distribution
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+}
+
+build.dependsOn += [distribution, jacocoTestReport]
