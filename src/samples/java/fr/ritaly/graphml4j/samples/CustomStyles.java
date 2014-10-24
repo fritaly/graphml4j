@@ -37,7 +37,19 @@ import fr.ritaly.graphml4j.base.Shape;
 import fr.ritaly.graphml4j.base.SizePolicy;
 
 /**
- * This sample demonstrates how to use custom styles for rendering node, groups and edges.
+ * <p>
+ * This sample demonstrates how to use custom styles for rendering node, groups
+ * and edges.
+ * </p>
+ * <p>
+ * Instructions:
+ * <ul>
+ * <li>Download and install yEd (if necessary)</li>
+ * <li>Execute this sample and generate a GraphML file</li>
+ * <li>Open the generated file in yEd</li>
+ * <li>In yEd, render the graph with the "Hierarchical" layout</li>
+ * </ul>
+ * </p>
  *
  * @author francois_ritaly
  */

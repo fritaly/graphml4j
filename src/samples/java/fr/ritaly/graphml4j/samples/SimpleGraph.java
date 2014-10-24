@@ -26,8 +26,19 @@ import java.util.Random;
 import fr.ritaly.graphml4j.GraphMLWriter;
 
 /**
+ * <p>
  * This sample demonstrates how to use the Graphml4j API to generate a simple
  * graph (with the default styles).
+ * </p>
+ * <p>
+ * Instructions:
+ * <ul>
+ * <li>Download and install yEd (if necessary)</li>
+ * <li>Execute this sample and generate a GraphML file</li>
+ * <li>Open the generated file in yEd</li>
+ * <li>In yEd, render the graph with the "Hierarchical" layout</li>
+ * </ul>
+ * </p>
  *
  * @author francois_ritaly
  */
