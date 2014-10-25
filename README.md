@@ -1,7 +1,9 @@
 graphml4j
 =========
 
-!(https://travis-ci.org/fritaly/graphml4j.svg?branch=master)
+![image][]
+
+[image]: https://travis-ci.org/fritaly/graphml4j.svg?branch=master
 
 A simple Java API for generating [GraphML](http://graphml.graphdrawing.org/) files for [yEd](http://www.yworks.com/en/products/yfiles/yed/).
 
