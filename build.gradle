@@ -1,8 +1,18 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7.1'
+  }
+}
+
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'jacoco'
+apply plugin: 'nexus'
 
 repositories {
   // Fetch the dependencies from Maven Central
@@ -64,7 +74,7 @@ artifacts {
 }
 
 jacoco {
-    toolVersion = "0.7.1.201405082137"
+  toolVersion = "0.7.1.201405082137"
 }
 
 build.dependsOn += [distribution, jacocoTestReport]
