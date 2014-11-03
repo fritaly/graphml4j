@@ -1,8 +1,18 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7.1'
+  }
+}
+
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'jacoco'
+apply plugin: 'nexus'
 
 repositories {
   // Fetch the dependencies from Maven Central
@@ -64,7 +74,42 @@ artifacts {
 }
 
 jacoco {
-    toolVersion = "0.7.1.201405082137"
+  toolVersion = "0.7.1.201405082137"
 }
 
 build.dependsOn += [distribution, jacocoTestReport]
+
+modifyPom {
+    project {
+        name 'Graphml4J'
+        description 'A simple Java API for generating GraphML files for yEd.'
+        url 'https://github.com/fritaly/graphml4j'
+        inceptionYear '2014'
+
+        scm {
+            url 'https://github.com/fritaly/graphml4j'
+            connection 'scm:https://github.com/fritaly/graphml4j.git'
+            developerConnection 'scm:https://github.com/fritaly/graphml4j.git'
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'fritaly'
+                name 'Francois Ritaly'
+                email 'francois.ritaly@gmail.com'
+            }
+        }
+    }
+}
+
+nexus {
+    sign = true
+}
