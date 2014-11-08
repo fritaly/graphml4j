@@ -112,5 +112,5 @@ modifyPom {
 }
 
 nexus {
-    sign = true
+    sign = false
 }
