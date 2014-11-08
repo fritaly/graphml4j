@@ -85,11 +85,12 @@ modifyPom {
         description 'A simple Java API for generating GraphML files for yEd.'
         url 'https://github.com/fritaly/graphml4j'
         inceptionYear '2014'
+        packaging 'jar'
 
         scm {
             url 'https://github.com/fritaly/graphml4j'
-            connection 'scm:https://github.com/fritaly/graphml4j.git'
-            developerConnection 'scm:https://github.com/fritaly/graphml4j.git'
+            connection 'scm:git:https://github.com/fritaly/graphml4j.git'
+            developerConnection 'scm:git@github.com:fritaly/graphml4j.git'
         }
 
         licenses {
