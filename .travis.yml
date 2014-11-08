@@ -3,3 +3,4 @@ env:
   global:
   - secure: Tcc9iKMVXZ9QxcNv98obDMinLdReRoV559H8vXMENURaNhVWfW97lG4+QZmQoXfNYnwtsYuPIG7LFCPPkNk2lAXePIj0KZ7LK9+NZOrQIwJ2cPZqvOUMsk45gq+lCNOegEUkSBlFKUaDV4Vl0qzRAxLik+64LJyGKi3OHUB5L5Q=
   - secure: AR1N/Zwl0zbFd+fduPl7qzgkwpxl0Kz4D7UNBDfjDHySeO8IDS6VD2+/Xwohlzd8iJNiPc5t4AwO5Lb4Ffrtk6Yh/xwyTeGU7casSSkwX/Ncaz8XV1FSUkXdqjlpHN2CXd5k+IbA61rBJFun5hx9njaXBQmE6E0vBBlj3o1QCr4=
+script: ./gradlew build uploadArchives
