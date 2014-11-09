@@ -78,6 +78,16 @@ public final class DirectedGraph {
 		return this.edges.get(id);
 	}
 
+	public Edge getEdgeByData(Object data) {
+		for (Edge edge : this.edges.values()) {
+			if ((edge.getData() == data) || edge.getData().equals(data)) {
+				return edge;
+			}
+		}
+
+		return null;
+	}
+
 	public boolean hasEdge(String id) {
 		return this.edges.containsKey(id);
 	}
