@@ -55,8 +55,9 @@ public final class DirectedGraph {
 		Validate.isTrue(hasNodeWithId(sourceId), String.format("The given source node id '%s' doesn't exist", sourceId));
 		Validate.isTrue(hasNodeWithId(targetId), String.format("The given target node id '%s' doesn't exist", targetId));
 
-		final Edge edge = new Edge(String.format("e%d", edgeSequence.incrementAndGet()), getNodeById(sourceId),
-				getNodeById(targetId));
+		final String id = String.format("e%d", edgeSequence.incrementAndGet());
+
+		final Edge edge = new Edge(id, getNodeById(sourceId), getNodeById(targetId));
 
 		this.edges.put(edge.getId(), edge);
 
