@@ -91,7 +91,7 @@ public class DirectedGraphWithBuffering {
 			for (int i = 0; i < 15; i++) {
 				Collections.shuffle(nodeIds);
 
-				graph.addEdge(nodeIds.get(0), nodeIds.get(1));
+				graph.addEdge(nodeIds.get(0), nodeIds.get(1), "Depends on");
 			}
 
 			graph.toGraphML(fileWriter);

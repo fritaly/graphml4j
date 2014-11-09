@@ -48,9 +48,10 @@ public final class DirectedGraph {
 
 	// --- Edge --- //
 
-	public Edge addEdge(String sourceId, String targetId) {
+	public Edge addEdge(String sourceId, String targetId, Object data) {
 		Validate.notNull(sourceId, "The given source node id is null");
 		Validate.notNull(targetId, "The given target node id is null");
+		Validate.notNull(data, "The given edge data is null");
 
 		// ensure the 2 nodes exist in the graph
 		Validate.isTrue(hasNode(sourceId), String.format("The given source node id '%s' doesn't exist", sourceId));
@@ -58,7 +59,7 @@ public final class DirectedGraph {
 
 		final String id = String.format("e%d", edgeSequence.incrementAndGet());
 
-		final Edge edge = new Edge(id, getNode(sourceId), getNode(targetId));
+		final Edge edge = new Edge(id, getNode(sourceId), getNode(targetId), data);
 
 		this.edges.put(edge.getId(), edge);
 
