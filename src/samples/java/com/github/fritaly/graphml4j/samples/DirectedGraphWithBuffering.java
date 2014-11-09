@@ -56,7 +56,7 @@ public class DirectedGraphWithBuffering {
 
 		// This list will store the identifiers of nodes added to the graph
 		final List<Node> nodes = new ArrayList<Node>();
-		final List<String> groupIds = new ArrayList<String>();
+		final List<Node> groups = new ArrayList<Node>();
 
 		final FileWriter fileWriter = new FileWriter(file);
 
@@ -71,7 +71,7 @@ public class DirectedGraphWithBuffering {
 
 			// create 3 group nodes
 			for (int i = 0; i < 3; i++) {
-				groupIds.add(graph.addNode(String.format("Group #%d", i + 1)).getId());
+				groups.add(graph.addNode(String.format("Group #%d", i + 1)));
 			}
 
 			// After the fact, add 5 nodes in each group. The buffering allows
@@ -79,11 +79,9 @@ public class DirectedGraphWithBuffering {
 			// GraphML files (groups can be handled after generating the nodes)
 			final Iterator<Node> iterator = nodes.iterator();
 
-			for (String groupId : groupIds) {
-				final Node groupNode = graph.getNodeById(groupId);
-
+			for (Node group : groups) {
 				for (int i = 0; i < 5; i++) {
-					iterator.next().setParent(groupNode);
+					iterator.next().setParent(group);
 				}
 			}
 
