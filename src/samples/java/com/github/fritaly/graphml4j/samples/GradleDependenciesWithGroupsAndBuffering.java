@@ -21,7 +21,6 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.Stack;
 
 import org.apache.commons.lang.StringUtils;
@@ -197,7 +196,7 @@ public class GradleDependenciesWithGroupsAndBuffering {
 			}
 
 			// Create the groups after creating the nodes & edges
-			for (Node node : new ArrayList<Node>(graph.getAllNodes().values())) {
+			for (Node node : graph.getAllNodes()) {
 				final Artifact artifact = (Artifact) node.getData();
 
 				final String groupId = artifact.group;

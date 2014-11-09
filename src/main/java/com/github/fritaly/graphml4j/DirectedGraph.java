@@ -17,8 +17,10 @@
 package com.github.fritaly.graphml4j;
 
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -107,9 +109,8 @@ public final class DirectedGraph {
 
 	// TODO create method getAllNodes which returns a List
 
-	// TODO rename into getAllNodeMap()
-	public Map<String, Node> getAllNodes() {
-		return Collections.unmodifiableMap(allNodes);
+	public List<Node> getAllNodes() {
+		return new ArrayList<Node>(allNodes.values());
 	}
 
 	public Node getNodeById(String id) {
