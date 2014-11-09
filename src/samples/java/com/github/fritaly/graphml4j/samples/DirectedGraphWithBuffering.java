@@ -80,10 +80,10 @@ public class DirectedGraphWithBuffering {
 			final Iterator<String> iterator = nodeIds.iterator();
 
 			for (String groupId : groupIds) {
-				final Node groupNode = graph.getNode(groupId);
+				final Node groupNode = graph.getNodeById(groupId);
 
 				for (int i = 0; i < 5; i++) {
-					graph.getNode(iterator.next()).setParent(groupNode);
+					graph.getNodeById(iterator.next()).setParent(groupNode);
 				}
 			}
 

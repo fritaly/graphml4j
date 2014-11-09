@@ -48,6 +48,7 @@ public final class DirectedGraph {
 
 	// --- Edge --- //
 
+	// TODO Use nodes instead of strings as arguments
 	public Edge addEdge(String sourceId, String targetId, Object data) {
 		Validate.notNull(sourceId, "The given source node id is null");
 		Validate.notNull(targetId, "The given target node id is null");
@@ -59,7 +60,7 @@ public final class DirectedGraph {
 
 		final String id = String.format("e%d", edgeSequence.incrementAndGet());
 
-		final Edge edge = new Edge(id, getNode(sourceId), getNode(targetId), data);
+		final Edge edge = new Edge(id, getNodeById(sourceId), getNodeById(targetId), data);
 
 		this.edges.put(edge.getId(), edge);
 
@@ -111,7 +112,7 @@ public final class DirectedGraph {
 		return Collections.unmodifiableMap(allNodes);
 	}
 
-	public Node getNode(String id) {
+	public Node getNodeById(String id) {
 		Validate.notNull(id, "The given node id is null");
 
 		return this.allNodes.get(id);
