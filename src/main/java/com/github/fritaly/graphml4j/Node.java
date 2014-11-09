@@ -37,6 +37,8 @@ public final class Node implements Comparable<Node> {
 
 	private Node parent;
 
+	private Object data;
+
 	Node(DirectedGraph graph, String id, String label) {
 		Validate.notNull(graph, "The given graph is null");
 		Validate.notNull(id, "The given node id is null");
@@ -45,6 +47,16 @@ public final class Node implements Comparable<Node> {
 		this.graph = graph;
 		this.id = id;
 		this.label = label;
+	}
+
+	public Object getData() {
+		return data;
+	}
+
+	public void setData(Object data) {
+		// the data can be null
+
+		this.data = data;
 	}
 
 	DirectedGraph getGraph() {
