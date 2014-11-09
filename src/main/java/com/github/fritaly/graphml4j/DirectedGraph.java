@@ -16,6 +16,7 @@
  */
 package com.github.fritaly.graphml4j;
 
+import java.io.Writer;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,6 +44,8 @@ public final class DirectedGraph {
 
 	public DirectedGraph() {
 	}
+
+	// --- Edge --- //
 
 	public Edge addEdge(String sourceId, String targetId) {
 		Validate.notNull(sourceId, "The given source node id is null");
@@ -120,5 +123,39 @@ public final class DirectedGraph {
 
 	public int getNodeCount() {
 		return this.nodes.size();
+	}
+
+	// --- Miscellaneous --- //
+
+	public void toGraphML(Writer writer) throws GraphMLException {
+		Validate.notNull(writer, "The given writer is null");
+
+		final GraphMLWriter graphWriter = new GraphMLWriter(writer);
+		graphWriter.graph();
+
+		// map containing the mapping between internal & external node ids
+		final Map<String, String> nodeMappings = new LinkedHashMap<String, String>();
+
+		// generate the nodes
+		for (Node node : this.nodes.values()) {
+			// TODO select the node style before creating the node
+
+			final String nodeId = graphWriter.node(node.getLabel());
+
+			// store the id generated for this node for future lookups
+			nodeMappings.put(node.getId(), nodeId);
+		}
+
+		// ... then the edges
+		for (Edge edge : this.edges.values()) {
+			final Node source = edge.getSource();
+			final Node target = edge.getTarget();
+
+			graphWriter.edge(nodeMappings.get(source.getId()), nodeMappings.get(target.getId()));
+		}
+
+		graphWriter.closeGraph();
+		graphWriter.close();
+
 	}
 }
