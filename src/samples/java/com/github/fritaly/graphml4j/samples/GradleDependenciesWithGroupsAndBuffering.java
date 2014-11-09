@@ -187,8 +187,7 @@ public class GradleDependenciesWithGroupsAndBuffering {
 				// Has this dependency already been added to the graph ?
 				if (!nodeIdsByArtifacts.containsKey(artifact)) {
 					// No, add the node
-					final Node node = graph.addNode(artifact.getLabel());
-					node.setData(artifact);
+					final Node node = graph.addNode(artifact);
 
 					nodeIdsByArtifacts.put(artifact, node.getId());
 				}
@@ -224,6 +223,11 @@ public class GradleDependenciesWithGroupsAndBuffering {
 			}
 
 			graph.toGraphML(fileWriter, new Renderer() {
+
+				@Override
+				public String getNodeLabel(Node node) {
+					return node.isGroup() ? node.getData().toString() : ((Artifact) node.getData()).getLabel();
+				}
 
 				@Override
 				public boolean isGroupOpen(Node node) {

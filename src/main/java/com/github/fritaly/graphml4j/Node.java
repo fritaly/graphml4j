@@ -29,36 +29,28 @@ public final class Node implements Comparable<Node> {
 
 	private final String id;
 
-	private final String label;
-
 	private final Set<Node> children = new TreeSet<Node>();
 
 	private final DirectedGraph graph;
 
 	private Node parent;
 
-	private Object data;
+	private final Object data;
 
 	// TODO Create a class NodeRenderer to generate the label of a node
 
-	Node(DirectedGraph graph, String id, String label) {
+	Node(DirectedGraph graph, String id, Object data) {
 		Validate.notNull(graph, "The given graph is null");
 		Validate.notNull(id, "The given node id is null");
-		Validate.notNull(label, "The given node label is null");
+		Validate.notNull(data, "The given node data is null");
 
 		this.graph = graph;
 		this.id = id;
-		this.label = label;
+		this.data = data;
 	}
 
 	public Object getData() {
 		return data;
-	}
-
-	public void setData(Object data) {
-		// the data can be null
-
-		this.data = data;
 	}
 
 	DirectedGraph getGraph() {
@@ -107,10 +99,6 @@ public final class Node implements Comparable<Node> {
 		setParent(null);
 	}
 
-	public String getLabel() {
-		return label;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -132,6 +120,6 @@ public final class Node implements Comparable<Node> {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("id", id).append("label", label).toString();
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("id", id).append("data", data).toString();
 	}
 }

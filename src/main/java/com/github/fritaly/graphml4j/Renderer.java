@@ -18,6 +18,8 @@ package com.github.fritaly.graphml4j;
 
 public interface Renderer {
 
+	public String getNodeLabel(Node node);
+
 	public NodeStyle getNodeStyle(Node node);
 
 	public EdgeStyle getEdgeStyle(Edge edge);

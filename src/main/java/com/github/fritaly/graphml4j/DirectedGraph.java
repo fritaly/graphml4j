@@ -85,13 +85,13 @@ public final class DirectedGraph {
 
 	// --- Node --- //
 
-	public Node addNode(String label) {
-		// validate the label prior generating the next node id
-		Validate.notNull(label, "The given node label is null");
+	public Node addNode(Object data) {
+		// validate the data prior generating the next node id
+		Validate.notNull(data, "The given node data is null");
 
 		final String id = String.format("n%d", nodeSequence.incrementAndGet());
 
-		final Node node = new Node(this, id, label);
+		final Node node = new Node(this, id, data);
 
 		this.childNodes.put(node.getId(), node);
 		this.allNodes.put(node.getId(), node);
@@ -140,7 +140,9 @@ public final class DirectedGraph {
 				open = true;
 			}
 
-			final String nodeId = graphWriter.group(node.getLabel(), open);
+			final String label = (renderer != null) ? renderer.getNodeLabel(node) : node.getData().toString();
+
+			final String nodeId = graphWriter.group(label, open);
 
 			// store the id generated for this node for future lookups
 			nodeMappings.put(node.getId(), nodeId);
@@ -157,7 +159,9 @@ public final class DirectedGraph {
 				graphWriter.setNodeStyle(renderer.getNodeStyle(node));
 			}
 
-			final String nodeId = graphWriter.node(node.getLabel());
+			final String label = (renderer != null) ? renderer.getNodeLabel(node) : node.getData().toString();
+
+			final String nodeId = graphWriter.node(label);
 
 			// store the id generated for this node for future lookups
 			nodeMappings.put(node.getId(), nodeId);
