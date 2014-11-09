@@ -39,6 +39,8 @@ public final class Node implements Comparable<Node> {
 
 	private Object data;
 
+	// TODO Create a class NodeRenderer to generate the label of a node
+
 	Node(DirectedGraph graph, String id, String label) {
 		Validate.notNull(graph, "The given graph is null");
 		Validate.notNull(id, "The given node id is null");

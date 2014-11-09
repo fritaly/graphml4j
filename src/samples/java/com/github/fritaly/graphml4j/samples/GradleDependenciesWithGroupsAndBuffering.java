@@ -21,9 +21,11 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -186,6 +188,7 @@ public class GradleDependenciesWithGroupsAndBuffering {
 				if (!nodeIdsByArtifacts.containsKey(artifact)) {
 					// No, add the node
 					final Node node = graph.addNode(artifact.getLabel());
+					node.setData(artifact);
 
 					nodeIdsByArtifacts.put(artifact, node.getId());
 				}
@@ -198,6 +201,26 @@ public class GradleDependenciesWithGroupsAndBuffering {
 					// Generate an edge between the current node and its parent
 					graph.addEdge(parentIds.get(parentIds.size() - 2), nodeId);
 				}
+			}
+
+			// Create the groups after creating the nodes & edges
+			final Map<String, Node> groupNodes = new TreeMap<String, Node>();
+
+			for (Node node : new ArrayList<Node>(graph.getAllNodes().values())) {
+				final Artifact artifact = (Artifact) node.getData();
+
+				final String groupId = artifact.group;
+
+				Node groupNode = groupNodes.get(groupId);
+
+				if (groupNode == null) {
+					groupNode = graph.addNode(groupId);
+
+					groupNodes.put(groupId, groupNode);
+				}
+
+				// add the node to the group
+				node.setParent(groupNode);
 			}
 
 			graph.toGraphML(fileWriter, new Renderer() {
