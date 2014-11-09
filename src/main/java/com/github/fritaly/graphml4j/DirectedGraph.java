@@ -73,7 +73,7 @@ public final class DirectedGraph {
 		return Collections.unmodifiableMap(edges);
 	}
 
-	public Edge getEdge(String id) {
+	public Edge getEdgeById(String id) {
 		Validate.notNull(id, "The given edge id is null");
 
 		return this.edges.get(id);
