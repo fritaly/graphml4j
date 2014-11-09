@@ -55,7 +55,7 @@ public class DirectedGraphWithBuffering {
 		System.out.println("Writing GraphML file to " + file.getAbsolutePath() + " ...");
 
 		// This list will store the identifiers of nodes added to the graph
-		final List<String> nodeIds = new ArrayList<String>();
+		final List<Node> nodes = new ArrayList<Node>();
 		final List<String> groupIds = new ArrayList<String>();
 
 		final FileWriter fileWriter = new FileWriter(file);
@@ -66,7 +66,7 @@ public class DirectedGraphWithBuffering {
 		try {
 			// generate 15 nodes
 			for (int i = 0; i < 15; i++) {
-				nodeIds.add(graph.addNode(String.format("N%d", (i + 1))).getId());
+				nodes.add(graph.addNode(String.format("N%d", (i + 1))));
 			}
 
 			// create 3 group nodes
@@ -77,21 +77,21 @@ public class DirectedGraphWithBuffering {
 			// After the fact, add 5 nodes in each group. The buffering allows
 			// moving nodes inside the graph thus simplifying the generation of
 			// GraphML files (groups can be handled after generating the nodes)
-			final Iterator<String> iterator = nodeIds.iterator();
+			final Iterator<Node> iterator = nodes.iterator();
 
 			for (String groupId : groupIds) {
 				final Node groupNode = graph.getNodeById(groupId);
 
 				for (int i = 0; i < 5; i++) {
-					graph.getNodeById(iterator.next()).setParent(groupNode);
+					iterator.next().setParent(groupNode);
 				}
 			}
 
 			// Randomly generate 15 edges between the nodes
 			for (int i = 0; i < 15; i++) {
-				Collections.shuffle(nodeIds);
+				Collections.shuffle(nodes);
 
-				graph.addEdge(nodeIds.get(0), nodeIds.get(1), "Depends on");
+				graph.addEdge(nodes.get(0), nodes.get(1), "Depends on");
 			}
 
 			graph.toGraphML(fileWriter);

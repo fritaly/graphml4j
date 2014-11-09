@@ -49,19 +49,18 @@ public final class DirectedGraph {
 
 	// --- Edge --- //
 
-	// TODO Use nodes instead of strings as arguments
-	public Edge addEdge(String sourceId, String targetId, Object data) {
-		Validate.notNull(sourceId, "The given source node id is null");
-		Validate.notNull(targetId, "The given target node id is null");
+	public Edge addEdge(Node source, Node target, Object data) {
+		Validate.notNull(source, "The given source node is null");
+		Validate.notNull(target, "The given target node is null");
 		Validate.notNull(data, "The given edge data is null");
 
 		// ensure the 2 nodes exist in the graph
-		Validate.isTrue(hasNode(sourceId), String.format("The given source node id '%s' doesn't exist", sourceId));
-		Validate.isTrue(hasNode(targetId), String.format("The given target node id '%s' doesn't exist", targetId));
+		Validate.isTrue(hasNode(source), String.format("The given source node '%s' doesn't belong to this graph", source));
+		Validate.isTrue(hasNode(target), String.format("The given target node '%s' doesn't belong to this graph", target));
 
 		final String id = String.format("e%d", edgeSequence.incrementAndGet());
 
-		final Edge edge = new Edge(id, getNodeById(sourceId), getNodeById(targetId), data);
+		final Edge edge = new Edge(id, source, target, data);
 
 		this.edges.put(edge.getId(), edge);
 
@@ -136,6 +135,10 @@ public final class DirectedGraph {
 
 	public boolean hasNode(String id) {
 		return this.allNodes.containsKey(id);
+	}
+
+	public boolean hasNode(Node node) {
+		return this.allNodes.containsValue(node);
 	}
 
 	public int getNodeCount() {

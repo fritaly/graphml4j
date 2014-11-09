@@ -18,7 +18,6 @@ package com.github.fritaly.graphml4j.samples;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,8 +64,7 @@ public class DirectedGraph {
 
 				// Add 5 nodes to the group
 				for (int j = 0; j < 5; j++) {
-					final Node node = graph.addNode(String.format("N%d", (i * 5) + j + 1));
-					node.setParent(groupNode);
+					graph.addNode(String.format("N%d", (i * 5) + j + 1)).setParent(groupNode);
 				}
 			}
 
@@ -76,7 +74,7 @@ public class DirectedGraph {
 			for (int i = 0; i < 15; i++) {
 				Collections.shuffle(nodes);
 
-				graph.addEdge(nodes.get(0).getId(), nodes.get(1).getId(), "Depends on");
+				graph.addEdge(nodes.get(0), nodes.get(1), "Depends on");
 			}
 
 			graph.toGraphML(fileWriter);

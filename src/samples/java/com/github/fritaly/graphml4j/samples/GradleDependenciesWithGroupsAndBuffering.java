@@ -149,10 +149,9 @@ public class GradleDependenciesWithGroupsAndBuffering {
 
 			String line = null;
 
-			// Stack containing the node identifiers per depth inside the
-			// dependency graph (the topmost dependency is the first one in the
-			// stack)
-			final Stack<String> parentIds = new Stack<String>();
+			// Stack containing the nodes per depth inside the dependency graph
+			// (the topmost dependency is the first one in the stack)
+			final Stack<Node> parentNodes = new Stack<Node>();
 
 			while ((line = lineReader.readLine()) != null) {
 				// Determine the depth of the current dependency inside the
@@ -171,8 +170,8 @@ public class GradleDependenciesWithGroupsAndBuffering {
 				final int depth = (initialLength - line.length()) / 5;
 
 				// Remove unnecessary node ids
-				while (depth <= parentIds.size()) {
-					parentIds.pop();
+				while (depth <= parentNodes.size()) {
+					parentNodes.pop();
 				}
 
 				final Artifact artifact = createArtifact(line);
@@ -185,13 +184,11 @@ public class GradleDependenciesWithGroupsAndBuffering {
 					node = graph.addNode(artifact);
 				}
 
-				final String nodeId = node.getId();
+				parentNodes.push(node);
 
-				parentIds.push(nodeId);
-
-				if (parentIds.size() > 1) {
+				if (parentNodes.size() > 1) {
 					// Generate an edge between the current node and its parent
-					graph.addEdge(parentIds.get(parentIds.size() - 2), nodeId, "Depends on");
+					graph.addEdge(parentNodes.get(parentNodes.size() - 2), node, "Depends on");
 				}
 			}
 
