@@ -21,10 +21,8 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import com.github.fritaly.graphml4j.Node;
-
 
 /**
  * <p>

@@ -127,22 +127,30 @@ public final class DirectedGraph {
 
 	// --- Miscellaneous --- //
 
-	private void traverse(GraphMLWriter graphWriter, Map<String, String> nodeMappings, Node node) throws GraphMLException {
-		// TODO select the node style before creating the node
+	private void traverse(GraphMLWriter graphWriter, Map<String, String> nodeMappings, Node node, Renderer renderer) throws GraphMLException {
 		if (node.isGroup()) {
-			// TODO decide whether the group should be open or closed
-			final String nodeId = graphWriter.group(node.getLabel(), true);
+			if (renderer != null) {
+				// resolve and set the contextual group styles
+				graphWriter.setGroupStyles(renderer.getGroupStyles(node));
+			}
+
+			final String nodeId = graphWriter.group(node.getLabel(), renderer.isGroupOpen(node));
 
 			// store the id generated for this node for future lookups
 			nodeMappings.put(node.getId(), nodeId);
 
 			// handle child nodes
 			for (Node child : node.getChildren()) {
-				traverse(graphWriter, nodeMappings, child);
+				traverse(graphWriter, nodeMappings, child, renderer);
 			}
 
 			graphWriter.closeGroup();
 		} else {
+			if (renderer != null) {
+				// resolve and set the contextual node style
+				graphWriter.setNodeStyle(renderer.getNodeStyle(node));
+			}
+
 			final String nodeId = graphWriter.node(node.getLabel());
 
 			// store the id generated for this node for future lookups
@@ -151,6 +159,11 @@ public final class DirectedGraph {
 	}
 
 	public void toGraphML(Writer writer) throws GraphMLException {
+		toGraphML(writer, null);
+	}
+
+	public void toGraphML(Writer writer, Renderer renderer) throws GraphMLException {
+		// the style renderer can be null
 		Validate.notNull(writer, "The given writer is null");
 
 		final GraphMLWriter graphWriter = new GraphMLWriter(writer);
@@ -161,13 +174,18 @@ public final class DirectedGraph {
 
 		// generate the nodes and groups
 		for (Node node : this.childNodes.values()) {
-			traverse(graphWriter, nodeMappings, node);
+			traverse(graphWriter, nodeMappings, node, renderer);
 		}
 
 		// ... then the edges
 		for (Edge edge : this.edges.values()) {
 			final Node source = edge.getSource();
 			final Node target = edge.getTarget();
+
+			if (renderer != null) {
+				// resolve and set the contextual edge style
+				graphWriter.setEdgeStyle(renderer.getEdgeStyle(edge));
+			}
 
 			graphWriter.edge(nodeMappings.get(source.getId()), nodeMappings.get(target.getId()));
 		}

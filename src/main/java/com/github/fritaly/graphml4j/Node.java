@@ -86,6 +86,13 @@ public final class Node implements Comparable<Node> {
 		}
 	}
 
+	public void detach() {
+		// detach the node from its parent (if any)
+		// this method won't remove the node from the graph, it'll move
+		// the node to the root of the graph
+		setParent(null);
+	}
+
 	public String getLabel() {
 		return label;
 	}
