@@ -118,6 +118,16 @@ public final class DirectedGraph {
 		return this.allNodes.get(id);
 	}
 
+	public Node getNodeByData(Object data) {
+		for (Node node : this.allNodes.values()) {
+			if ((node.getData() == data) || node.getData().equals(data)) {
+				return node;
+			}
+		}
+
+		return null;
+	}
+
 	public boolean hasNode(String id) {
 		return this.allNodes.containsKey(id);
 	}

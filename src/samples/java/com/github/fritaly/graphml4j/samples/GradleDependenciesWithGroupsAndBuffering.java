@@ -22,10 +22,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
-import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -158,9 +155,6 @@ public class GradleDependenciesWithGroupsAndBuffering {
 			// stack)
 			final Stack<String> parentIds = new Stack<String>();
 
-			// Map storing the node identifiers per artifact
-			final Map<Artifact, String> nodeIdsByArtifacts = new HashMap<Artifact, String>();
-
 			while ((line = lineReader.readLine()) != null) {
 				// Determine the depth of the current dependency inside the
 				// graph. The depth can be inferred from the indentation used by
@@ -184,15 +178,15 @@ public class GradleDependenciesWithGroupsAndBuffering {
 
 				final Artifact artifact = createArtifact(line);
 
-				// Has this dependency already been added to the graph ?
-				if (!nodeIdsByArtifacts.containsKey(artifact)) {
-					// No, add the node
-					final Node node = graph.addNode(artifact);
+				Node node = graph.getNodeByData(artifact);
 
-					nodeIdsByArtifacts.put(artifact, node.getId());
+				// Has this dependency already been added to the graph ?
+				if (node == null) {
+					// No, add the node
+					node = graph.addNode(artifact);
 				}
 
-				final String nodeId = nodeIdsByArtifacts.get(artifact);
+				final String nodeId = node.getId();
 
 				parentIds.push(nodeId);
 
@@ -203,19 +197,15 @@ public class GradleDependenciesWithGroupsAndBuffering {
 			}
 
 			// Create the groups after creating the nodes & edges
-			final Map<String, Node> groupNodes = new TreeMap<String, Node>();
-
 			for (Node node : new ArrayList<Node>(graph.getAllNodes().values())) {
 				final Artifact artifact = (Artifact) node.getData();
 
 				final String groupId = artifact.group;
 
-				Node groupNode = groupNodes.get(groupId);
+				Node groupNode = graph.getNodeByData(groupId);
 
 				if (groupNode == null) {
 					groupNode = graph.addNode(groupId);
-
-					groupNodes.put(groupId, groupNode);
 				}
 
 				// add the node to the group
