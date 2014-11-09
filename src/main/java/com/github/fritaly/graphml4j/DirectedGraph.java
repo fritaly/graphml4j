@@ -18,7 +18,6 @@ package com.github.fritaly.graphml4j;
 
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,8 +68,8 @@ public final class DirectedGraph {
 		return edge;
 	}
 
-	public Map<String, Edge> getEdges() {
-		return Collections.unmodifiableMap(edges);
+	public List<Edge> getEdges() {
+		return new ArrayList<Edge>(this.edges.values());
 	}
 
 	public Edge getEdgeById(String id) {
