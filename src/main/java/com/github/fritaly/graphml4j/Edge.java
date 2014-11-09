@@ -26,6 +26,8 @@ public final class Edge {
 
 	private final String id;
 
+	private Object data;
+
 	Edge(String id, Node source, Node target) {
 		Validate.notNull(id, "The given edge id is null");
 		Validate.notNull(source, "The given source node is null");
@@ -34,6 +36,15 @@ public final class Edge {
 		this.id = id;
 		this.source = source;
 		this.target = target;
+	}
+
+	public Object getData() {
+		return data;
+	}
+
+	public void setData(Object data) {
+		// the data can be null
+		this.data = data;
 	}
 
 	public String getId() {
