@@ -193,7 +193,7 @@ public class GradleDependenciesWithGroupsAndBuffering {
 			}
 
 			// Create the groups after creating the nodes & edges
-			for (Node node : graph.getAllNodes()) {
+			for (Node node : graph.getNodes()) {
 				final Artifact artifact = (Artifact) node.getData();
 
 				final String groupId = artifact.group;

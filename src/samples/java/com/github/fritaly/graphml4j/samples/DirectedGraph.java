@@ -69,7 +69,7 @@ public class DirectedGraph {
 			}
 
 			// Randomly generate 15 edges between the nodes
-			final List<Node> nodes = graph.getAllNodes();
+			final List<Node> nodes = graph.getNodes();
 
 			for (int i = 0; i < 15; i++) {
 				Collections.shuffle(nodes);

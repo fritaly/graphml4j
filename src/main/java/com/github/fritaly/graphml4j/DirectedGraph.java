@@ -36,7 +36,7 @@ public final class DirectedGraph {
 	 * Map storing the nodes per id. This map contains all the nodes added to
 	 * the graph (direct child or descendant nodes).
 	 */
-	private final Map<String, Node> allNodes = new LinkedHashMap<String, Node>();
+	private final Map<String, Node> nodes = new LinkedHashMap<String, Node>();
 
 	private final AtomicInteger nodeSequence = new AtomicInteger();
 
@@ -106,25 +106,23 @@ public final class DirectedGraph {
 		final Node node = new Node(this, id, data);
 
 		this.childNodes.put(node.getId(), node);
-		this.allNodes.put(node.getId(), node);
+		this.nodes.put(node.getId(), node);
 
 		return node;
 	}
 
-	// TODO create method getAllNodes which returns a List
-
-	public List<Node> getAllNodes() {
-		return new ArrayList<Node>(allNodes.values());
+	public List<Node> getNodes() {
+		return new ArrayList<Node>(nodes.values());
 	}
 
 	public Node getNodeById(String id) {
 		Validate.notNull(id, "The given node id is null");
 
-		return this.allNodes.get(id);
+		return this.nodes.get(id);
 	}
 
 	public Node getNodeByData(Object data) {
-		for (Node node : this.allNodes.values()) {
+		for (Node node : this.nodes.values()) {
 			if ((node.getData() == data) || node.getData().equals(data)) {
 				return node;
 			}
@@ -134,15 +132,15 @@ public final class DirectedGraph {
 	}
 
 	public boolean hasNode(String id) {
-		return this.allNodes.containsKey(id);
+		return this.nodes.containsKey(id);
 	}
 
 	public boolean hasNode(Node node) {
-		return this.allNodes.containsValue(node);
+		return this.nodes.containsValue(node);
 	}
 
 	public int getNodeCount() {
-		return this.allNodes.size();
+		return this.nodes.size();
 	}
 
 	// --- Miscellaneous --- //
