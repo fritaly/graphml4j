@@ -114,6 +114,8 @@ public final class Node implements Comparable<Node> {
 	public void addChild(Node node) {
 		// TODO check that the node belongs to the same graph
 		Validate.notNull(node, "The given node is null");
+		Validate.isTrue(this.graph == node.graph, "The given node doesn't belong to the same graph");
+		Validate.isTrue(this != node, "A node can't be its own child or parent");
 
 		this.children.add(node);
 	}
