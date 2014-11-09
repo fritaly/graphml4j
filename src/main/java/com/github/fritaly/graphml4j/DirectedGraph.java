@@ -103,10 +103,6 @@ public final class DirectedGraph {
 		return node;
 	}
 
-	public Map<String, Node> getChildNodes() {
-		return Collections.unmodifiableMap(childNodes);
-	}
-
 	// TODO create method getAllNodes which returns a List
 
 	public List<Node> getAllNodes() {
