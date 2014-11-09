@@ -21,6 +21,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import com.github.fritaly.graphml4j.Node;
 
@@ -62,11 +63,18 @@ public class DirectedGraph {
 		final com.github.fritaly.graphml4j.DirectedGraph graph = new com.github.fritaly.graphml4j.DirectedGraph();
 
 		try {
-			// Generate 15 nodes
-			for (int i = 0; i < 15; i++) {
-				final Node node = graph.addNode(String.format("N%d", i + 1));
+			// Generate 3 groups (of nodes) with 5 nodes in each
+			for (int i = 0; i < 3; i++) {
+				// Open a new group of nodes
+				final Node groupNode = graph.addNode(String.format("Group #%d", i + 1));
 
-				nodeIds.add(node.getId());
+				// Add 5 nodes to the group
+				for (int j = 0; j < 5; j++) {
+					final Node node = graph.addNode(String.format("N%d", (i * 5) + j + 1));
+					node.setParent(groupNode);
+
+					nodeIds.add(node.getId());
+				}
 			}
 
 			// Randomly generate 15 edges between the nodes

@@ -27,14 +27,15 @@ import org.apache.commons.lang.Validate;
 public final class DirectedGraph {
 
 	/**
-	 * Map storing the nodes per id.
+	 * Map storing the nodes per id. This map only contains the direct child nodes for the graph.
 	 */
-	private final Map<String, Node> nodes = new LinkedHashMap<String, Node>();
+	final Map<String, Node> childNodes = new LinkedHashMap<String, Node>();
 
 	/**
-	 * Map storing the nodes per label.
+	 * Map storing the nodes per id. This map contains all the nodes added to
+	 * the graph (direct child or descendant nodes).
 	 */
-	private final Map<String, Node> nodesByLabel = new LinkedHashMap<String, Node>();
+	private final Map<String, Node> allNodes = new LinkedHashMap<String, Node>();
 
 	private final AtomicInteger nodeSequence = new AtomicInteger();
 
@@ -52,12 +53,12 @@ public final class DirectedGraph {
 		Validate.notNull(targetId, "The given target node id is null");
 
 		// ensure the 2 nodes exist in the graph
-		Validate.isTrue(hasNodeWithId(sourceId), String.format("The given source node id '%s' doesn't exist", sourceId));
-		Validate.isTrue(hasNodeWithId(targetId), String.format("The given target node id '%s' doesn't exist", targetId));
+		Validate.isTrue(nodeExists(sourceId), String.format("The given source node id '%s' doesn't exist", sourceId));
+		Validate.isTrue(nodeExists(targetId), String.format("The given target node id '%s' doesn't exist", targetId));
 
 		final String id = String.format("e%d", edgeSequence.incrementAndGet());
 
-		final Edge edge = new Edge(id, getNodeById(sourceId), getNodeById(targetId));
+		final Edge edge = new Edge(id, getNode(sourceId), getNode(targetId));
 
 		this.edges.put(edge.getId(), edge);
 
@@ -90,43 +91,64 @@ public final class DirectedGraph {
 
 		final String id = String.format("n%d", nodeSequence.incrementAndGet());
 
-		final Node node = new Node(id, label);
+		final Node node = new Node(this, id, label);
 
-		this.nodes.put(node.getId(), node);
-		this.nodesByLabel.put(node.getLabel(), node);
+		this.childNodes.put(node.getId(), node);
+		this.allNodes.put(node.getId(), node);
 
 		return node;
 	}
 
-	public Map<String, Node> getNodes() {
-		return Collections.unmodifiableMap(nodes);
+	public Map<String, Node> getChildNodes() {
+		return Collections.unmodifiableMap(childNodes);
 	}
 
-	public Node getNodeById(String id) {
+	public Map<String, Node> getAllNodes() {
+		return Collections.unmodifiableMap(allNodes);
+	}
+
+	public Node getNode(String id) {
 		Validate.notNull(id, "The given node id is null");
 
-		return this.nodes.get(id);
+		return this.allNodes.get(id);
 	}
 
-	public Node getNodeByLabel(String label) {
-		Validate.notNull(label, "The given node label is null");
-
-		return this.nodesByLabel.get(label);
+	public boolean hasNode(String id) {
+		return this.allNodes.containsKey(id);
 	}
 
-	public boolean hasNodeWithId(String label) {
-		return this.nodes.containsKey(label);
-	}
-
-	public boolean hasNodeWithLabel(String id) {
-		return this.nodesByLabel.containsKey(id);
+	public boolean nodeExists(String id) {
+		return this.allNodes.containsKey(id);
 	}
 
 	public int getNodeCount() {
-		return this.nodes.size();
+		return this.allNodes.size();
 	}
 
 	// --- Miscellaneous --- //
+
+	private void traverse(GraphMLWriter graphWriter, Map<String, String> nodeMappings, Node node) throws GraphMLException {
+		// TODO select the node style before creating the node
+		if (node.isGroup()) {
+			// TODO decide whether the group should be open or closed
+			final String nodeId = graphWriter.group(node.getLabel(), true);
+
+			// store the id generated for this node for future lookups
+			nodeMappings.put(node.getId(), nodeId);
+
+			// handle child nodes
+			for (Node child : node.getChildren()) {
+				traverse(graphWriter, nodeMappings, child);
+			}
+
+			graphWriter.closeGroup();
+		} else {
+			final String nodeId = graphWriter.node(node.getLabel());
+
+			// store the id generated for this node for future lookups
+			nodeMappings.put(node.getId(), nodeId);
+		}
+	}
 
 	public void toGraphML(Writer writer) throws GraphMLException {
 		Validate.notNull(writer, "The given writer is null");
@@ -137,14 +159,9 @@ public final class DirectedGraph {
 		// map containing the mapping between internal & external node ids
 		final Map<String, String> nodeMappings = new LinkedHashMap<String, String>();
 
-		// generate the nodes
-		for (Node node : this.nodes.values()) {
-			// TODO select the node style before creating the node
-
-			final String nodeId = graphWriter.node(node.getLabel());
-
-			// store the id generated for this node for future lookups
-			nodeMappings.put(node.getId(), nodeId);
+		// generate the nodes and groups
+		for (Node node : this.childNodes.values()) {
+			traverse(graphWriter, nodeMappings, node);
 		}
 
 		// ... then the edges
