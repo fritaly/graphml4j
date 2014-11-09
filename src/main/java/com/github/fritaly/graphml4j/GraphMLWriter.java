@@ -641,6 +641,9 @@ public final class GraphMLWriter {
 			// Store the current group id in a stack
 			this.groupIds.push(groupId);
 
+			// Store the group node id
+			this.nodeIds.add(groupId);
+
 			return groupId;
 		} catch (XMLStreamException e) {
 			throw new GraphMLException(e);
