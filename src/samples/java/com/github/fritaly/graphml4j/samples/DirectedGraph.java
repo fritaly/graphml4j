@@ -53,9 +53,6 @@ public class DirectedGraph {
 
 		System.out.println("Writing GraphML file to " + file.getAbsolutePath() + " ...");
 
-		// This list will store the identifiers of nodes added to the graph
-		final List<String> nodeIds = new ArrayList<String>();
-
 		final FileWriter fileWriter = new FileWriter(file);
 
 		final com.github.fritaly.graphml4j.DirectedGraph graph = new com.github.fritaly.graphml4j.DirectedGraph();
@@ -70,16 +67,16 @@ public class DirectedGraph {
 				for (int j = 0; j < 5; j++) {
 					final Node node = graph.addNode(String.format("N%d", (i * 5) + j + 1));
 					node.setParent(groupNode);
-
-					nodeIds.add(node.getId());
 				}
 			}
 
 			// Randomly generate 15 edges between the nodes
-			for (int i = 0; i < 15; i++) {
-				Collections.shuffle(nodeIds);
+			final List<Node> nodes = graph.getAllNodes();
 
-				graph.addEdge(nodeIds.get(0), nodeIds.get(1), "Depends on");
+			for (int i = 0; i < 15; i++) {
+				Collections.shuffle(nodes);
+
+				graph.addEdge(nodes.get(0).getId(), nodes.get(1).getId(), "Depends on");
 			}
 
 			graph.toGraphML(fileWriter);
