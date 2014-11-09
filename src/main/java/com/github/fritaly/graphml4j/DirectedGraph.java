@@ -53,8 +53,8 @@ public final class DirectedGraph {
 		Validate.notNull(targetId, "The given target node id is null");
 
 		// ensure the 2 nodes exist in the graph
-		Validate.isTrue(nodeExists(sourceId), String.format("The given source node id '%s' doesn't exist", sourceId));
-		Validate.isTrue(nodeExists(targetId), String.format("The given target node id '%s' doesn't exist", targetId));
+		Validate.isTrue(hasNode(sourceId), String.format("The given source node id '%s' doesn't exist", sourceId));
+		Validate.isTrue(hasNode(targetId), String.format("The given target node id '%s' doesn't exist", targetId));
 
 		final String id = String.format("e%d", edgeSequence.incrementAndGet());
 
@@ -69,13 +69,13 @@ public final class DirectedGraph {
 		return Collections.unmodifiableMap(edges);
 	}
 
-	public Edge getEdgeById(String id) {
+	public Edge getEdge(String id) {
 		Validate.notNull(id, "The given edge id is null");
 
 		return this.edges.get(id);
 	}
 
-	public boolean hasEdgeWithId(String id) {
+	public boolean hasEdge(String id) {
 		return this.edges.containsKey(id);
 	}
 
@@ -117,10 +117,6 @@ public final class DirectedGraph {
 		return this.allNodes.containsKey(id);
 	}
 
-	public boolean nodeExists(String id) {
-		return this.allNodes.containsKey(id);
-	}
-
 	public int getNodeCount() {
 		return this.allNodes.size();
 	}
@@ -129,12 +125,19 @@ public final class DirectedGraph {
 
 	private void traverse(GraphMLWriter graphWriter, Map<String, String> nodeMappings, Node node, Renderer renderer) throws GraphMLException {
 		if (node.isGroup()) {
+			final boolean open;
+
 			if (renderer != null) {
 				// resolve and set the contextual group styles
 				graphWriter.setGroupStyles(renderer.getGroupStyles(node));
+
+				open = renderer.isGroupOpen(node);
+			} else {
+				// by default, groups are always open
+				open = true;
 			}
 
-			final String nodeId = graphWriter.group(node.getLabel(), renderer.isGroupOpen(node));
+			final String nodeId = graphWriter.group(node.getLabel(), open);
 
 			// store the id generated for this node for future lookups
 			nodeMappings.put(node.getId(), nodeId);
