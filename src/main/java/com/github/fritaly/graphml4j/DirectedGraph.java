@@ -87,10 +87,6 @@ public final class DirectedGraph {
 		return null;
 	}
 
-	public boolean hasEdge(String id) {
-		return this.edges.containsKey(id);
-	}
-
 	public int getEdgeCount() {
 		return this.edges.size();
 	}
@@ -129,10 +125,6 @@ public final class DirectedGraph {
 		}
 
 		return null;
-	}
-
-	public boolean hasNode(String id) {
-		return this.nodes.containsKey(id);
 	}
 
 	public boolean hasNode(Node node) {
