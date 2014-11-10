@@ -67,6 +67,10 @@ public final class Node implements Comparable<Node> {
 		return data;
 	}
 
+	public boolean hasData() {
+		return (data != null);
+	}
+
 	Graph getGraph() {
 		return graph;
 	}
