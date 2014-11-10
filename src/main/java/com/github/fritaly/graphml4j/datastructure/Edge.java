@@ -44,6 +44,10 @@ public final class Edge {
 		return data;
 	}
 
+	public boolean hasData() {
+		return (data != null);
+	}
+
 	public String getId() {
 		return id;
 	}
