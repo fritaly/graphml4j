@@ -51,16 +51,13 @@ public final class Node implements Comparable<Node> {
 		this.data = data;
 	}
 
+	public String getLabel() {
+		return hasData() ? getData().toString() : getId();
+	}
+
 	String getLabel(Renderer renderer) {
 		// the renderer can be null
-		if (renderer != null) {
-			return renderer.getNodeLabel(this);
-		}
-		if (getData() != null) {
-			return getData().toString();
-		}
-
-		return getId();
+		return (renderer != null) ? renderer.getNodeLabel(this) : getLabel();
 	}
 
 	public Object getData() {
