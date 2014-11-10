@@ -29,10 +29,10 @@ public final class Edge {
 	private final Object data;
 
 	Edge(String id, Node source, Node target, Object data) {
+		// the associated data can be null
 		Validate.notNull(id, "The given edge id is null");
 		Validate.notNull(source, "The given source node is null");
 		Validate.notNull(target, "The given target node is null");
-		Validate.notNull(data, "The given edge data is null");
 
 		this.id = id;
 		this.source = source;

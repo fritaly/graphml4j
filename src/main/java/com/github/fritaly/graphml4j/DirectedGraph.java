@@ -50,9 +50,9 @@ public final class DirectedGraph {
 	// --- Edge --- //
 
 	public Edge addEdge(Object data, Node source, Node target) {
+		// the edge data can be null
 		Validate.notNull(source, "The given source node is null");
 		Validate.notNull(target, "The given target node is null");
-		Validate.notNull(data, "The given edge data is null");
 
 		// ensure the 2 nodes exist in the graph
 		Validate.isTrue(hasNode(source), String.format("The given source node '%s' doesn't belong to this graph", source));
@@ -79,7 +79,7 @@ public final class DirectedGraph {
 
 	public Edge getEdgeByData(Object data) {
 		for (Edge edge : this.edges.values()) {
-			if ((edge.getData() == data) || edge.getData().equals(data)) {
+			if ((edge.getData() == data) || ((edge.getData() != null) && edge.getData().equals(data))) {
 				return edge;
 			}
 		}
