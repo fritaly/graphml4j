@@ -14,22 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.fritaly.graphml4j.base;
+package com.github.fritaly.graphml4j.yed;
 
-/**
- * Enumeration of possible text alignments.
- *
- * @author francois_ritaly
- */
-public enum Alignment {
-	LEFT("left"),
-	CENTER("center"),
-	RIGHT("right")
-	;
+public enum Position {
+	ANYWHERE(null),
+
+	// --- //
+
+	CENTER("c"),
+	TOP("t"),
+	BOTTOM("b"),
+	LEFT("l"),
+	RIGHT("r"),
+	TOP_LEFT("tl"),
+	TOP_RIGHT("tr"),
+	BOTTOM_LEFT("bl"),
+	BOTTOM_RIGHT("br"),
+
+	// --- //
+
+	NORTH_WEST("nw"),
+	NORTH_EAST("ne"),
+	SOUTH_WEST("sw"),
+	SOUTH_EAST("se"),
+
+	// --- //
+
+	NORTH("n"),
+	SOUTH("s"),
+	EAST("e"),
+	WEST("w");
 
 	private final String value;
 
-	private Alignment(String value) {
+	private Position(String value) {
 		this.value = value;
 	}
 

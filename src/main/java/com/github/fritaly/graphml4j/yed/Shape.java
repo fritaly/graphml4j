@@ -14,40 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.fritaly.graphml4j.base;
+package com.github.fritaly.graphml4j.yed;
 
-public enum Position {
-	ANYWHERE(null),
-
-	// --- //
-
-	CENTER("c"),
-	TOP("t"),
-	BOTTOM("b"),
-	LEFT("l"),
-	RIGHT("r"),
-	TOP_LEFT("tl"),
-	TOP_RIGHT("tr"),
-	BOTTOM_LEFT("bl"),
-	BOTTOM_RIGHT("br"),
-
-	// --- //
-
-	NORTH_WEST("nw"),
-	NORTH_EAST("ne"),
-	SOUTH_WEST("sw"),
-	SOUTH_EAST("se"),
-
-	// --- //
-
-	NORTH("n"),
-	SOUTH("s"),
-	EAST("e"),
-	WEST("w");
+/**
+ * Enumeration of possible shapes (for rendering nodes & groups).
+ *
+ * @author francois_ritaly
+ */
+public enum Shape {
+	RECTANGLE("rectangle"),
+	TRIANGLE("triangle"),
+	ROUNDED_RECTANGLE("roundrectangle"),
+	ELLIPSE("ellipse"),
+	PARALLELOGRAM("parallelogram"),
+	HEXAGON("hexagon"),
+	RECTANGLE_3D("rectangle3d"),
+	OCTAGON("octagon"),
+	DIAMOND("diamond"),
+	TRAPEZOID("trapezoid"),
+	TRAPEZOID_2("trapezoid2")
+	;
 
 	private final String value;
 
-	private Position(String value) {
+	private Shape(String value) {
 		this.value = value;
 	}
 

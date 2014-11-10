@@ -14,27 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.fritaly.graphml4j.base;
+package com.github.fritaly.graphml4j.yed;
 
 /**
- * Enumeration of possible placement strategies.
+ * Enumeration of possible sizing policies.
  *
  * @author francois_ritaly
  */
-public enum Placement {
-	INTERNAL("internal"),
-	CUSTOM("custom"),
-	EDGE_OPPOSITE("edge_opposite"),
-	EIGHT_POSITION("eight_pos"),
-	FREE("free"),
-	CORNERS("corners"),
-	SANDWICH("sandwich"),
-	SIDES("sides")
+public enum SizePolicy {
+	CONTENT("content"),
+	NODE_WIDTH("node_width"),
+	NODE_HEIGHT("node_height"),
+	NODE_SIZE("node_size")
 	;
 
 	private final String value;
 
-	private Placement(String value) {
+	private SizePolicy(String value) {
 		this.value = value;
 	}
 

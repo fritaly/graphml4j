@@ -23,7 +23,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.Validate;
 
-import com.github.fritaly.graphml4j.base.LineType;
+import com.github.fritaly.graphml4j.yed.LineType;
 
 
 /**

@@ -14,30 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.fritaly.graphml4j.base;
+package com.github.fritaly.graphml4j.yed;
 
 /**
- * Enumeration of possible shapes (for rendering nodes & groups).
+ * Enumeration of possible text alignments.
  *
  * @author francois_ritaly
  */
-public enum Shape {
-	RECTANGLE("rectangle"),
-	TRIANGLE("triangle"),
-	ROUNDED_RECTANGLE("roundrectangle"),
-	ELLIPSE("ellipse"),
-	PARALLELOGRAM("parallelogram"),
-	HEXAGON("hexagon"),
-	RECTANGLE_3D("rectangle3d"),
-	OCTAGON("octagon"),
-	DIAMOND("diamond"),
-	TRAPEZOID("trapezoid"),
-	TRAPEZOID_2("trapezoid2")
+public enum Alignment {
+	LEFT("left"),
+	CENTER("center"),
+	RIGHT("right")
 	;
 
 	private final String value;
 
-	private Shape(String value) {
+	private Alignment(String value) {
 		this.value = value;
 	}
 

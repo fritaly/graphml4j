@@ -27,14 +27,14 @@ import java.util.Random;
 import com.github.fritaly.graphml4j.EdgeStyle;
 import com.github.fritaly.graphml4j.GraphMLWriter;
 import com.github.fritaly.graphml4j.NodeStyle;
-import com.github.fritaly.graphml4j.base.Alignment;
-import com.github.fritaly.graphml4j.base.Arrow;
-import com.github.fritaly.graphml4j.base.FontStyle;
-import com.github.fritaly.graphml4j.base.LineType;
-import com.github.fritaly.graphml4j.base.Placement;
-import com.github.fritaly.graphml4j.base.Position;
-import com.github.fritaly.graphml4j.base.Shape;
-import com.github.fritaly.graphml4j.base.SizePolicy;
+import com.github.fritaly.graphml4j.yed.Alignment;
+import com.github.fritaly.graphml4j.yed.Arrow;
+import com.github.fritaly.graphml4j.yed.FontStyle;
+import com.github.fritaly.graphml4j.yed.LineType;
+import com.github.fritaly.graphml4j.yed.Placement;
+import com.github.fritaly.graphml4j.yed.Position;
+import com.github.fritaly.graphml4j.yed.Shape;
+import com.github.fritaly.graphml4j.yed.SizePolicy;
 
 
 /**

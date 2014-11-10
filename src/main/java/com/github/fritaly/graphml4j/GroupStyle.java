@@ -23,13 +23,13 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.Validate;
 
-import com.github.fritaly.graphml4j.base.Alignment;
-import com.github.fritaly.graphml4j.base.FontStyle;
-import com.github.fritaly.graphml4j.base.LineType;
-import com.github.fritaly.graphml4j.base.Placement;
-import com.github.fritaly.graphml4j.base.Position;
-import com.github.fritaly.graphml4j.base.Shape;
-import com.github.fritaly.graphml4j.base.SizePolicy;
+import com.github.fritaly.graphml4j.yed.Alignment;
+import com.github.fritaly.graphml4j.yed.FontStyle;
+import com.github.fritaly.graphml4j.yed.LineType;
+import com.github.fritaly.graphml4j.yed.Placement;
+import com.github.fritaly.graphml4j.yed.Position;
+import com.github.fritaly.graphml4j.yed.Shape;
+import com.github.fritaly.graphml4j.yed.SizePolicy;
 
 
 public class GroupStyle extends NodeStyle {
