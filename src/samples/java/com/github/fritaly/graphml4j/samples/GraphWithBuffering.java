@@ -42,11 +42,11 @@ import com.github.fritaly.graphml4j.Node;
  *
  * @author francois_ritaly
  */
-public class DirectedGraphWithBuffering {
+public class GraphWithBuffering {
 
 	public static void main(String[] args) throws Exception {
 		if (args.length != 1) {
-			System.out.println(String.format("%s <output-file>", DirectedGraphWithBuffering.class.getSimpleName()));
+			System.out.println(String.format("%s <output-file>", GraphWithBuffering.class.getSimpleName()));
 			System.exit(1);
 		}
 
@@ -61,7 +61,7 @@ public class DirectedGraphWithBuffering {
 		final FileWriter fileWriter = new FileWriter(file);
 
 		// this data structure will hold the edges & nodes in memory
-		final com.github.fritaly.graphml4j.DirectedGraph graph = new com.github.fritaly.graphml4j.DirectedGraph();
+		final com.github.fritaly.graphml4j.Graph graph = new com.github.fritaly.graphml4j.Graph();
 
 		try {
 			// generate 15 nodes

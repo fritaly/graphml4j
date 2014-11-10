@@ -40,11 +40,11 @@ import com.github.fritaly.graphml4j.Node;
  *
  * @author francois_ritaly
  */
-public class DirectedGraph {
+public class Graph {
 
 	public static void main(String[] args) throws Exception {
 		if (args.length != 1) {
-			System.out.println(String.format("%s <output-file>", DirectedGraph.class.getSimpleName()));
+			System.out.println(String.format("%s <output-file>", Graph.class.getSimpleName()));
 			System.exit(1);
 		}
 
@@ -54,7 +54,7 @@ public class DirectedGraph {
 
 		final FileWriter fileWriter = new FileWriter(file);
 
-		final com.github.fritaly.graphml4j.DirectedGraph graph = new com.github.fritaly.graphml4j.DirectedGraph();
+		final com.github.fritaly.graphml4j.Graph graph = new com.github.fritaly.graphml4j.Graph();
 
 		try {
 			// Generate 3 groups (of nodes) with 5 nodes in each

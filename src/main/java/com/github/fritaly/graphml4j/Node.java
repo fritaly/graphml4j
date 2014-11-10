@@ -31,7 +31,7 @@ public final class Node implements Comparable<Node> {
 
 	private final Set<Node> children = new TreeSet<Node>();
 
-	private final DirectedGraph graph;
+	private final Graph graph;
 
 	private Node parent;
 
@@ -39,7 +39,7 @@ public final class Node implements Comparable<Node> {
 
 	// TODO Create a class NodeRenderer to generate the label of a node
 
-	Node(DirectedGraph graph, String id, Object data) {
+	Node(Graph graph, String id, Object data) {
 		// the node data can be null
 		Validate.notNull(graph, "The given graph is null");
 		Validate.notNull(id, "The given node id is null");
@@ -65,7 +65,7 @@ public final class Node implements Comparable<Node> {
 		return data;
 	}
 
-	DirectedGraph getGraph() {
+	Graph getGraph() {
 		return graph;
 	}
 

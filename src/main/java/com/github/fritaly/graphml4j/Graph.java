@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang.Validate;
 
-public final class DirectedGraph {
+public final class Graph {
 
 	/**
 	 * Map storing the nodes per id. This map only contains the direct child nodes for the graph.
@@ -44,7 +44,7 @@ public final class DirectedGraph {
 
 	private final Map<String, Edge> edges = new LinkedHashMap<String, Edge>();
 
-	public DirectedGraph() {
+	public Graph() {
 	}
 
 	// --- Edge --- //
