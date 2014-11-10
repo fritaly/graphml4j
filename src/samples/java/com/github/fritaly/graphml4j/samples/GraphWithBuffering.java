@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import com.github.fritaly.graphml4j.Node;
+import com.github.fritaly.graphml4j.datastructure.Node;
 
 /**
  * <p>
@@ -61,7 +61,7 @@ public class GraphWithBuffering {
 		final FileWriter fileWriter = new FileWriter(file);
 
 		// this data structure will hold the edges & nodes in memory
-		final com.github.fritaly.graphml4j.Graph graph = new com.github.fritaly.graphml4j.Graph();
+		final com.github.fritaly.graphml4j.datastructure.Graph graph = new com.github.fritaly.graphml4j.datastructure.Graph();
 
 		try {
 			// generate 15 nodes

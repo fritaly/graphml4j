@@ -16,6 +16,9 @@
  */
 package com.github.fritaly.graphml4j;
 
+import com.github.fritaly.graphml4j.datastructure.Edge;
+import com.github.fritaly.graphml4j.datastructure.Node;
+
 public interface Renderer {
 
 	public String getNodeLabel(Node node);

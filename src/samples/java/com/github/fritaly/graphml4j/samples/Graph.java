@@ -21,7 +21,7 @@ import java.io.FileWriter;
 import java.util.Collections;
 import java.util.List;
 
-import com.github.fritaly.graphml4j.Node;
+import com.github.fritaly.graphml4j.datastructure.Node;
 
 /**
  * <p>
@@ -54,7 +54,7 @@ public class Graph {
 
 		final FileWriter fileWriter = new FileWriter(file);
 
-		final com.github.fritaly.graphml4j.Graph graph = new com.github.fritaly.graphml4j.Graph();
+		final com.github.fritaly.graphml4j.datastructure.Graph graph = new com.github.fritaly.graphml4j.datastructure.Graph();
 
 		try {
 			// Generate 3 groups (of nodes) with 5 nodes in each

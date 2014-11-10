@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.fritaly.graphml4j;
+package com.github.fritaly.graphml4j.datastructure;
 
 import java.io.Writer;
 import java.util.ArrayList;
@@ -24,6 +24,10 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang.Validate;
+
+import com.github.fritaly.graphml4j.GraphMLException;
+import com.github.fritaly.graphml4j.GraphMLWriter;
+import com.github.fritaly.graphml4j.Renderer;
 
 public final class Graph {
 
