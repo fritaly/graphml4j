@@ -94,8 +94,7 @@ public final class DirectedGraph {
 	// --- Node --- //
 
 	public Node addNode(Object data) {
-		// validate the data prior generating the next node id
-		Validate.notNull(data, "The given node data is null");
+		// the node data can be null
 
 		final String id = String.format("n%d", nodeSequence.incrementAndGet());
 
@@ -119,7 +118,7 @@ public final class DirectedGraph {
 
 	public Node getNodeByData(Object data) {
 		for (Node node : this.nodes.values()) {
-			if ((node.getData() == data) || node.getData().equals(data)) {
+			if ((node.getData() == data) || ((node.getData() != null) && node.getData().equals(data))) {
 				return node;
 			}
 		}
@@ -151,9 +150,7 @@ public final class DirectedGraph {
 				open = true;
 			}
 
-			final String label = (renderer != null) ? renderer.getNodeLabel(node) : node.getData().toString();
-
-			final String nodeId = graphWriter.group(label, open);
+			final String nodeId = graphWriter.group(node.getLabel(renderer), open);
 
 			// store the id generated for this node for future lookups
 			nodeMappings.put(node.getId(), nodeId);
@@ -170,9 +167,7 @@ public final class DirectedGraph {
 				graphWriter.setNodeStyle(renderer.getNodeStyle(node));
 			}
 
-			final String label = (renderer != null) ? renderer.getNodeLabel(node) : node.getData().toString();
-
-			final String nodeId = graphWriter.node(label);
+			final String nodeId = graphWriter.node(node.getLabel(renderer));
 
 			// store the id generated for this node for future lookups
 			nodeMappings.put(node.getId(), nodeId);

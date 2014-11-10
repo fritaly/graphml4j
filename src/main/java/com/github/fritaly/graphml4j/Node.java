@@ -40,13 +40,25 @@ public final class Node implements Comparable<Node> {
 	// TODO Create a class NodeRenderer to generate the label of a node
 
 	Node(DirectedGraph graph, String id, Object data) {
+		// the node data can be null
 		Validate.notNull(graph, "The given graph is null");
 		Validate.notNull(id, "The given node id is null");
-		Validate.notNull(data, "The given node data is null");
 
 		this.graph = graph;
 		this.id = id;
 		this.data = data;
+	}
+
+	String getLabel(Renderer renderer) {
+		// the renderer can be null
+		if (renderer != null) {
+			return renderer.getNodeLabel(this);
+		}
+		if (getData() != null) {
+			return getData().toString();
+		}
+
+		return getId();
 	}
 
 	public Object getData() {
