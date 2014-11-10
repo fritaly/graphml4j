@@ -49,7 +49,7 @@ public final class DirectedGraph {
 
 	// --- Edge --- //
 
-	public Edge addEdge(Node source, Node target, Object data) {
+	public Edge addEdge(Object data, Node source, Node target) {
 		Validate.notNull(source, "The given source node is null");
 		Validate.notNull(target, "The given target node is null");
 		Validate.notNull(data, "The given edge data is null");

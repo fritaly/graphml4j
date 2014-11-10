@@ -74,7 +74,7 @@ public class DirectedGraph {
 			for (int i = 0; i < 15; i++) {
 				Collections.shuffle(nodes);
 
-				graph.addEdge(nodes.get(0), nodes.get(1), "Depends on");
+				graph.addEdge("Depends on", nodes.get(0), nodes.get(1));
 			}
 
 			graph.toGraphML(fileWriter);

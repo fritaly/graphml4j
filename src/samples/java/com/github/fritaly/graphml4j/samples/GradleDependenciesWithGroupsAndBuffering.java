@@ -188,7 +188,7 @@ public class GradleDependenciesWithGroupsAndBuffering {
 
 				if (parentNodes.size() > 1) {
 					// Generate an edge between the current node and its parent
-					graph.addEdge(parentNodes.get(parentNodes.size() - 2), node, "Depends on");
+					graph.addEdge("Depends on", parentNodes.get(parentNodes.size() - 2), node);
 				}
 			}
 
