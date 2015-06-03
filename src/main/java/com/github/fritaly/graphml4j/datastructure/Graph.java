@@ -70,7 +70,15 @@ public final class Graph {
 
 		return edge;
 	}
-
+	
+	public void removeEdge(Edge edge) {
+		Validate.notNull(edge, "The given edge is null");
+		
+		if (this.edges.containsKey(edge.getId())) {
+			this.edges.remove(edge.getId());
+		}
+	}
+	
 	public List<Edge> getEdges() {
 		return new ArrayList<Edge>(this.edges.values());
 	}
@@ -109,7 +117,7 @@ public final class Graph {
 
 		return node;
 	}
-
+	
 	public List<Node> getNodes() {
 		return new ArrayList<Node>(nodes.values());
 	}
