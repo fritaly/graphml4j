@@ -18,6 +18,7 @@ package com.github.fritaly.graphml4j.datastructure;
 
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,6 +117,26 @@ public final class Graph {
 		this.nodes.put(node.getId(), node);
 
 		return node;
+	}
+	
+	public void removeNode(Node node) {
+		Validate.notNull(node, "The given node is null");
+		
+		if (nodes.containsKey(node.getId())) {
+			// start by removing the edges related to this node
+			for (Iterator<Map.Entry<String, Edge>> it = edges.entrySet().iterator(); it.hasNext();) {
+				final Map.Entry<String, Edge> entry = it.next();
+				final Edge edge = entry.getValue();
+				
+				if ((edge.getSource() == node) || (edge.getTarget() == node)) {
+					// this edge contains the node we're about to remove
+					it.remove();
+				}
+			}
+			
+			// finally remove the node
+			nodes.remove(node.getId());
+		}
 	}
 	
 	public List<Node> getNodes() {
