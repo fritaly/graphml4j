@@ -54,7 +54,6 @@ import org.apache.commons.lang.Validate;
  * <li>Close the graph</li>
  * <li>Close the graph writer</li>
  * </ul>
- * </p>
  *
  * @author francois_ritaly
  */

@@ -17,7 +17,7 @@
 package com.github.fritaly.graphml4j.yed;
 
 /**
- * Enumeration of possible shapes (for rendering nodes & groups).
+ * Enumeration of possible shapes (for rendering nodes &amp; groups).
  *
  * @author francois_ritaly
  */
