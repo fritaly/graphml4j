@@ -1,16 +1,16 @@
 buildscript {
   repositories {
-    jcenter()
+    mavenCentral()
   }
   dependencies {
-    classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7.1'
+    classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
   }
 }
 
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'jacoco'
-apply plugin: 'nexus'
+apply plugin: 'com.bmuschko.nexus'
 
 defaultTasks 'clean', 'build'
 
@@ -19,7 +19,11 @@ repositories {
   mavenCentral()
 }
 
-sourceCompatibility = targetCompatibility = '1.8'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
 
 dependencies {
   compile 'commons-lang:commons-lang:2.4'
