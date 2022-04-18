@@ -23,6 +23,7 @@ import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.EnumSet;
@@ -55,7 +56,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author francois_ritaly
  */
-public final class GraphMLWriter {
+public final class GraphMLWriter implements Closeable {
 
 	/** The id associated to the node URL property */
 	private static final String ID_NODE_URL = "d4";
@@ -710,11 +711,9 @@ public final class GraphMLWriter {
 	}
 
 	/**
-	 * <p>
-	 * Closes the graph writer and all underlying resources. Once closed, the
-	 * graph writer can't be reopened.
-	 * </p>
+	 * <p>Closes the graph writer and all underlying resources. Once closed, the graph writer can't be reopened.</p>
 	 */
+	@Override
 	public void close() {
 		assertNotState(State.CLOSED);
 
