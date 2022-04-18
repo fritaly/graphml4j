@@ -16,14 +16,15 @@
  */
 package com.github.fritaly.graphml4j;
 
-import java.awt.Color;
+import com.github.fritaly.graphml4j.yed.LineType;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import org.apache.commons.lang.Validate;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-
-import org.apache.commons.lang.Validate;
-
-import com.github.fritaly.graphml4j.yed.LineType;
+import java.awt.*;
 
 
 /**
@@ -36,23 +37,46 @@ final class GeneralStyle {
 	// The properties x & y aren't defined here because they're not style
 	// properties
 
+	@Getter
 	private float height = 40.0f;
 
+	@Getter
 	private float width = 40.0f;
 
-	// This color is optional
+	/**
+	 * <p>This color is optional. Can be <code>null</code>.</p>
+	 */
+	@Getter
+	@Setter
 	private Color fillColor = Utils.decode("#99CC00");
 
-	// This color is optional
+	/**
+	 * <p>This color is optional. Can be <code>null</code>.</p>
+	 */
+	@Getter
+	@Setter
 	private Color fillColor2;
 
-	// This color is optional
+	/**
+	 * <p>This color is optional. Can be <code>null</code>.</p>
+	 */
+	@Getter
+	@Setter
 	private Color borderColor = Color.BLACK;
 
+	/**
+	 * <p>Never <code>null</code>.</p>
+	 */
+	@Getter
+	@Setter
+	@NonNull
 	private LineType borderType = LineType.LINE;
 
+	@Getter
 	private float borderWidth = 2.0f;
 
+	@Getter
+	@Setter
 	private boolean transparentFill = false;
 
 	public GeneralStyle() {
@@ -75,73 +99,16 @@ final class GeneralStyle {
 		this.width = style.width;
 	}
 
-	public boolean isTransparentFill() {
-		return transparentFill;
-	}
-
-	public void setTransparentFill(boolean transparentFill) {
-		this.transparentFill = transparentFill;
-	}
-
-	public float getHeight() {
-		return height;
-	}
-
 	public void setHeight(float height) {
 		Validate.isTrue(height > 0, String.format("The given height (%f) must be positive", height));
 
 		this.height = height;
 	}
 
-	public float getWidth() {
-		return width;
-	}
-
 	public void setWidth(float width) {
 		Validate.isTrue(width > 0, String.format("The given width (%f) must be positive", width));
 
 		this.width = width;
-	}
-
-	public Color getFillColor() {
-		return fillColor;
-	}
-
-	public void setFillColor(Color color) {
-		// This color is optional
-		this.fillColor = color;
-	}
-
-	public Color getFillColor2() {
-		return fillColor2;
-	}
-
-	public void setFillColor2(Color fillColor2) {
-		// This color is optional
-		this.fillColor2 = fillColor2;
-	}
-
-	public Color getBorderColor() {
-		return borderColor;
-	}
-
-	public void setBorderColor(Color color) {
-		// This color is optional
-		this.borderColor = color;
-	}
-
-	public LineType getBorderType() {
-		return borderType;
-	}
-
-	public void setBorderType(LineType borderType) {
-		Validate.notNull(borderType, "The given border type is null");
-
-		this.borderType = borderType;
-	}
-
-	public float getBorderWidth() {
-		return borderWidth;
 	}
 
 	public void setBorderWidth(float borderWidth) {
