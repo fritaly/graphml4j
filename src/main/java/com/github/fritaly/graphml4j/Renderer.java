@@ -21,13 +21,13 @@ import com.github.fritaly.graphml4j.datastructure.Node;
 
 public interface Renderer {
 
-	public String getNodeLabel(Node node);
+	String getNodeLabel(Node node);
 
-	public NodeStyle getNodeStyle(Node node);
+	NodeStyle getNodeStyle(Node node);
 
-	public EdgeStyle getEdgeStyle(Edge edge);
+	EdgeStyle getEdgeStyle(Edge edge);
 
-	public GroupStyles getGroupStyles(Node node);
+	GroupStyles getGroupStyles(Node node);
 
 	/**
 	 * Tells whether the given group node should be rendered as open or closed.
@@ -37,5 +37,5 @@ public interface Renderer {
 	 * @return whether the given group node should be rendered as open or
 	 *         closed.
 	 */
-	public boolean isGroupOpen(Node node);
+	boolean isGroupOpen(Node node);
 }
