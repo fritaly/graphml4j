@@ -16,6 +16,13 @@
  */
 package com.github.fritaly.graphml4j;
 
+import javanet.staxutils.IndentingXMLStreamWriter;
+import org.apache.commons.lang.Validate;
+
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.EnumSet;
@@ -23,15 +30,6 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import javanet.staxutils.IndentingXMLStreamWriter;
-
-import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
-import org.apache.commons.lang.Validate;
 
 /**
  * <p>This class is a stream writer ("a la Stax") used for generating GraphML
@@ -85,7 +83,7 @@ public final class GraphMLWriter {
 	 *
 	 * @author francois_ritaly
 	 */
-	static enum State {
+	enum State {
 		INITIAL, DOCUMENT_OPENED, GRAPH_OPENED, GRAPH_CLOSED, DOCUMENT_CLOSED, CLOSED;
 
 		/**
