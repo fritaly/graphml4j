@@ -25,12 +25,17 @@ java {
     }
 }
 
-dependencies {
-  compile 'commons-lang:commons-lang:2.4'
-  compile 'net.java.dev.stax-utils:stax-utils:20070216@jar'
+def lombokVersion = '1.18.20'
 
-  testCompile localGroovy()
-  testCompile 'junit:junit:4.8.1'
+dependencies {
+  compileOnly "org.projectlombok:lombok:${lombokVersion}"
+  annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+  implementation 'commons-lang:commons-lang:2.4'
+  implementation 'net.java.dev.stax-utils:stax-utils:20070216@jar'
+
+  testImplementation localGroovy()
+  testImplementation 'junit:junit:4.8.1'
 }
 
 jar {
@@ -48,7 +53,7 @@ sourceSets {
   samples {
     java {
       // The samples need the main classes to compile & the compile dependencies
-      compileClasspath += sourceSets.main.output + configurations.compile
+      compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
     }
   }
 }
