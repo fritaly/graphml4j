@@ -16,14 +16,15 @@
  */
 package com.github.fritaly.graphml4j;
 
-import java.awt.Color;
+import com.github.fritaly.graphml4j.yed.Shape;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import org.apache.commons.lang.Validate;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-
-import org.apache.commons.lang.Validate;
-
-import com.github.fritaly.graphml4j.yed.Shape;
+import java.awt.*;
 
 
 /**
@@ -33,11 +34,20 @@ import com.github.fritaly.graphml4j.yed.Shape;
  */
 final class ShapeStyle {
 
+	@Getter
+	@Setter
+	@NonNull
 	private Shape shape = Shape.ROUNDED_RECTANGLE;
 
-	// This color is optional
+	/**
+	 * <p>This color is optional. Can be <code>null</code>.</p>
+	 */
+	@Getter
+	@Setter
 	private Color shadowColor = Utils.decode("#B3A691");
 
+	@Getter
+	@Setter
 	private int shadowOffsetX = 3, shadowOffsetY = 3;
 
 	public ShapeStyle() {
@@ -54,41 +64,6 @@ final class ShapeStyle {
 		this.shadowColor = object.shadowColor;
 		this.shadowOffsetX = object.shadowOffsetX;
 		this.shadowOffsetY = object.shadowOffsetY;
-	}
-
-	public Shape getShape() {
-		return shape;
-	}
-
-	public void setShape(Shape shape) {
-		Validate.notNull(shape, "The given shape is null");
-
-		this.shape = shape;
-	}
-
-	public Color getShadowColor() {
-		return shadowColor;
-	}
-
-	public int getShadowOffsetX() {
-		return shadowOffsetX;
-	}
-
-	public int getShadowOffsetY() {
-		return shadowOffsetY;
-	}
-
-	public void setShadowColor(Color color) {
-		// This color is optional
-		this.shadowColor = color;
-	}
-
-	public void setShadowOffsetX(int value) {
-		this.shadowOffsetX = value;
-	}
-
-	public void setShadowOffsetY(int value) {
-		this.shadowOffsetY = value;
 	}
 
 	void writeTo(XMLStreamWriter writer) throws XMLStreamException {
