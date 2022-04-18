@@ -58,6 +58,22 @@ sourceSets {
   }
 }
 
+task delombok(type: JavaExec, dependsOn: compileJava) {
+    ext.outputDir = file("${buildDir}/delombok")
+
+    classpath = configurations.compileClasspath
+    mainClass = 'lombok.launch.Main'
+    args = [ 'delombok', 'src/main/java', '-d', ext.outputDir ]
+}
+
+javadoc {
+    dependsOn delombok
+
+    // Generate the javadoc from the delomboked files
+    source = delombok.ext.outputDir // sourceSets.main.allJava
+    classpath = configurations.compileClasspath + configurations.annotationProcessor
+}
+
 // Compile the samples before packaging them
 task distribution(type: Zip, dependsOn: samplesClasses) {
   archiveClassifier = 'dist'
