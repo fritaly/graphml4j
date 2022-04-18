@@ -55,7 +55,7 @@ sourceSets {
 
 // Compile the samples before packaging them
 task distribution(type: Zip, dependsOn: samplesClasses) {
-  classifier = 'dist'
+  archiveClassifier = 'dist'
   from jar, {
     into 'lib'
   }
@@ -77,7 +77,7 @@ jacoco {
   toolVersion = "0.7.1.201405082137"
 }
 
-build.dependsOn += [distribution, jacocoTestReport]
+build.dependsOn distribution, jacocoTestReport
 
 modifyPom {
     project {
