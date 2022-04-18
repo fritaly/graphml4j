@@ -29,7 +29,7 @@ public enum Alignment {
 
 	private final String value;
 
-	private Alignment(String value) {
+	Alignment(String value) {
 		this.value = value;
 	}
 

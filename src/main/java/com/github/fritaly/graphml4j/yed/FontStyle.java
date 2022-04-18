@@ -30,7 +30,7 @@ public enum FontStyle {
 
 	private final String value;
 
-	private FontStyle(String value) {
+	FontStyle(String value) {
 		this.value = value;
 	}
 

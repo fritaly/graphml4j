@@ -30,7 +30,7 @@ public enum LineType {
 
 	private final String value;
 
-	private LineType(String value) {
+	LineType(String value) {
 		this.value = value;
 	}
 
