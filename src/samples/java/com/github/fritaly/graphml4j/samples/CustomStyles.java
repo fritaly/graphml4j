@@ -16,25 +16,19 @@
  */
 package com.github.fritaly.graphml4j.samples;
 
-import java.awt.Color;
+import com.github.fritaly.graphml4j.EdgeStyle;
+import com.github.fritaly.graphml4j.GraphMLWriter;
+import com.github.fritaly.graphml4j.NodeStyle;
+import com.github.fritaly.graphml4j.yed.Shape;
+import com.github.fritaly.graphml4j.yed.*;
+
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import com.github.fritaly.graphml4j.EdgeStyle;
-import com.github.fritaly.graphml4j.GraphMLWriter;
-import com.github.fritaly.graphml4j.NodeStyle;
-import com.github.fritaly.graphml4j.yed.Alignment;
-import com.github.fritaly.graphml4j.yed.Arrow;
-import com.github.fritaly.graphml4j.yed.FontStyle;
-import com.github.fritaly.graphml4j.yed.LineType;
-import com.github.fritaly.graphml4j.yed.Placement;
-import com.github.fritaly.graphml4j.yed.Position;
-import com.github.fritaly.graphml4j.yed.Shape;
-import com.github.fritaly.graphml4j.yed.SizePolicy;
 
 
 /**
@@ -58,13 +52,14 @@ public class CustomStyles {
 
 	private static void customizeEdges(GraphMLWriter graphWriter) {
 		// Create a new default edge style and customize it
-		final EdgeStyle edgeStyle = new EdgeStyle();
-		edgeStyle.setColor(Color.BLUE);
-		edgeStyle.setSmoothed(true);
-		edgeStyle.setSourceArrow(Arrow.CIRCLE);
-		edgeStyle.setTargetArrow(Arrow.DELTA);
-		edgeStyle.setType(LineType.DASHED);
-		edgeStyle.setWidth(2.0f);
+		final EdgeStyle edgeStyle = EdgeStyle.builder()
+				.color(Color.BLUE)
+				.smoothed(true)
+				.sourceArrow(Arrow.CIRCLE)
+				.targetArrow(Arrow.DELTA)
+				.type(LineType.DASHED)
+				.width(2.0f)
+				.build();
 
 		// All subsequent edges added to the graph will use this style
 		graphWriter.setEdgeStyle(edgeStyle);

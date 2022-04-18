@@ -16,16 +16,6 @@
  */
 package com.github.fritaly.graphml4j.samples;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.io.Reader;
-import java.util.Stack;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
 import com.github.fritaly.graphml4j.EdgeStyle;
 import com.github.fritaly.graphml4j.GroupStyles;
 import com.github.fritaly.graphml4j.NodeStyle;
@@ -33,6 +23,11 @@ import com.github.fritaly.graphml4j.Renderer;
 import com.github.fritaly.graphml4j.datastructure.Edge;
 import com.github.fritaly.graphml4j.datastructure.Graph;
 import com.github.fritaly.graphml4j.datastructure.Node;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import java.io.*;
+import java.util.Stack;
 
 
 /**
@@ -236,7 +231,7 @@ public class GradleDependenciesWithGroupsAndBuffering {
 
 				@Override
 				public EdgeStyle getEdgeStyle(Edge edge) {
-					return new EdgeStyle();
+					return EdgeStyle.DEFAULT;
 				}
 			});
 

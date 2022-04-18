@@ -18,9 +18,10 @@ package com.github.fritaly.graphml4j;
 
 import com.github.fritaly.graphml4j.yed.Arrow;
 import com.github.fritaly.graphml4j.yed.LineType;
-import lombok.Getter;
+import lombok.Builder;
 import lombok.NonNull;
-import lombok.Setter;
+import lombok.Value;
+import lombok.With;
 import org.apache.commons.lang.Validate;
 
 import javax.xml.stream.XMLStreamException;
@@ -33,84 +34,52 @@ import java.awt.*;
  *
  * @author francois_ritaly
  */
-public final class EdgeStyle {
+@Value
+@Builder(builderClassName = "Builder")
+@With
+public class EdgeStyle {
+
+	public static final EdgeStyle DEFAULT = EdgeStyle.builder().build();
 
 	/**
 	 * <p>The color for rendering the edge. Never <code>null</code>.</p>
 	 */
-	@Getter
-	@Setter
 	@NonNull
+	@lombok.Builder.Default
 	private Color color = Color.BLACK;
 
 	/**
 	 * <p>The type of line for rendering the edge. Never <code>null</code>.</p>
 	 */
-	@Getter
-	@Setter
 	@NonNull
+	@lombok.Builder.Default
 	private LineType type = LineType.LINE;
 
 	/**
 	 * <p>The width of the edge as a float.</p>
 	 */
-	@Getter
-	@Setter
+	@lombok.Builder.Default
 	private float width = 1.0f;
 
 	/**
 	 * <p>The type of arrow for rendering the start of the edge. Never <code>null</code>.</p>
 	 */
-	@Getter
-	@Setter
 	@NonNull
+	@lombok.Builder.Default
 	private Arrow sourceArrow = Arrow.NONE;
 
 	/**
 	 * <p>The type of arrow for rendering the target of the edge. Never <code>null</code>.</p>
 	 */
-	@Getter
-	@Setter
 	@NonNull
+	@lombok.Builder.Default
 	private Arrow targetArrow = Arrow.STANDARD;
 
 	/**
 	 * <p>Whether the edge should be smoothed.</p>
 	 */
-	@Getter
-	@Setter
+	@lombok.Builder.Default
 	private boolean smoothed = false;
-
-	/**
-	 * Creates a new default edge style.
-	 */
-	public EdgeStyle() {
-	}
-
-	/**
-	 * Creates a new edge style from the given one.
-	 *
-	 * @param style an edge style to copy. Can't be null.
-	 */
-	public EdgeStyle(EdgeStyle style) {
-		apply(style);
-	}
-
-	/**
-	 * Applies the given edge style to this style.
-	 *
-	 * @param style an edge style. Can't be null.
-	 */
-	void apply(EdgeStyle style) {
-		Validate.notNull(style, "The given style is null");
-
-		this.color = style.color;
-		this.type = style.type;
-		this.width = style.width;
-		this.sourceArrow = style.sourceArrow;
-		this.targetArrow = style.targetArrow;
-		this.smoothed = style.smoothed;
-	}
 
 	void writeTo(XMLStreamWriter writer) throws XMLStreamException {
 		Validate.notNull(writer, "The given stream writer is null");

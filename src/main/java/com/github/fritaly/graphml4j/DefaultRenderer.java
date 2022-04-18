@@ -41,7 +41,7 @@ public class DefaultRenderer implements Renderer {
 
 	@Override
 	public EdgeStyle getEdgeStyle(Edge edge) {
-		return new EdgeStyle();
+		return EdgeStyle.DEFAULT;
 	}
 
 	@Override

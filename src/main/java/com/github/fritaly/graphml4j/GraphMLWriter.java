@@ -150,7 +150,7 @@ public final class GraphMLWriter {
 	/**
 	 * The style applied to edges.
 	 */
-	private final EdgeStyle edgeStyle = new EdgeStyle();
+	private EdgeStyle edgeStyle = EdgeStyle.DEFAULT;
 
 	private final GroupStyles groupStyles = new GroupStyles();
 
@@ -255,8 +255,7 @@ public final class GraphMLWriter {
 	 * @return a new instance {@link EdgeStyle}. Never returns null.
 	 */
 	public EdgeStyle getEdgeStyle() {
-		// Defensive recopy
-		return new EdgeStyle(edgeStyle);
+		return edgeStyle;
 	}
 
 	/**
@@ -267,8 +266,7 @@ public final class GraphMLWriter {
 	public void setEdgeStyle(EdgeStyle style) {
 		Validate.notNull(style, "The given style is null");
 
-		// Defensive recopy
-		this.edgeStyle.apply(style);
+		this.edgeStyle = style;
 	}
 
 	/**
