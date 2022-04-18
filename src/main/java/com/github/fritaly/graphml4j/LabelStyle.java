@@ -16,18 +16,15 @@
  */
 package com.github.fritaly.graphml4j;
 
-import java.awt.Color;
+import com.github.fritaly.graphml4j.yed.*;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import org.apache.commons.lang.Validate;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-
-import org.apache.commons.lang.Validate;
-
-import com.github.fritaly.graphml4j.yed.Alignment;
-import com.github.fritaly.graphml4j.yed.FontStyle;
-import com.github.fritaly.graphml4j.yed.Placement;
-import com.github.fritaly.graphml4j.yed.Position;
-import com.github.fritaly.graphml4j.yed.SizePolicy;
+import java.awt.*;
 
 
 /**
@@ -37,36 +34,72 @@ import com.github.fritaly.graphml4j.yed.SizePolicy;
  */
 final class LabelStyle {
 
+	@Getter
+	@Setter
 	private boolean visible = true;
 
+	@Getter
+	@Setter
+	@NonNull
 	private Color textColor = Color.BLACK;
 
-	// This color is optional
-	private Color backgroundColor = null;
+	/**
+	 * <p>This color is optional. Can be <code>null</code>.</p>
+	 */
+	@Getter
+	@Setter
+	private Color backgroundColor;
 
-	// This color is optional
-	private Color lineColor = null;
+	/**
+	 * <p>This color is optional. Can be <code>null</code>.</p>
+	 */
+	@Getter
+	@Setter
+	private Color lineColor;
 
+	@Getter
+	@Setter
+	@NonNull
 	private Alignment textAlignment = Alignment.CENTER;
 
+	@Getter
+	@Setter
+	@NonNull
 	private FontStyle fontStyle = FontStyle.PLAIN;
 
+	@Getter
+	@Setter
+	@NonNull
 	private String fontFamily = "Dialog";
 
+	@Getter // + custom setter
 	private int fontSize = 12;
 
+	@Getter
+	@Setter
 	private float borderDistance = 0.0f;
 
+	@Getter
+	@Setter
 	private float rotationAngle = 0.0f;
 
+	@Getter
+	@Setter
 	private boolean underlinedText = false;
 
+	@Getter // + custom setter
 	private Placement placement = Placement.INTERNAL;
 
+	@Getter // + custom setter
 	private Position position = Position.CENTER;
 
+	@Getter
+	@Setter
 	private int leftInset, rightInset, topInset, bottomInset;
 
+	@Getter
+	@Setter
+	@NonNull
 	private SizePolicy sizePolicy = SizePolicy.CONTENT;
 
 	public LabelStyle() {
@@ -99,64 +132,6 @@ final class LabelStyle {
 		this.rotationAngle = style.rotationAngle;
 	}
 
-	public float getRotationAngle() {
-		return rotationAngle;
-	}
-
-	public void setRotationAngle(float rotationAngle) {
-		this.rotationAngle = rotationAngle;
-	}
-
-	public float getBorderDistance() {
-		return borderDistance;
-	}
-
-	public void setBorderDistance(float borderDistance) {
-		this.borderDistance = borderDistance;
-	}
-
-	public SizePolicy getSizePolicy() {
-		return sizePolicy;
-	}
-
-	public void setSizePolicy(SizePolicy policy) {
-		Validate.notNull(policy, "The given size policy is null");
-
-		this.sizePolicy = policy;
-	}
-
-	public int getBottomInset() {
-		return bottomInset;
-	}
-
-	public int getLeftInset() {
-		return leftInset;
-	}
-
-	public int getRightInset() {
-		return rightInset;
-	}
-
-	public int getTopInset() {
-		return topInset;
-	}
-
-	public void setBottomInset(int bottomInset) {
-		this.bottomInset = bottomInset;
-	}
-
-	public void setLeftInset(int leftInset) {
-		this.leftInset = leftInset;
-	}
-
-	public void setRightInset(int rightInset) {
-		this.rightInset = rightInset;
-	}
-
-	public void setTopInset(int topInset) {
-		this.topInset = topInset;
-	}
-
 	public boolean hasInsets() {
 		return (topInset != 0) || (bottomInset != 0) || (leftInset != 0) || (rightInset != 0);
 	}
@@ -166,14 +141,6 @@ final class LabelStyle {
 		setRightInset(value);
 		setTopInset(value);
 		setBottomInset(value);
-	}
-
-	public Placement getPlacement() {
-		return placement;
-	}
-
-	public Position getPosition() {
-		return position;
 	}
 
 	public void setPlacement(Placement placement) {
@@ -192,88 +159,10 @@ final class LabelStyle {
 		}
 	}
 
-	public Color getLineColor() {
-		return lineColor;
-	}
-
-	public void setLineColor(Color lineColor) {
-		// This color is optional
-		this.lineColor = lineColor;
-	}
-
-	public Color getBackgroundColor() {
-		return backgroundColor;
-	}
-
-	public void setBackgroundColor(Color backgroundColor) {
-		// This color is optional
-		this.backgroundColor = backgroundColor;
-	}
-
-	public boolean isUnderlinedText() {
-		return underlinedText;
-	}
-
-	public void setUnderlinedText(boolean value) {
-		this.underlinedText = value;
-	}
-
-	public boolean isVisible() {
-		return visible;
-	}
-
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
-
-	public Color getTextColor() {
-		return textColor;
-	}
-
-	public void setTextColor(Color color) {
-		Validate.notNull(color, "The given text color is null");
-
-		this.textColor = color;
-	}
-
-	public int getFontSize() {
-		return fontSize;
-	}
-
 	public void setFontSize(int fontSize) {
 		Validate.isTrue(fontSize > 0, String.format("The given font size (%d) must be positive", fontSize));
 
 		this.fontSize = fontSize;
-	}
-
-	public String getFontFamily() {
-		return fontFamily;
-	}
-
-	public void setFontFamily(String fontFamily) {
-		Validate.notNull(fontFamily, "The given font family is null");
-
-		this.fontFamily = fontFamily;
-	}
-
-	public Alignment getTextAlignment() {
-		return textAlignment;
-	}
-
-	public void setTextAlignment(Alignment textAlignment) {
-		Validate.notNull(textAlignment, "The given text alignment is null");
-
-		this.textAlignment = textAlignment;
-	}
-
-	public FontStyle getFontStyle() {
-		return fontStyle;
-	}
-
-	public void setFontStyle(FontStyle fontStyle) {
-		Validate.notNull(fontStyle, "The given font style is null");
-
-		this.fontStyle = fontStyle;
 	}
 
 	void writeTo(XMLStreamWriter writer, String label) throws XMLStreamException {

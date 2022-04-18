@@ -34,7 +34,7 @@ public enum Placement {
 
 	private final String value;
 
-	private Placement(String value) {
+	Placement(String value) {
 		this.value = value;
 	}
 

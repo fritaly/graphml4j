@@ -16,24 +16,19 @@
  */
 package com.github.fritaly.graphml4j;
 
-import java.awt.Color;
+import com.github.fritaly.graphml4j.yed.Shape;
+import com.github.fritaly.graphml4j.yed.*;
+import lombok.Getter;
+import org.apache.commons.lang.Validate;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-
-import org.apache.commons.lang.Validate;
-
-import com.github.fritaly.graphml4j.yed.Alignment;
-import com.github.fritaly.graphml4j.yed.FontStyle;
-import com.github.fritaly.graphml4j.yed.LineType;
-import com.github.fritaly.graphml4j.yed.Placement;
-import com.github.fritaly.graphml4j.yed.Position;
-import com.github.fritaly.graphml4j.yed.Shape;
-import com.github.fritaly.graphml4j.yed.SizePolicy;
+import java.awt.*;
 
 
 public class GroupStyle extends NodeStyle {
 
+	@Getter
 	private float insets = 15.0f;
 
 	public GroupStyle() {
@@ -76,10 +71,6 @@ public class GroupStyle extends NodeStyle {
 
 		// Apply the group-specific attributes
 		this.insets = style.insets;
-	}
-
-	public float getInsets() {
-		return insets;
 	}
 
 	public void setInsets(float value) {

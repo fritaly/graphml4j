@@ -16,15 +16,15 @@
  */
 package com.github.fritaly.graphml4j.datastructure;
 
+import lombok.Value;
 import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 
+@Value
 public final class Edge {
 
-	private final Node source, target;
-
 	private final String id;
+
+	private final Node source, target;
 
 	private final Object data;
 
@@ -40,29 +40,7 @@ public final class Edge {
 		this.data = data;
 	}
 
-	public Object getData() {
-		return data;
-	}
-
 	public boolean hasData() {
 		return (data != null);
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public Node getSource() {
-		return source;
-	}
-
-	public Node getTarget() {
-		return target;
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("id", id).append("source", source)
-				.append("target", target).toString();
 	}
 }

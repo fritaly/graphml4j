@@ -16,27 +16,33 @@
  */
 package com.github.fritaly.graphml4j.datastructure;
 
+import com.github.fritaly.graphml4j.Renderer;
+import lombok.Getter;
+import lombok.ToString;
+import org.apache.commons.lang.Validate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
-import com.github.fritaly.graphml4j.Renderer;
-
+@ToString
 public final class Node implements Comparable<Node> {
 
+	@Getter
 	private final String id;
 
+	@ToString.Exclude
 	private final Set<Node> children = new TreeSet<Node>();
 
+	@ToString.Exclude
 	private final Graph graph;
 
+	@Getter
+	@ToString.Exclude
 	private Node parent;
 
+	@Getter
 	private final Object data;
 
 	// TODO Create a class NodeRenderer to generate the label of a node
@@ -60,10 +66,6 @@ public final class Node implements Comparable<Node> {
 		return (renderer != null) ? renderer.getNodeLabel(this) : getLabel();
 	}
 
-	public Object getData() {
-		return data;
-	}
-
 	public boolean hasData() {
 		return (data != null);
 	}
@@ -75,10 +77,6 @@ public final class Node implements Comparable<Node> {
 	@Override
 	public int compareTo(Node node) {
 		return this.id.compareTo(node.id);
-	}
-
-	public Node getParent() {
-		return this.parent;
 	}
 
 	public boolean hasParent() {
@@ -114,10 +112,6 @@ public final class Node implements Comparable<Node> {
 		setParent(null);
 	}
 
-	public String getId() {
-		return id;
-	}
-
 	public boolean isGroup() {
 		return !this.children.isEmpty();
 	}
@@ -133,10 +127,5 @@ public final class Node implements Comparable<Node> {
 		Validate.isTrue(this != node, "A node can't be its own child or parent");
 
 		this.children.add(node);
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("id", id).append("data", data).toString();
 	}
 }

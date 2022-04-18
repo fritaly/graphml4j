@@ -30,7 +30,7 @@ public enum SizePolicy {
 
 	private final String value;
 
-	private SizePolicy(String value) {
+	SizePolicy(String value) {
 		this.value = value;
 	}
 

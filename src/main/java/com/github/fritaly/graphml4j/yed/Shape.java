@@ -37,7 +37,7 @@ public enum Shape {
 
 	private final String value;
 
-	private Shape(String value) {
+	Shape(String value) {
 		this.value = value;
 	}
 

@@ -48,7 +48,7 @@ public enum Arrow {
 
 	private final String value;
 
-	private Arrow(String value) {
+	Arrow(String value) {
 		this.value = value;
 	}
 
